@@ -1,8 +1,8 @@
 <template>
-  <Body>
+  <div>
     <TheHeader />
     <slot />
-  </Body>
+  </div>
 </template>
 <script setup lang="ts">
 </script>
