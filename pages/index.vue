@@ -1,10 +1,8 @@
 <template>
   <div class="container">
-    <pre>
-      {{ products }}
-    </pre>
+    {{ $t('products') }}
     <div v-for="product in products" :key="product.id">
-      <img :src="product.imgUrl" alt="" class="w-40">
+      <img :src="product.imgUrl" width="100" height="100" :alt="product.name">
       <div>{{ product.name }}</div>
       <div>{{ product.price }}</div>
       <div>{{ product.description }}</div>
@@ -13,12 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import { useYimaProduct, useHead } from '#imports'
 
 const { getProducts } = useYimaProduct()
 
 const { data: products } = await getProducts()
-console.log(products.value)
 
 /**
  * SEO meta tags
