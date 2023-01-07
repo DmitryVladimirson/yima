@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@formkit/nuxt": "^1.0.0-beta.12",
+    "@iconify-json/mdi": "^1.1.41",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/fontaine": "^0.2.4",
     "@nuxtjs/html-validator": "^1.2.3",
@@ -22,7 +23,9 @@
     "nuxt": "3.0.0",
     "nuxt-headlessui": "^1.0.4",
     "nuxt-swiper": "^0.1.6",
-    "tailwindcss": "^3.2.4"
+    "tailwindcss": "^3.2.4",
+    "unplugin-icons": "^0.15.1",
+    "unplugin-vue-components": "^0.22.12"
   },
   "dependencies": {
     "@nuxtjs/i18n": "^8.0.0-beta.7",

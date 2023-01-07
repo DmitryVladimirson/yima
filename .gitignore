@@ -1,13 +1,64 @@
+# Dependencies
 node_modules
-*.log*
-.nuxt
-.nitro
+jspm_packages
+
+# Logs
+*.log
+
+# Temp directories
+.temp
+.tmp
 .cache
-.output
-.env
+.eslintcache
+
+# PNPM
+**/.pnpm-store
+
+# Generated dirs
 dist
+.nuxt
+.nuxt-*
+.output
+.gen
+nuxt.d.ts
 
-# IDE
-.idea/*
-!.idea/inspectionProfiles/Project_Default.xml
+# Junit reports
+reports
 
+# Coverage reports
+coverage
+*.lcov
+.nyc_output
+
+# Intellij idea
+*.iml
+.idea
+
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+.vercel_build_output
+.build-*
+.env
+.netlify
+./core
+
+components.d.ts

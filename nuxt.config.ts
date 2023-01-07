@@ -1,4 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import IconsResolver from 'unplugin-icons/resolver'
+import Icons from 'unplugin-icons/vite'
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
+import Components from 'unplugin-vue-components/vite'
+
 export default defineNuxtConfig({
   modules: ['@nuxtjs/fontaine', '@nuxtjs/html-validator', '@nuxtjs/i18n', '@formkit/nuxt', '@nuxtjs/tailwindcss', 'nuxt-swiper', 'nuxt-headlessui'],
   app: {
@@ -16,6 +21,24 @@ export default defineNuxtConfig({
     exposeConfig: false,
     injectPosition: 0,
     viewer: true
+  },
+  vite: {
+    plugins: [
+      Icons({
+        compiler: 'vue3',
+        customCollections: {
+          yima: FileSystemIconLoader('assets/images/icons')
+        }
+      }),
+      Components({
+        dts: true,
+        resolvers: [
+          IconsResolver({
+            customCollections: ['yima']
+          })
+        ]
+      })
+    ]
   },
   i18n: {
     locales: [
