@@ -13,7 +13,6 @@
     "@iconify-json/mdi": "^1.1.41",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/fontaine": "^0.2.4",
-    "@nuxtjs/html-validator": "^1.2.3",
     "@nuxtjs/tailwindcss": "^6.2.0",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -29,6 +28,7 @@
   },
   "dependencies": {
     "@nuxtjs/i18n": "^8.0.0-beta.7",
-    "firebase": "^9.15.0"
+    "firebase": "^9.15.0",
+    "vue-toastification": "^2.0.0-rc.5"
   }
 }
