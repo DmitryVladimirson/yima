@@ -13,13 +13,13 @@
         <TheLoading class="object-fit-contain h-full max-h-[75%] w-full max-w-[75%]" :class="loadingClass" />
       </div>
     </transition>
-    <div
+    <span
       :class="{
         invisible: loading
       }"
     >
       <slot />
-    </div>
+    </span>
   </button>
 </template>
 

@@ -5,7 +5,7 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import Components from 'unplugin-vue-components/vite'
 
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/fontaine', '@nuxtjs/html-validator', '@nuxtjs/i18n', '@formkit/nuxt', '@nuxtjs/tailwindcss', 'nuxt-swiper', 'nuxt-headlessui'],
+  modules: ['@nuxtjs/fontaine', '@nuxtjs/i18n', '@formkit/nuxt', '@nuxtjs/tailwindcss', 'nuxt-swiper', 'nuxt-headlessui'],
   app: {
     head: {
       viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
@@ -49,6 +49,19 @@ export default defineNuxtConfig({
     baseUrl: '/',
     lazy: true,
     langDir: 'lang/'
+  },
+  htmlValidator: {
+    usePrettier: true,
+    logLevel: 'verbose',
+    options: {
+      extends: [
+        'html-validate:recommended'
+      ],
+      rules: {
+        'text-content': 'off',
+        'input-missing-label': 'off'
+      }
+    }
   },
   imports: {
     dirs: [
