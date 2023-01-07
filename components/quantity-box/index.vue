@@ -2,6 +2,7 @@
   <div class="flex overflow-hidden rounded-md border bg-white p-1" v-bind="$attrs">
     <TheButton
       v-if="!disableButtons"
+      class="flex items-center justify-center"
       :class="[
         decreaseButtonClass,
         {
@@ -25,6 +26,7 @@
     <span v-if="suffix" :class="suffixClass" class="flex items-center justify-center">{{ suffix }}</span>
     <TheButton
       v-if="!disableButtons"
+      class="flex items-center justify-center"
       :class="[
         increaseButtonClass,
         {
