@@ -1,5 +1,5 @@
 <template>
-  <div class="card bg-base-100 pt-4 shadow-xl">
+  <div class="card bg-base-100 pt-4 shadow-xl dark:bg-white dark:text-black">
     <figure><img :src="product.imgUrl" width="150" height="150" :alt="product.name" /></figure>
     <div class="card-body">
       <h2 class="card-title">
@@ -8,8 +8,8 @@
       <p class="line-clamp-3">
         {{ product.description }}
       </p>
-      <div class="flex justify-between gap-4">
-        <QuantityBox v-model="quantity" />
+      <div class="xs:flex-row flex flex-col justify-between gap-4">
+        <QuantityBox v-model="quantity" class="justify-around" />
         <TheButton class="btn btn-primary relative" @click="handleAddToOrder">
           {{ $t('buy') }}
         </TheButton>

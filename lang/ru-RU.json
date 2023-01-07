@@ -1,10 +1,12 @@
 {
-  "cart": "Корзина",
-  "yourCartIsEmpty": "Ваша корзина пуста",
   "addedToCart": "Продукт \"{productName}\" был добавлен в корзину",
   "buy": "Купить",
-  "count": "Кличество",
+  "cart": "Корзина",
+  "count": "Количество",
   "priceForOne": "За еденицу",
-  "products": "Продукты",
-  "totalPriceProduct": "Сумма"
+  "products": "Все товары",
+  "searchProducts": "Искать товар",
+  "totalPriceProduct": "Сумма",
+  "viewCart": "В корзину",
+  "yourCartIsEmpty": "Ваша корзина пуста"
 }

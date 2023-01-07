@@ -17,9 +17,6 @@
       <article
         v-for="item in orderState.products"
         :key="item.id"
-
-
-
         class="grid grid-flow-row grid-cols-2 gap-3 border-b py-3 md:grid-cols-6 md:gap-2"
       >
         <div class="col-span-2 flex items-center gap-6">

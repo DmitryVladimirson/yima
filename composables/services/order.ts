@@ -1,4 +1,5 @@
 import { useCookie, useState } from '#imports'
+// eslint-disable-next-line import/no-unresolved
 import { uploadFile } from '~/server/lib/firestorage'
 
 export interface Product {

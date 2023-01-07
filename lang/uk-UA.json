@@ -3,8 +3,10 @@
   "buy": "Купити",
   "cart": "Кошик",
   "count": "Кількість",
-  "priceForOne": "За єдиницю",
-  "products": "Продукти",
+  "priceForOne": "За одиницю",
+  "products": "Всі товари",
+  "searchProducts": "Шукати товар",
   "totalPriceProduct": "Сума",
+  "viewCart": "У кошик",
   "yourCartIsEmpty": "У вашому кошику пусто"
 }
