@@ -2,3 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    html {
+        @apply scroll-smooth;
+    }
+
+    h1 {
+        @apply text-3xl font-semibold text-black;
+    }
+
+    h2 {
+        @apply text-2xl font-semibold text-black;
+    }
+
+    h3 {
+        @apply text-xl font-semibold;
+    }
+
+    h4 {
+        @apply text-lg font-semibold;
+    }
+}
