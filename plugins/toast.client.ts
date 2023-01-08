@@ -1,11 +1,11 @@
-import type { PluginOptions } from 'vue-toastification'
 import { defineNuxtPlugin } from '#imports'
+import type { PluginOptions } from 'vue-toastification'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   const [{ default: Toast, POSITION, TYPE }] = await Promise.all([
     import('vue-toastification'),
     // @ts-expect-error This is ok
-    import('vue-toastification/dist/index.css')
+    import('vue-toastification/dist/index.css'),
   ])
 
   nuxtApp.vueApp.use(Toast, {
@@ -15,22 +15,22 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     position: POSITION.TOP_CENTER,
     toastDefaults: {
       [TYPE.DEFAULT]: {
-        timeout: 5000
+        timeout: 5000,
       },
       [TYPE.INFO]: {
-        timeout: 3000
+        timeout: 3000,
       },
       [TYPE.SUCCESS]: {
-        timeout: 3000
+        timeout: 3000,
       },
       [TYPE.WARNING]: {
         timeout: 5000,
-        closeButton: false
+        closeButton: false,
       },
       [TYPE.ERROR]: {
         timeout: 8000,
-        closeButton: false
-      }
-    }
+        closeButton: false,
+      },
+    },
   } as PluginOptions)
 })

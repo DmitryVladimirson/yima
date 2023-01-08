@@ -1,71 +1,64 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+/* eslint-disable new-cap */
+
 import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import Components from 'unplugin-vue-components/vite'
 
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/fontaine', '@nuxtjs/i18n', '@formkit/nuxt', '@nuxtjs/tailwindcss', 'nuxt-swiper', 'nuxt-headlessui'],
+  modules: [
+    '@nuxtjs/fontaine',
+    '@nuxtjs/i18n',
+    '@formkit/nuxt',
+    '@nuxtjs/tailwindcss',
+    'nuxt-swiper',
+    'nuxt-headlessui',
+  ],
   app: {
     head: {
       viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
       meta: [
         { name: 'description', content: '' },
-        { name: 'format-detection', content: 'telephone=no' }
-      ]
-    }
+        { name: 'format-detection', content: 'telephone=no' },
+      ],
+    },
   },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: 'tailwind.config.ts',
     exposeConfig: false,
     injectPosition: 0,
-    viewer: true
+    viewer: true,
   },
   vite: {
     plugins: [
       Icons({
         compiler: 'vue3',
         customCollections: {
-          yima: FileSystemIconLoader('assets/images/icons')
-        }
+          yima: FileSystemIconLoader('assets/images/icons'),
+        },
       }),
       Components({
         dts: true,
         resolvers: [
           IconsResolver({
-            customCollections: ['yima']
-          })
-        ]
-      })
-    ]
+            customCollections: ['yima'],
+          }),
+        ],
+      }),
+    ],
   },
   i18n: {
     locales: [
       { code: 'uk', iso: 'uk-UA', file: 'uk-UA.json' },
-      { code: 'ru', iso: 'ru-RU', file: 'ru-RU.json' }
+      { code: 'ru', iso: 'ru-RU', file: 'ru-RU.json' },
     ],
     defaultLocale: 'uk',
     baseUrl: '/',
     lazy: true,
-    langDir: 'lang/'
-  },
-  htmlValidator: {
-    usePrettier: true,
-    logLevel: 'verbose',
-    options: {
-      extends: [
-        'html-validate:recommended'
-      ],
-      rules: {
-        'text-content': 'off',
-        'input-missing-label': 'off'
-      }
-    }
+    langDir: 'lang/',
   },
   imports: {
-    dirs: [
-      'composables/**'
-    ]
-  }
+    dirs: ['composables/**'],
+  },
 })

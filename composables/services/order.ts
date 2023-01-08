@@ -1,13 +1,22 @@
-import { useCookie } from '#imports'
+import { useCookie, useState } from '#imports'
+
+export interface Product {
+  name: string
+  description: string
+  price: number
+  quantity: number
+  imgUrl: string
+  inStock: boolean
+}
 
 const useOrderCookie = () =>
   useCookie('order', {
     expires: new Date(new Date().setMonth(new Date().getMonth() + 1)),
-    secure: true
+    secure: true,
   })
 const useOrderState = () =>
-  useState<Record<string, any>>('order', () => {
-    return { products: [] }
+  useState('order', () => {
+    return { products: [] as Product[] }
   })
 
 const refreshOrder = () => {
@@ -16,7 +25,7 @@ const refreshOrder = () => {
   const orderCookie = useOrderCookie()
 
   if (orderCookie.value) {
-    orderState.value.products = orderCookie.value
+    orderState.value.products = orderCookie.value as unknown as Product[]
   }
 }
 
@@ -33,6 +42,6 @@ export const useYimaOrder = () => {
     refreshOrder,
     updateCookie,
     useOrderCookie,
-    useOrderState
+    useOrderState,
   }
 }
