@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="flex h-screen min-h-full flex-col">
     <TheHeader />
-    <div class="py-10">
+    <main class="py-10">
       <slot />
-    </div>
+    </main>
+    <TheFooter />
   </div>
 </template>
 <script setup lang="ts"></script>

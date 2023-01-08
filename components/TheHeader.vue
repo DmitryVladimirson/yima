@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-base-100 container flex-col gap-4 sm:flex-row">
+  <div class="navbar bg-base-100 container flex-col gap-4 px-4 sm:flex-row">
     <TheLink to="/" class="flex-grow text-xl font-bold normal-case">EuroPrice</TheLink>
     <div class="flex-none gap-2">
       <FormKit type="text" :placeholder="$t('searchProducts')" />
