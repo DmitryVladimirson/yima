@@ -21,7 +21,7 @@
       :disabled="disabled"
       :class="inputClass"
       @change="validateValue"
-    >
+    />
     <span v-if="suffix" :class="suffixClass" class="flex items-center justify-center">{{ suffix }}</span>
     <TheButton
       v-if="!disableButtons"
@@ -39,10 +39,10 @@
 </template>
 
 <script lang="ts" setup>
-import { withDefaults } from 'vue'
 import { toRefs, ref } from '#imports'
 import MinusIcon from '~icons/mdi/minus'
 import PlusIcon from '~icons/mdi/plus'
+import { withDefaults } from 'vue'
 
 interface Properties {
   decreaseButtonClass?: string
@@ -73,7 +73,7 @@ const properties = withDefaults(defineProps<Properties>(), {
   step: 1,
   suffix: '',
   suffixClass: 'text-gray-800 leading-tight mr-2',
-  value: 1
+  value: 1,
 })
 
 const {
@@ -87,14 +87,14 @@ const {
   min,
   modelValue,
   step,
-  value
+  value,
 } = toRefs(properties)
 
 const quantity = ref(modelValue.value || value.value)
 
 const emits = defineEmits(['update:modelValue', 'changed'])
 
-function increase () {
+function increase() {
   const updatedValue = quantity.value + step.value
 
   if (updatedValue > max.value) {
@@ -106,7 +106,7 @@ function increase () {
   validateValue()
 }
 
-function decrease () {
+function decrease() {
   const updatedValue = quantity.value - step.value
 
   if (updatedValue < min.value) {
@@ -118,10 +118,11 @@ function decrease () {
   validateValue()
 }
 
-function validateValue () {
+function validateValue() {
   if (!quantity.value || quantity.value <= 0) {
     quantity.value = 1
   }
+
   if (quantity.value > max.value) {
     quantity.value = max.value
   }
@@ -129,6 +130,7 @@ function validateValue () {
   if (quantity.value < min.value) {
     quantity.value = min.value
   }
+
   quantity.value = Math.floor(quantity.value)
   emits('changed', quantity.value)
   emits('update:modelValue', quantity.value)

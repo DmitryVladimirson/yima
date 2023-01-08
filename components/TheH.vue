@@ -12,7 +12,6 @@ interface Properties {
 }
 
 withDefaults(defineProps<Properties>(), {
-  level: 1
+  level: 1,
 })
-
 </script>

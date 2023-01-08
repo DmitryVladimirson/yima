@@ -8,7 +8,7 @@ const toastDefault = (content: string, options?: ToastOptions) => {
 
   toast(content, {
     ...options,
-    type: TYPE.DEFAULT
+    type: TYPE.DEFAULT,
   })
 }
 
@@ -17,7 +17,7 @@ const toastInfo = (content: string, options?: ToastOptions) => {
 
   toast(content, {
     ...options,
-    type: TYPE.INFO
+    type: TYPE.INFO,
   })
 }
 
@@ -26,7 +26,7 @@ const toastSuccess = (content: string, options?: ToastOptions) => {
 
   toast(content, {
     ...options,
-    type: TYPE.SUCCESS
+    type: TYPE.SUCCESS,
   })
 }
 
@@ -35,7 +35,7 @@ const toastError = (content: string, options?: ToastOptions) => {
 
   toast(content, {
     ...options,
-    type: TYPE.ERROR
+    type: TYPE.ERROR,
   })
 }
 
@@ -44,7 +44,7 @@ const toastWarning = (content: string, options?: ToastOptions) => {
 
   toast(content, {
     ...options,
-    type: TYPE.WARNING
+    type: TYPE.WARNING,
   })
 }
 
@@ -54,6 +54,6 @@ export const useYimaToast = () => {
     toastError,
     toastInfo,
     toastSuccess,
-    toastWarning
+    toastWarning,
   }
 }

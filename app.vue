@@ -11,8 +11,9 @@
 <script setup lang="ts">
 import { useNuxtApp } from '#imports'
 
-const { $order: { refreshOrder } } = useNuxtApp()
+const {
+  $order: { refreshOrder },
+} = useNuxtApp()
 
 refreshOrder()
-
 </script>

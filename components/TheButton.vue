@@ -1,5 +1,11 @@
 <template>
-  <button :type="type" :class="{ loading: loading }" :aria-disabled="disabled" :disabled="disabled || loading" class="before:hidden">
+  <button
+    :type="type"
+    :class="{ loading: loading }"
+    :aria-disabled="disabled"
+    :disabled="disabled || loading"
+    class="before:hidden"
+  >
     <transition
       v-if="loading"
       enter-active-class="transition duration-300 ease-out"
@@ -15,7 +21,7 @@
     </transition>
     <span
       :class="{
-        invisible: loading
+        invisible: loading,
       }"
     >
       <slot />
@@ -39,6 +45,6 @@ withDefaults(defineProps<Properties>(), {
   loading: false,
   loadingClass: '',
   loadingWrapperClass: '',
-  type: 'button'
+  type: 'button',
 })
 </script>
