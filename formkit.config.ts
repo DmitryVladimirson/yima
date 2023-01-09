@@ -6,7 +6,7 @@ const generalClassification = {
   input: 'input input-bordered w-full',
   label: 'block text-sm',
   help: 'text-sm mt-1',
-  messages: 'bg-warning py-2 px-3 rounded text-white mt-1 ',
+  messages: 'text-warning mt-1'
 }
 
 const config: DefaultConfigOptions = {

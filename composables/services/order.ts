@@ -1,4 +1,5 @@
 import { useCookie, useState } from '#imports'
+import { uploadFile } from '~/server/lib/firestorage'
 
 export interface Product {
   name: string
@@ -7,6 +8,10 @@ export interface Product {
   quantity: number
   imgUrl: string
   inStock: boolean
+}
+
+async function completeOrder(file: File) {
+  return uploadFile(file, `orders/${file.name}`)
 }
 
 const useOrderCookie = () =>
@@ -43,5 +48,6 @@ export const useYimaOrder = () => {
     updateCookie,
     useOrderCookie,
     useOrderState,
+    completeOrder,
   }
 }
