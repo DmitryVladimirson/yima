@@ -20,9 +20,9 @@ export default {
     extend: {
       colors: {
         primary: {
-          light: colors.orange['500'],
-          DEFAULT: colors.orange['600'],
-          dark: colors.orange['700'],
+          light: colors.amber[400],
+          DEFAULT: colors.amber[400],
+          dark: colors.cyan['400'],
         },
         /**
          * General color variants

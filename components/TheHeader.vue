@@ -1,6 +1,8 @@
 <template>
-  <div class="navbar bg-base-100 container flex-col gap-4 px-4 sm:flex-row">
-    <TheLink to="/" class="flex-grow text-xl font-bold normal-case">EuroPrice</TheLink>
+  <div class="navbar container flex-col gap-4 bg-slate-100 dark:bg-gray-800 sm:flex-row">
+    <TheLink to="/" class="flex-grow text-xl font-bold normal-case"
+      >Euro<span class="text-amber-400 dark:text-cyan-400">PRICE.</span></TheLink
+    >
     <div class="flex-none gap-2">
       <FormKit type="text" :placeholder="$t('searchProducts')" />
       <div class="dropdown dropdown-end dropdown-hover">
@@ -9,7 +11,7 @@
             <CartIcon class="text-xl" />
             <span
               v-if="orderState.products.length > 0"
-              class="indicator-item bg-primary flex h-6 w-6 items-center justify-center rounded-full text-white"
+              class="indicator-item bg-primary flex h-6 w-6 items-center justify-center rounded-full text-white dark:bg-cyan-400"
             >
               {{ orderState.products.length }}
             </span>
