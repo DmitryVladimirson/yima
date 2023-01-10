@@ -10,6 +10,7 @@
         <TheLink to="/" class="hover:text-primary-light transition"> <TwitterIcon class="text-lg" /></TheLink>
         <TheLink to="/" class="hover:text-primary-light transition"> <YoutubeIcon class="text-lg" /></TheLink>
       </div>
+
     </div>
   </footer>
 </template>
