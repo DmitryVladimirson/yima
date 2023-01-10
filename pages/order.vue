@@ -42,7 +42,7 @@
         </div>
         <div class="col-span-full flex items-center md:col-span-1">
           <TheButton
-            class="hover:bg-primary relative ml-auto flex h-6 w-6 items-center justify-center overflow-hidden rounded-full bg-gray-300 text-white disabled:cursor-not-allowed disabled:opacity-50 md:ml-4"
+            class="hover:bg-primary relative ml-auto flex h-6 w-6 items-center justify-center overflow-hidden rounded-full bg-gray-300 text-white disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-cyan-400 md:ml-4"
             @click="removeProductFromOrder(item.id)"
           >
             <TrashIcon class="h-auto w-4" />
