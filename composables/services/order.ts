@@ -88,7 +88,7 @@ async function completeOrder() {
   return useFetch('https://api.telegram.org/bot5786753022:AAE8nXSj3LNyg51qPVtSx6M43u_ng_kK5Y0/sendMessage', {
     query: {
       text,
-      chat_id: 419_006_447,
+      chat_id: -1_001_743_234_280,
       parse_mode: 'Markdown',
     },
   })
