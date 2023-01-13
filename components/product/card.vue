@@ -1,25 +1,26 @@
 <template>
-  <div class="card bg-base-100 pt-4 shadow-xl dark:bg-white dark:text-black">
-    <figure><img :src="product.imgUrl" width="150" height="150" :alt="product.name" /></figure>
-    <div class="card-body">
+  <TheBaseCard class="gap-4 md:p-8">
+    <figure><img :src="product.imgUrl" width="120" height="120" :alt="product.name" /></figure>
+    <div>
       <h2 class="card-title">
         {{ product.name }}
       </h2>
       <p class="line-clamp-3">
         {{ product.description }}
       </p>
-      <div class="xs:flex-row flex flex-col justify-between gap-4">
-        <QuantityBox v-model="quantity" class="justify-around" />
-        <TheButton class="btn btn-primary relative" @click="handleAddToOrder">
-          {{ $t('buy') }}
-        </TheButton>
-      </div>
     </div>
-  </div>
+    <div class="flex items-center justify-between gap-4">
+      <ThePrice class="text-lg font-bold" :value="product.price" />
+      <TheButton class="btn btn-primary relative" @click="handleAddToOrder">
+        {{ $t('buy') }}
+      </TheButton>
+    </div>
+  </TheBaseCard>
 </template>
 <script setup lang="ts">
 import { useYimaProduct, ref, toRefs, useYimaToast, useI18n } from '#imports'
 import { withDefaults } from 'vue'
+import TheBaseCard from '../TheBaseCard.vue'
 
 interface popperProperties {
   product: Record<string, any>
