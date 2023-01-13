@@ -3,8 +3,8 @@ import { generateClasses } from '@formkit/themes'
 import type { DefaultConfigOptions } from '@formkit/vue'
 
 const generalClassification = {
-  input: 'input input-bordered w-full',
-  label: 'block text-sm',
+  input: 'input input-bordered w-full dark:text-white',
+  label: 'block text-sm mb-1',
   help: 'text-sm mt-1',
   messages: 'text-warning mt-1',
 }
