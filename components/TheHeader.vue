@@ -4,8 +4,20 @@
       >Euro<span class="text-amber-400 dark:text-cyan-400">PRICE.</span></TheLink
     >
     <div class="flex-none gap-2">
-      <FormKit type="text" :placeholder="$t('searchProducts')" />
-
+      <div class="form-control">
+        <div class="input-group">
+          <FormKit
+            type="text"
+            :placeholder="$t('searchProducts')"
+            :classes="{
+              input: 'appearance-none border-none focus:ring-0 focus:outline-none rounded-br-none rounded-tr-none',
+            }"
+          />
+          <TheButton class="btn btn-square">
+            <SearchIcon class="text-xl"></SearchIcon>
+          </TheButton>
+        </div>
+      </div>
       <div class="dropdown dropdown-end dropdown-hover">
         <TheLink to="/order" class="btn btn-ghost btn-circle">
           <span class="indicator">
@@ -66,8 +78,8 @@
 <script setup lang="ts">
 import { useNuxtApp, useYimaProduct } from '#imports'
 import CartIcon from '~icons/mdi/cart-outline'
+import SearchIcon from '~icons/mdi/magnify'
 import TrashIcon from '~icons/mdi/close'
-import ThePrice from './ThePrice.vue'
 
 const {
   $order: { state: orderState },
