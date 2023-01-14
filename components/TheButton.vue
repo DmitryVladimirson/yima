@@ -19,13 +19,8 @@
         <TheLoading class="object-fit-contain h-full max-h-[75%] w-full max-w-[75%]" :class="loadingClass" />
       </div>
     </transition>
-    <span
-      :class="{
-        invisible: loading,
-      }"
-    >
-      <slot />
-    </span>
+
+    <slot />
   </button>
 </template>
 
