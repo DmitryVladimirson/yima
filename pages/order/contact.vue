@@ -73,14 +73,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useNuxtApp, navigateTo, useLocalePath, useYimaToast, ref } from '#imports'
+import { useNuxtApp, navigateTo, useLocalePath, ref } from '#imports'
 
 const {
   $order: { state: orderState, setShippingAddress, completeOrder, removeOrder },
-  $i18n: { t },
 } = useNuxtApp()
 const localePath = useLocalePath()
-const { toastSuccess } = useYimaToast()
 
 const formData = ref<Record<string, any>>({})
 
@@ -93,9 +91,7 @@ async function handleSubmit(data: Record<string, any>) {
 
   await completeOrder()
 
-  await navigateTo(localePath('/'))
-
-  toastSuccess(t('orderCompleteSuccess'))
+  await navigateTo(localePath('/order/complete'))
 
   removeOrder()
 }
