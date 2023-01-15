@@ -1,7 +1,7 @@
 <template>
   <footer class="footer bg-neutral text-neutral-content mt-auto items-center py-4">
     <div class="container flex flex-col items-center justify-between gap-4 sm:flex-row sm:items-start">
-      <div class="flex flex-col items-center gap-4 sm:flex-row">
+      <div class="flex flex-col items-center gap-4 text-center sm:flex-row">
         <span class="text-md font-medium">EuroPrice</span>
         <span>Copyright © 2023 - All right reserved</span>
       </div>
