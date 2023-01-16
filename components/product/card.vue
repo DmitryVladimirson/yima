@@ -1,7 +1,7 @@
 <template>
   <TheBaseCard class="gap-4 md:p-8">
     <figure><img :src="product.imgUrl" width="120" height="120" :alt="product.name" /></figure>
-    <div>
+    <div class="h-24">
       <h2 class="card-title">
         {{ product.name }}
       </h2>
