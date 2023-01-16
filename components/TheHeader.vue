@@ -71,7 +71,7 @@
                 <div
                   v-for="product in orderState.products"
                   :key="product.id"
-                  class="flex items-center justify-between gap-4 rounded bg-white p-3 text-black"
+                  class="flex items-center justify-between gap-4 rounded-3xl bg-white p-3 text-black"
                 >
                   <img class="shrink-0 rounded" width="50" height="50" :src="product.imgUrl" :alt="product.name" />
                   <span class="line-clamp-1 w-24 grow text-base">{{ product.name }}</span>

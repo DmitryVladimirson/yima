@@ -1,0 +1,44 @@
+<template>
+  <TheBaseCard class="gap-4 md:p-8">
+    <figure><img :src="product.imgUrl" width="120" height="120" :alt="product.name" /></figure>
+    <div class="h-24">
+      <h2 class="card-title">
+        {{ product.name }}
+      </h2>
+      <p class="line-clamp-3">
+        {{ product.description }}
+      </p>
+    </div>
+    <div class="flex items-center justify-between gap-4">
+      <ThePrice class="text-lg font-bold" :value="product.price" />
+      <TheButton class="btn btn-primary relative" @click="handleAddToOrder">
+        {{ $t('buy') }}
+      </TheButton>
+    </div>
+  </TheBaseCard>
+</template>
+<script setup lang="ts">
+import { useYimaProduct, ref, toRefs, useYimaToast, useI18n } from '#imports'
+import { withDefaults } from 'vue'
+import TheBaseCard from '../TheBaseCard.vue'
+
+interface popperProperties {
+  product: Record<string, any>
+}
+
+const properties = withDefaults(defineProps<popperProperties>(), {
+  product: undefined,
+})
+
+const { addProductToOrder } = useYimaProduct()
+const { toastSuccess } = useYimaToast()
+const { t } = useI18n()
+
+const { product } = toRefs(properties)
+const quantity = ref(1)
+
+function handleAddToOrder() {
+  addProductToOrder(product.value, quantity.value)
+  toastSuccess(t('addedToCart', { productName: product.value.name }))
+}
+</script>
