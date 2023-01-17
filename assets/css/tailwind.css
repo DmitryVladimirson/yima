@@ -23,3 +23,13 @@
         @apply text-lg font-semibold;
     }
 }
+
+@layer components {
+
+  .ng-range-slider {
+    --slider-connect-bg: theme('colors.primary.DEFAULT');
+    --slider-tooltip-bg: theme('colors.primary.DEFAULT');
+    --slider-handle-ring-color: theme('colors.primary.DEFAULT');
+  }
+
+}

@@ -36,6 +36,7 @@
     "nuxt-swiper": "^0.1.6",
     "prettier": "^2.8.2",
     "prettier-plugin-tailwindcss": "^0.2.1",
+    "sass": "^1.57.1",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.9.4",
     "unplugin-icons": "^0.15.1",
@@ -43,6 +44,7 @@
   },
   "dependencies": {
     "@nuxtjs/i18n": "^8.0.0-beta.7",
+    "@vueform/slider": "^2.1.7",
     "firebase": "^9.15.0",
     "vue-toastification": "^2.0.0-rc.5"
   }
