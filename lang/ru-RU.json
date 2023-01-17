@@ -1,12 +1,21 @@
 {
+  "a-z":"А-Я",
   "addedToCart": "Продукт \"{productName}\" был добавлен в корзину",
   "buy": "Купить",
   "cart": "Корзина",
+  "categories": "Категории",
+  "cheapestFirst":"Сначала дешевле",
   "count": "Количество",
+  "expensiveFirst":"Сначала дороже",
+  "newest":"Новые",
+  "price": "Цена",
   "priceForOne": "За еденицу",
   "products": "Все товары",
+  "resetFilters": "Сбросить фильтры",
   "searchProducts": "Искать товар",
+  "sort":"Сортировать",
   "totalPriceProduct": "Сумма",
   "viewCart": "В корзину",
-  "yourCartIsEmpty": "Ваша корзина пуста"
+  "yourCartIsEmpty": "Ваша корзина пуста",
+  "z-a":"Я-А",
 }

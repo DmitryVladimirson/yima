@@ -51,6 +51,9 @@ export default {
       screens: {
         xs: '380px',
       },
+      backgroundSize: {
+        '50%': '50%',
+      },
     },
     container: {
       center: true,

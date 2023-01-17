@@ -6,16 +6,24 @@
         <span>Copyright © 2023 - All right reserved</span>
       </div>
       <div class="flex gap-4">
-        <TheLink to="/" class="hover:text-primary-light transition"> <FacebookIcon class="text-lg" /></TheLink>
-        <TheLink to="/" class="hover:text-primary-light transition"> <TwitterIcon class="text-lg" /></TheLink>
-        <TheLink to="/" class="hover:text-primary-light transition"> <YoutubeIcon class="text-lg" /></TheLink>
+        <TheLink
+          to="https://www.instagram.com/euro_price/?igshid=YmMyMTA2M2Y%3D"
+          class="hover:text-primary-light transition"
+        >
+          <InstagramIcon class="text-lg" />
+        </TheLink>
+        <TheLink
+          to="https://invite.viber.com/?g2=AQBMiX9uuUuuSksmmxuoKirb73jl%2F5VEEjqvy4D1U8mN7XBIpOtN0oyPFJXS8nBx"
+          class="hover:text-primary-light transition"
+        >
+          <ViberIcon class="text-lg" />
+        </TheLink>
       </div>
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
-import TwitterIcon from '~icons/mdi/twitter'
-import FacebookIcon from '~icons/mdi/facebook'
-import YoutubeIcon from '~icons/mdi/youtube'
+import InstagramIcon from '~icons/mdi/instagram'
+import ViberIcon from '~icons/mdi/whatsapp'
 </script>
