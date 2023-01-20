@@ -58,8 +58,20 @@ export default defineNuxtConfig({
     lazy: true,
     langDir: 'lang/',
   },
+  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        types: ['unplugin-icons/types/vue'],
+      },
+    },
+  },
+  runtimeConfig: {
+    public: {
+      telegramApiKey: '',
+    },
+  },
   imports: {
     dirs: ['composables/**'],
   },
-  css: ['@vueform/slider/themes/default.css'],
+  css: ['@vueform/slider/themes/default.css', 'firebaseui/dist/firebaseui.css'],
 })

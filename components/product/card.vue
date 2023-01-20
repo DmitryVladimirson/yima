@@ -2,7 +2,7 @@
   <TheBaseCard class="items-center gap-4 md:p-8">
     <figure><img :src="product.imgUrl" width="120" height="120" :alt="product.name" /></figure>
     <div class="h-full w-full">
-      <h2 class="card-title">
+      <h2 class="card-title line-clamp-2">
         {{ product.name }}
       </h2>
       <p class="line-clamp-3">
@@ -22,7 +22,7 @@ import { useYimaProduct, ref, toRefs, useYimaToast, useI18n } from '#imports'
 import { withDefaults } from 'vue'
 
 interface popperProperties {
-  product: Record<string, any>
+  product: Product
 }
 
 const properties = withDefaults(defineProps<popperProperties>(), {

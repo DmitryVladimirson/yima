@@ -1,10 +1,19 @@
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { storage } from './firebase'
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage'
 
 export const uploadFile = async (file: any, url: string) => {
+  const { storage } = await import('~/server/lib/firebase')
+
   const storageReference = ref(storage, url)
 
   await uploadBytes(storageReference, file)
 
-  return getDownloadURL(ref(storage, url))
+  return getDownloadURL(storageReference)
+}
+
+export const deleteFile = async (url: string) => {
+  const { storage } = await import('~/server/lib/firebase')
+
+  const storageReference = ref(storage, url)
+
+  return deleteObject(storageReference)
 }

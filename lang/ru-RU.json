@@ -17,5 +17,6 @@
   "totalPriceProduct": "Сумма",
   "viewCart": "В корзину",
   "yourCartIsEmpty": "Ваша корзина пуста",
-  "z-a":"Я-А",
+  "productCodeExists": "Код продукта уже существует",
+  "z-a":"Я-А"
 }

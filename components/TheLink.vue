@@ -13,7 +13,7 @@ interface Properties {
 }
 
 const properties = withDefaults(defineProps<Properties>(), {
-  to: undefined,
+  to: '/',
 })
 
 const { to } = toRefs(properties)

@@ -1,23 +1,35 @@
 import { useNuxtApp, useYimaApiProduct } from '#imports'
-import type { UseFetchOptions } from '#app'
+import type { AsyncDataOptions } from '#app'
+import type { YimaFetchOptions } from '~/plugins/http'
 
-const getProducts = async (useFetchOptions?: UseFetchOptions<any>) => {
-  const { getProducts } = useYimaApiProduct()
-
-  return getProducts(useFetchOptions)
+declare global {
+  interface Product {
+    id: string
+    name: string
+    description: string
+    price: number
+    imgUrl: string
+    inStock: boolean
+    slug: string
+    categories: string[]
+  }
 }
 
-const addProductToOrder = (product: Record<string, any>, quantity: number) => {
+const getProducts = async (options?: YimaFetchOptions, asyncDataOptions?: AsyncDataOptions<any>) => {
+  const { getProducts } = useYimaApiProduct()
+
+  return getProducts(options, asyncDataOptions)
+}
+
+const addProductToOrder = (product: Product, quantity: number) => {
   const {
     $order: { state: orderState },
   } = useNuxtApp()
 
-  const existingProduct = orderState.value.products.find(
-    (productItem: Record<string, any>) => productItem.id === product.id
-  ) as Record<string, any>
+  const existingProduct = orderState.value.products.find((productItem) => productItem.id === product.id)
 
   if (existingProduct) {
-    ;(existingProduct.quantity as number) += quantity
+    existingProduct.quantity += quantity
 
     return
   }
