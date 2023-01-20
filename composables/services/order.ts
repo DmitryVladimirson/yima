@@ -1,31 +1,28 @@
-import { useCookie, useState, useFetch, useNuxtApp } from '#imports'
+import { useCookie, useState, useFetch, useNuxtApp, useRuntimeConfig } from '#imports'
 
-export interface Product {
-  name: string
-  description: string
-  price: number
-  quantity: number
-  imgUrl: string
-  inStock: boolean
-}
+declare global {
+  interface OrderProduct extends Product {
+    quantity: number
+  }
 
-export interface ShippingAddress extends Record<string, any> {
-  city: string
-  country: string
-  email: string
-  firstName: string
-  lastName: string
-  postCode: string
-  streetAndNum: string
-  phoneNumber: string
-}
+  interface ShippingAddress extends Record<string, any> {
+    city: string
+    country: string
+    email: string
+    firstName: string
+    lastName: string
+    postCode: string
+    streetAndNum: string
+    phoneNumber: string
+  }
 
-export interface OrderState {
-  products: Product[]
-  shippingAddress?: ShippingAddress
-  deliveryId?: number
-  paymentId?: number
-  total?: number
+  interface OrderState {
+    products: OrderProduct[]
+    shippingAddress?: ShippingAddress
+    deliveryId?: number
+    paymentId?: number
+    total?: number
+  }
 }
 
 const useOrderCookie = () =>
@@ -69,6 +66,7 @@ async function completeOrder() {
     $i18n: { t },
   } = useNuxtApp()
 
+  const config = useRuntimeConfig()
   const state = useOrderState()
   const { shippingAddress, total, products } = state.value
 
@@ -85,7 +83,7 @@ async function completeOrder() {
     }
   }
 
-  return useFetch('https://api.telegram.org/bot5786753022:AAE8nXSj3LNyg51qPVtSx6M43u_ng_kK5Y0/sendMessage', {
+  return useFetch(`https://api.telegram.org/${config.public.telegramApiKey}/sendMessage`, {
     query: {
       text,
       chat_id: -1_001_743_234_280,

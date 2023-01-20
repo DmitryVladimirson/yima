@@ -62,3 +62,8 @@ Temporary Items
 ./core
 
 components.d.ts
+
+
+#firebase admin
+serviceAccountKey.json
+server/api/admin/add.ts

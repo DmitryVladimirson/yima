@@ -87,7 +87,7 @@ if (orderState.value.shippingAddress) {
 }
 
 async function handleSubmit(data: Record<string, any>) {
-  setShippingAddress(data)
+  setShippingAddress(data as ShippingAddress)
 
   await completeOrder()
 

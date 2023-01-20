@@ -32,7 +32,7 @@ interface Properties {
   loading?: boolean
   loadingClass?: string
   loadingWrapperClass?: string
-  type?: string
+  type?: 'button' | 'submit' | 'reset' | undefined
 }
 
 withDefaults(defineProps<Properties>(), {

@@ -7,7 +7,7 @@
 import { withDefaults } from 'vue'
 
 interface popperProperties {
-  products: Record<string, any>[]
+  products: Product[]
 }
 
 withDefaults(defineProps<popperProperties>(), {

@@ -1,8 +1,9 @@
 <template>
   <div class="navbar container min-h-min flex-col gap-4 bg-slate-100 dark:bg-gray-800 sm:flex-row">
-    <TheLink to="/" class="flex-grow text-xl font-bold normal-case"
-      >Euro<span class="text-amber-400 dark:text-cyan-400">PRICE.</span></TheLink
-    >
+    <TheLink to="/" class="flex-grow text-xl font-bold normal-case">
+      Euro
+      <span class="text-amber-400 dark:text-cyan-400">PRICE.</span>
+    </TheLink>
     <div class="flex-none gap-2">
       <div class="form-control">
         <div class="input-group">

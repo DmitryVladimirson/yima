@@ -47,6 +47,8 @@ const generalRules = {
         '^unplugin-vue-components/',
         '^~/assets/',
         '^~icons/',
+        '^~/server/',
+        '^~/composables/',
       ],
     },
   ],
