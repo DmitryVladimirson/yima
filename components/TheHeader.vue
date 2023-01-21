@@ -114,12 +114,11 @@ const {
   $order: { state: orderState },
 } = useNuxtApp()
 
-const { search } = useYimaSearch()
+const { searchProductsByName } = useYimaSearch()
 const { removeProductFromOrder } = useYimaProduct()
 const { waitAnd } = useYimaHttp()
 
 const searchHits = ref<Product[]>([])
-const itemsFoundCount = ref(0)
 const formData = ref<Record<string, any>>({})
 const showHits = ref(false)
 const searchFormReference = ref()
@@ -132,23 +131,19 @@ const { execute: handleSearch } = waitAnd(
   (data: Record<string, any>) => {
     if (!data.searchText) {
       searchHits.value = []
-      itemsFoundCount.value = 0
       showHits.value = false
 
       return
     }
 
-    return search(data.searchText)
+    return searchProductsByName(data.searchText)
   },
   (searchResponse) => {
-    if (!searchResponse) {
+    if (!searchResponse || searchResponse.error.value || !searchResponse.data.value) {
       return
     }
 
-    itemsFoundCount.value = searchResponse.itemsFoundCount
-    if (searchResponse.hits) {
-      searchHits.value = searchResponse.hits
-    }
+    searchHits.value = searchResponse.data.value.member
 
     showHits.value = true
   }

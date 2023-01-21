@@ -1,40 +1,12 @@
-import { useRuntimeConfig } from '#imports'
-import Typesense from 'typesense'
+import { useYimaApiProduct } from '#imports'
+import { type SearchParams } from 'typesense/lib/Typesense/Documents'
 
-const getTypesenseApiKey = () => {
-  const config = useRuntimeConfig()
+const searchProductsByName = async (name: string, parameters?: SearchParams) => {
+  const { getProducts } = useYimaApiProduct()
 
-  return config.public.typesenseApiKey
-}
-
-const client = new Typesense.Client({
-  nodes: [
-    {
-      host: 'hl9vim30y7wqcbtkp-1.a1.typesense.net',
-      port: 443,
-      protocol: 'https',
-    },
-  ],
-  apiKey: getTypesenseApiKey(),
-  connectionTimeoutSeconds: 2,
-})
-
-const search = async (query: string) => {
-  const search = {
-    q: query,
-    query_by: 'name',
-    page: 1,
-    per_page: 10,
-  }
-
-  const searchResults = await client.collections('products').documents().search(search)
-
-  return {
-    itemsFoundCount: searchResults.found,
-    hits: [...(searchResults.hits?.map((hit) => hit.document) ?? [])] as Product[],
-  }
+  return getProducts({ params: { ...parameters, q: name } })
 }
 
 export const useYimaSearch = () => {
-  return { search }
+  return { searchProductsByName }
 }

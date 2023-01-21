@@ -1,6 +1,4 @@
 import { useNuxtApp, useYimaApiProduct } from '#imports'
-import type { AsyncDataOptions } from '#app'
-import type { YimaFetchOptions } from '~/plugins/http'
 
 declare global {
   interface Product {
@@ -14,12 +12,6 @@ declare global {
     price: number
     slug: string
   }
-}
-
-const getProducts = async (options?: YimaFetchOptions, asyncDataOptions?: AsyncDataOptions<any>) => {
-  const { getProducts } = useYimaApiProduct()
-
-  return getProducts(options, asyncDataOptions)
 }
 
 const addProductToOrder = (product: Product, quantity: number) => {
@@ -64,8 +56,8 @@ const changeProductOrderQuantity = (id: string, quantity: number) => {
 
 export const useYimaProduct = () => {
   return {
+    ...useYimaApiProduct(),
     addProductToOrder,
-    getProducts,
     removeProductFromOrder,
     changeProductOrderQuantity,
   }
