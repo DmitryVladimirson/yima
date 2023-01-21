@@ -1,6 +1,8 @@
 <template>
   <TheBaseCard class="items-center gap-4 md:p-8">
-    <figure><img :src="product.imgUrl" width="120" height="120" :alt="product.name" /></figure>
+    <figure>
+      <img :src="product.imgUrl" width="120" height="120" class="h-32 w-32 object-contain" :alt="product.name" />
+    </figure>
     <div class="h-full w-full">
       <h2 class="card-title line-clamp-2">
         {{ product.name }}

@@ -96,6 +96,8 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
     }
 
     product.categories = categoriesArray
+    product.createdAt = Math.floor(Date.now() / 1000)
+    product.imgUrl = ''
 
     const addProductResponse = await addProduct(product, { validationFormRef: 'productNewFormReference' })
 

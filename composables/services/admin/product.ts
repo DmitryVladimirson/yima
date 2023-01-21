@@ -6,8 +6,6 @@ import { uploadFile } from '~/server/lib/firestorage'
 declare global {
   interface AdminProduct extends Product {
     isVisible: boolean
-    createdAt: string
-    updatedAt: string
   }
 }
 

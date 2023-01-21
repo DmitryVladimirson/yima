@@ -9,7 +9,10 @@
       @submit="handleSubmit"
     >
       <TheH :level="1">{{ product.name }}</TheH>
-      <div>ID: {{ product.id }}</div>
+      <div class="flex items-center gap-4">
+        <span>ID: {{ product.id }} </span>
+        <span>{{ $t('createdAt') }}: {{ resolveDate }}</span>
+      </div>
       <div><img :src="product.imgUrl" alt="" class="h-40 w-40" /></div>
       <FormKit type="file" name="image" :label="$t('image')" />
       <FormKit type="text" name="name" :label="$t('name')" />
@@ -93,7 +96,7 @@ formData.value = {
   slug: product.value.slug,
   isVisible: product.value.isVisible,
   inStock: product.value.inStock,
-  price: product.value.price,
+  price: Number(product.value.price),
 }
 
 onMounted(() => {
@@ -101,6 +104,13 @@ onMounted(() => {
     formData.value.categories[category] = true
   }
 })
+
+const resolveDate = computed(() => {
+  const dateObject = new Date(product.value.createdAt * 1000)
+
+  return dateObject.toLocaleString('uk-UA', { timeStyle: 'short', dateStyle: 'short' }) // 2019-12-9 10:30:15
+})
+
 const { execute: handleSubmit, pending: submitPending } = waitAnd(
   async ({ image, categories, ...data }: Record<string, any>) => {
     if (image[0]) {

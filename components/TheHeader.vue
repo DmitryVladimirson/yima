@@ -1,23 +1,51 @@
 <template>
-  <div class="navbar container min-h-min flex-col gap-4 bg-slate-100 dark:bg-gray-800 sm:flex-row">
+  <div class="navbar container min-h-min flex-col gap-4 bg-slate-100 px-4 dark:bg-gray-800 sm:flex-row">
     <TheLink to="/" class="flex-grow text-xl font-bold normal-case">
       Euro
       <span class="text-amber-400 dark:text-cyan-400">PRICE.</span>
     </TheLink>
     <div class="flex-none gap-2">
-      <div class="form-control">
-        <div class="input-group">
-          <FormKit
-            type="text"
-            :placeholder="$t('searchProducts')"
-            :classes="{
-              input: 'appearance-none border-none focus:ring-0 focus:outline-none rounded-br-none rounded-tr-none',
-            }"
-          />
-          <TheButton class="btn btn-square">
+      <div ref="searchFormReference" class="form-control">
+        <FormKit
+          v-model="formData"
+          type="form"
+          form-class="input-group"
+          :actions="false"
+          @submit="handleSearch"
+          @input="handleSearch"
+        >
+          <div class="relative">
+            <FormKit
+              type="text"
+              name="searchText"
+              :placeholder="$t('searchProducts')"
+              :classes="{
+                input: 'appearance-none border-none focus:ring-0 focus:outline-none rounded-br-none rounded-tr-none',
+              }"
+              :input-class="{ 'rounded-b-none': showHits }"
+            />
+            <TheBaseCard v-if="showHits" class="absolute top-full w-full rounded-tr-none rounded-tl-none p-0">
+              <div v-if="searchHasHits" class="scroller max-h-[200px] w-full overflow-auto">
+                <TheLink
+                  v-for="product in searchHits"
+                  :key="product.id"
+                  :to="`/${product.slug}.html`"
+                  class="hover:bg-base-200 flex items-center gap-2 p-3 sm:gap-4"
+                >
+                  <div class="flex h-10 w-10 min-w-fit items-center justify-center">
+                    <img :src="product.imgUrl" :alt="product.name" width="40" height="40" />
+                  </div>
+                  <div class="truncate text-sm font-medium">{{ product.name }}</div>
+                </TheLink>
+              </div>
+              <div v-else class="p-4">{{ $t('noHits') }}</div>
+            </TheBaseCard>
+          </div>
+
+          <TheButton type="submit" class="btn btn-square relative">
             <SearchIcon class="text-xl"></SearchIcon>
           </TheButton>
-        </div>
+        </FormKit>
       </div>
       <div class="dropdown dropdown-end dropdown-hover">
         <TheLink to="/order" class="btn btn-ghost btn-circle">
@@ -33,8 +61,8 @@
         </TheLink>
         <div
           tabindex="0"
-          class="card card-compact dropdown-content bg-base-100 w-96 shadow"
-          :class="{ hidden: $route.path.startsWith('/order') }"
+          class="card card-compact dropdown-content bg-base-100 shadow"
+          :class="[{ hidden: $route.path.startsWith('/order') }, orderState.products.length > 0 ? 'w-96' : 'w-52']"
         >
           <div class="card-body max-sm:hidden">
             <div v-if="orderState.products.length > 0" class="flex flex-col gap-4">
@@ -77,7 +105,7 @@
 </template>
 
 <script setup lang="ts">
-import { useNuxtApp, useYimaProduct } from '#imports'
+import { useNuxtApp, useYimaProduct, useYimaSearch, ref, computed, onClickOutside, useYimaHttp } from '#imports'
 import CartIcon from '~icons/mdi/cart-outline'
 import SearchIcon from '~icons/mdi/magnify'
 import TrashIcon from '~icons/mdi/close'
@@ -86,5 +114,47 @@ const {
   $order: { state: orderState },
 } = useNuxtApp()
 
+const { search } = useYimaSearch()
 const { removeProductFromOrder } = useYimaProduct()
+const { waitAnd } = useYimaHttp()
+
+const searchHits = ref<Product[]>([])
+const itemsFoundCount = ref(0)
+const formData = ref<Record<string, any>>({})
+const showHits = ref(false)
+const searchFormReference = ref()
+
+const searchHasHits = computed(() => {
+  return searchHits.value.length > 0
+})
+
+const { execute: handleSearch } = waitAnd(
+  (data: Record<string, any>) => {
+    if (!data.searchText) {
+      searchHits.value = []
+      itemsFoundCount.value = 0
+      showHits.value = false
+
+      return
+    }
+
+    return search(data.searchText)
+  },
+  (searchResponse) => {
+    if (!searchResponse) {
+      return
+    }
+
+    itemsFoundCount.value = searchResponse.itemsFoundCount
+    if (searchResponse.hits) {
+      searchHits.value = searchResponse.hits
+    }
+
+    showHits.value = true
+  }
+)
+
+onClickOutside(searchFormReference, () => {
+  showHits.value = false
+})
 </script>
