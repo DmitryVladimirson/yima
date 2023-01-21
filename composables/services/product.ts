@@ -4,14 +4,15 @@ import type { YimaFetchOptions } from '~/plugins/http'
 
 declare global {
   interface Product {
-    id: string
-    name: string
+    categories: string[]
+    createdAt: number
     description: string
-    price: number
+    id: string
     imgUrl: string
     inStock: boolean
+    name: string
+    price: number
     slug: string
-    categories: string[]
   }
 }
 

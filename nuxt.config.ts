@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxtjs/fontaine',
     '@nuxtjs/i18n',
     '@formkit/nuxt',
+    '@vueuse/nuxt',
     '@nuxtjs/tailwindcss',
     'nuxt-swiper',
     'nuxt-headlessui',
@@ -68,6 +69,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       telegramApiKey: '',
+      typesenseApiKey: '',
     },
   },
   imports: {
