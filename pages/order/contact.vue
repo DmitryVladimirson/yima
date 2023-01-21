@@ -42,7 +42,7 @@
           <TheH :level="2">{{ $t('order') }}</TheH>
           <TheBaseCard class="flex flex-col divide-y px-4 py-2">
             <div v-for="product in orderState.products" :key="product.id" class="flex items-center gap-4 py-2">
-              <div><img width="60" height="60" :src="product.imgUrl" :alt="product.name" /></div>
+              <div class="min-w-fit"><img width="60" height="60" :src="product.imgUrl" :alt="product.name" /></div>
               <div>
                 <div class="line-clamp-1">{{ product.name }}</div>
                 <div class="divide-x">

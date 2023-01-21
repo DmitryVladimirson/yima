@@ -42,13 +42,9 @@ const generalRules = {
         '#imports',
         '#tailwind-config',
         '^@vueuse/integrations/',
-        '^@oxyshop/',
         '^unplugin-icons/',
         '^unplugin-vue-components/',
-        '^~/assets/',
-        '^~icons/',
-        '^~/server/',
-        '^~/composables/',
+        '^~',
       ],
     },
   ],
@@ -75,6 +71,7 @@ const typeScriptRules = {
   '@typescript-eslint/naming-convention': 'off', // This is ok
   '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
   '@typescript-eslint/no-unused-vars': ['error', { args: 'all', argsIgnorePattern: '^_' }],
+  camelcase: 'off',
 }
 
 const vueRules = {

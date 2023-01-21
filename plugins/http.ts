@@ -1,14 +1,23 @@
 import { useAsyncData, useYimaToast, defineNuxtPlugin, useNuxtApp, unref, computed } from '#imports'
 import { defu } from 'defu'
 import { hash } from 'ohash'
+import { type SearchParams } from 'typesense/lib/Typesense/Documents'
 import type { AsyncData, AsyncDataOptions } from '#app'
 import type { FetchOptions, FetchResponse } from 'ohmyfetch'
 import type { ComputedRef } from 'vue'
 
-export interface YimaFetchOptions extends FetchOptions<any> {
+declare global {
+  interface MemberResponse<T> {
+    totalItems: number
+    member: T
+  }
+}
+
+export interface YimaFetchOptions extends Omit<FetchOptions<any>, 'params'> {
   validationFormRef?: string
   recaptcha?: boolean
   throwToast?: boolean
+  params: Partial<SearchParams>
 }
 
 export const baseLdJsonHeader = 'application/ld+json'
