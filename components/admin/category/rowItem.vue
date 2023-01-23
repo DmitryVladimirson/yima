@@ -36,16 +36,3 @@ function toggleCollapse() {
   collapseOpen.value = !collapseOpen.value
 }
 </script>
-<style scoped>
-.collapse-open .collapse-content,
-.collapse:focus:not(.collapse-close) .collapse-content,
-.collapse:not(.collapse-close) input[type='checkbox']:checked ~ .collapse-content {
-  max-height: 0px;
-}
-
-.collapse-open > .collapse-content,
-.collapse:focus:not(.collapse-close) .collapse-content,
-.collapse:not(.collapse-close) input[type='checkbox']:checked ~ .collapse-content {
-  max-height: none;
-}
-</style>

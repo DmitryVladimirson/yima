@@ -21,9 +21,9 @@ import { withDefaults } from 'vue'
 
 interface Properties {
   max: number
-  maxSelected: number
+  maxSelected?: number
   min: number
-  minSelected: number
+  minSelected?: number
   price?: boolean
   step?: number
   resetData?: boolean
@@ -31,9 +31,9 @@ interface Properties {
 
 const properties = withDefaults(defineProps<Properties>(), {
   max: 100,
-  maxSelected: 80,
+  maxSelected: undefined,
   min: 1,
-  minSelected: 20,
+  minSelected: undefined,
   price: true,
   step: 1,
   resetData: false,
@@ -42,7 +42,7 @@ const properties = withDefaults(defineProps<Properties>(), {
 const emits = defineEmits(['price-filter-change'])
 
 const { min, max, minSelected, maxSelected, resetData } = toRefs(properties)
-const slider = ref([minSelected.value, maxSelected.value])
+const slider = ref([minSelected.value ?? min.value, maxSelected.value ?? max.value])
 
 function formatTooltip(value: number) {
   return new Intl.NumberFormat('uk', {
@@ -58,9 +58,15 @@ watch(resetData, (value) => {
   }
 })
 
+watch(
+  [minSelected, maxSelected],
+  () => {
+    slider.value = [minSelected.value, maxSelected.value]
+  },
+  { deep: true }
+)
+
 watch(slider, (value) => {
-  if (!resetData.value) {
-    emits('price-filter-change', value)
-  }
+  emits('price-filter-change', value)
 })
 </script>

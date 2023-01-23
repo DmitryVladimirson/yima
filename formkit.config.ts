@@ -37,7 +37,7 @@ const config: DefaultConfigOptions = {
         ...generalClassification,
         wrapper: 'flex items-center gap-2 cursor-pointer',
         inner: 'flex items-center  cursor-pointer',
-        input: 'checkbox w-5 h-5 !bg-50% ',
+        input: 'checkbox w-5 h-5 !bg-50% focus:ring-0',
         options: 'gap-2 flex flex-col',
         label: 'block text-sm',
       },

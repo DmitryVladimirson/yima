@@ -70,6 +70,10 @@ const transliterate = (cyrillicText: string) => {
     .replaceAll('і', 'i')
     .replaceAll('є', 'e')
     .replaceAll('ґ', 'g')
+    .replaceAll('Ї', 'I')
+    .replaceAll('І', 'I')
+    .replaceAll('Є', 'E')
+    .replaceAll('Ґ', 'G')
 }
 
 export const useYimaUtils = () => {
