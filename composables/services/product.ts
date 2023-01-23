@@ -12,6 +12,11 @@ declare global {
     price: number
     slug: string
   }
+
+  interface Filter {
+    sectionName: string
+    items: Array<Record<string, any>>
+  }
 }
 
 const addProductToOrder = (product: Product, quantity: number) => {
