@@ -1,5 +1,6 @@
 import { queryByCollection } from '~/server/lib/firestore'
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export const getCategories = async (client?: boolean) => {
   let categories = await queryByCollection('category')
 

@@ -1,7 +1,7 @@
 <template>
   <TheBaseCard class="items-center gap-4 p-0">
     <TheLink
-      :to="`/${product.slug}.html`"
+      :to="`/${product.slug}`"
       class="flex h-full w-full flex-col items-center gap-4 p-4 pt-4 pb-0 md:px-8 md:pt-8"
     >
       <div class="flex items-center justify-center">

@@ -1,4 +1,4 @@
-import { watch } from '#imports'
+import { watch, useYimaOrder } from '#imports'
 
 export function order() {
   const order = useYimaOrder()

@@ -29,8 +29,9 @@
                 <TheLink
                   v-for="product in searchHits"
                   :key="product.id"
-                  :to="`/${product.slug}.html`"
+                  :to="`/${product.slug}`"
                   class="hover:bg-base-200 flex items-center gap-2 p-3 sm:gap-4"
+                  @click="closeHits"
                 >
                   <div class="flex h-10 w-10 min-w-fit items-center justify-center">
                     <img :src="product.imgUrl" :alt="product.name" width="40" height="40" />
@@ -149,7 +150,11 @@ const { execute: handleSearch } = waitAnd(
   }
 )
 
-onClickOutside(searchFormReference, () => {
+function closeHits() {
   showHits.value = false
+}
+
+onClickOutside(searchFormReference, () => {
+  closeHits()
 })
 </script>
