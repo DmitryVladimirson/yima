@@ -20,7 +20,7 @@
       :max="max"
       :step="step"
       :disabled="disabled"
-      :class="inputClass"
+      :class="['w-10 border-0 p-1 text-center leading-tight text-gray-800 focus:ring-0', inputClass]"
       @change="validateValue"
     />
     <span v-if="suffix" :class="suffixClass" class="flex items-center justify-center">{{ suffix }}</span>
@@ -68,7 +68,7 @@ const properties = withDefaults(defineProps<Properties>(), {
   disabled: false,
   iconClass: 'h-auto w-6',
   increaseButtonClass: 'ng-button w-10 bg-white p-0 text-gray-500 hover:bg-gray-100',
-  inputClass: 'w-10 border-0 p-1 text-center text-gray-800 focus:ring-0 leading-tight',
+  inputClass: '',
   max: 999,
   min: 1,
   modelValue: undefined,

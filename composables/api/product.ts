@@ -6,13 +6,18 @@ const getProducts = async (options?: YimaFetchOptions, asyncDataOptions?: AsyncD
   return useNuxtApp().$http.get<MemberResponse<Product[]>>(`${urlPrefix}/products`, options, asyncDataOptions)
 }
 
+const getProductBySlug = async (slug: string, options?: YimaFetchOptions, asyncDataOptions?: AsyncDataOptions<any>) => {
+  return useNuxtApp().$http.get<Product>(`${urlPrefix}/products/${slug}`, options, asyncDataOptions)
+}
+
 const getProductFilters = async (options?: YimaFetchOptions, asyncDataOptions?: AsyncDataOptions<any>) => {
   return useNuxtApp().$http.get<Filter[]>(`${urlPrefix}/products/filters`, options, asyncDataOptions)
 }
 
 export const useYimaApiProduct = () => {
   return {
-    getProducts,
+    getProductBySlug,
     getProductFilters,
+    getProducts,
   }
 }
