@@ -31,7 +31,7 @@
             </div>
             <div v-if="product.categories.length > 0" class="flex items-center gap-4">
               {{ $t('categories') }}:
-              {{ product.categories.join(',') }}
+              {{ product.categories.join(', ') }}
             </div>
           </div>
 
