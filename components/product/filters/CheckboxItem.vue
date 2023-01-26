@@ -82,7 +82,9 @@ watch(isChildrenChecked, () => {
 
 watch(data, (value) => {
   if (item.value.children.length === 0) {
-    handleChange()
+    setTimeout(() => {
+      handleChange()
+    }, 0)
 
     return
   }

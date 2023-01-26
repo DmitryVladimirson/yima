@@ -3,7 +3,9 @@ import type { AsyncDataOptions } from '#app'
 import type { YimaFetchOptions } from '~/plugins/http'
 
 declare global {
-  interface AdminCategory extends Category {
+  interface AdminCategory {
+    id: string
+    name: string
     isVisible: boolean
     children: AdminCategory[]
     parent: string

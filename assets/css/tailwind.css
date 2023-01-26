@@ -32,6 +32,15 @@
     --slider-handle-ring-color: theme('colors.primary.DEFAULT');
   }
 
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
 }
 
 

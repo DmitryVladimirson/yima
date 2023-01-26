@@ -20,7 +20,8 @@
               name="searchText"
               :placeholder="$t('searchProducts')"
               :classes="{
-                input: 'appearance-none border-none focus:ring-0 focus:outline-none rounded-br-none rounded-tr-none',
+                input:
+                  'appearance-none border-none focus:ring-0 focus:outline-none rounded-br-none rounded-tr-none shadow-sm',
               }"
               :input-class="{ 'rounded-b-none': showHits }"
             />
@@ -43,7 +44,7 @@
             </TheBaseCard>
           </div>
 
-          <TheButton type="submit" class="btn btn-square relative">
+          <TheButton type="submit" class="btn btn-square relative shadow">
             <SearchIcon class="text-xl"></SearchIcon>
           </TheButton>
         </FormKit>

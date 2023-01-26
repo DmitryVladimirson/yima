@@ -9,7 +9,13 @@
       <TheButton class="btn btn-primary flex h-10 items-center md:hidden" @click="showFilters = !showFilters">
         <FilterIcon class="text-lg" />
       </TheButton>
-      <FormKit v-model="currentSort" outer-class="ml-auto" type="select" :options="sortOptions" />
+      <FormKit
+        v-model="currentSort"
+        input-class="!border-0 shadow"
+        outer-class="ml-auto"
+        type="select"
+        :options="sortOptions"
+      />
     </div>
     <div class="flex flex-col items-start gap-10 md:flex-row xl:gap-20">
       <div class="hidden w-full md:block md:w-1/3 lg:w-1/5 xl:w-1/6" :class="{ '!block': showFilters }">
