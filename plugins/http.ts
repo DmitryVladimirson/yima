@@ -17,7 +17,7 @@ export interface YimaFetchOptions extends Omit<FetchOptions<any>, 'params'> {
   validationFormRef?: string
   recaptcha?: boolean
   throwToast?: boolean
-  params: Partial<SearchParams>
+  params?: Partial<SearchParams>
 }
 
 export const baseLdJsonHeader = 'application/ld+json'

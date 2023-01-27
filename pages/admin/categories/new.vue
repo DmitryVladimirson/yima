@@ -86,7 +86,7 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
   async (data: Record<string, any>) => {
     const category = { ...data, children: [] as string[] }
 
-    return addCategory(category, { validationFormRef: 'categoryNewFormReference' })
+    return addCategory(category as ServerCategory, { validationFormRef: 'categoryNewFormReference' })
   },
   async (response) => {
     if (response.error.value) {
