@@ -61,7 +61,7 @@ watch(resetData, (value) => {
 watch(
   [minSelected, maxSelected],
   () => {
-    slider.value = [minSelected.value, maxSelected.value]
+    slider.value = [minSelected.value ?? min.value, maxSelected.value ?? max.value]
   },
   { deep: true }
 )

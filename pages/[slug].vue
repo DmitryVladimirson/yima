@@ -42,9 +42,32 @@
             </TheButton>
           </div>
         </TheBaseCard>
-        <div v-if="product.description">
+        <div v-if="product.description" class="flex flex-col gap-2">
           <TheH :level="2">{{ $t('description') }} </TheH>
           <p>{{ product.description }}</p>
+        </div>
+        <div v-if="product.attributes.length > 0" class="flex flex-col gap-2">
+          <TheH :level="2">{{ $t('attributes') }} </TheH>
+          <div class="w-full overflow-x-auto">
+            <table class="table w-full">
+              <thead>
+                <tr>
+                  <th class="bg-neutral text-neutral-content">{{ $t('name') }}</th>
+                  <th class="bg-neutral text-neutral-content">{{ $t('value') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="attribute in product.attributes" :key="attribute.name" class="group relative">
+                  <td class="group-hover:bg-base-200">
+                    <div class="max-w-xs truncate font-bold">{{ attribute.name }}</div>
+                  </td>
+                  <td class="group-hover:bg-base-200">
+                    {{ attribute.value }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

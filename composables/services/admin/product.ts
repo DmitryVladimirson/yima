@@ -4,8 +4,9 @@ import type { YimaFetchOptions } from '~/plugins/http'
 import { uploadFile } from '~/server/lib/firestorage'
 
 declare global {
-  interface AdminProduct extends Product {
+  interface AdminProduct extends Omit<Product, 'attributes'> {
     isVisible: boolean
+    attributes: Array<{ id: string; value: string | number }>
   }
 }
 

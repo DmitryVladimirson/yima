@@ -3,6 +3,7 @@ import { useNuxtApp, useYimaApiProduct } from '#imports'
 declare global {
   interface Product {
     categories: string[]
+    attributes: Array<{ name: string; value: string | number }>
     createdAt: number
     description: string
     id: string

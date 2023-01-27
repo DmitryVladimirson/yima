@@ -21,14 +21,10 @@
         :help="$t('productPath')"
       />
       <FormKit v-model="id" type="text" validation="required" name="id" :label="$t('id')" />
-      <FormKit type="group" name="categories" :label="$t('categories')">
-        <div class="-mb-2 block text-sm">
-          {{ $t('categories') }}
-        </div>
-        <AdminProductCategoryList :categories="allCategories" />
-      </FormKit>
+      <AdminProductCategoryList :categories="allCategories" />
+      <AdminProductAttributes :all-attributes="allAttributes" />
       <FormKit type="textarea" name="description" :label="$t('description')" />
-      <FormKit type="number" validation="required" name="price" :label="$t('price')" />
+      <FormKit type="number" validation="required" name="price" :step="0.01" :label="$t('price')" />
       <FormKit type="file" name="image" :label="$t('image')" />
       <FormKit type="checkbox" name="inStock" :label="$t('inStock')" />
       <FormKit type="checkbox" name="isVisible" :label="$t('visibility')" />
@@ -48,12 +44,14 @@ import {
   useYimaHttp,
   useYimaToast,
   useYimaUtils,
+  useYimaAdminAttribute,
 } from '#imports'
 
 const { addProduct, uploadImage, setProduct } = useYimaAdminProduct()
 const { waitAnd } = useYimaHttp()
 const { toastSuccess } = useYimaToast()
 const { getCategories } = useYimaAdminCategory()
+const { getAttributes } = useYimaAdminAttribute()
 const { transliterate } = useYimaUtils()
 const { t } = useI18n()
 
@@ -82,12 +80,10 @@ const resolveId = computed(() => {
   return transliterate(id.replaceAll(' ', '-'))
 })
 
-const { data: allCategories } = await getCategories()
+const [{ data: allCategories }, { data: allAttributes }] = await Promise.all([getCategories(), getAttributes()])
 
 const { execute: handleSubmit, pending: submitPending } = waitAnd(
-  async ({ price, image, categories, ...data }: Record<string, any>) => {
-    const product = { ...data, price: Number(price) } as AdminProduct
-
+  async ({ image, categories, attributes, ...data }: Record<string, any>) => {
     const categoriesArray = []
     for (const category in categories) {
       if (categories[category]) {
@@ -95,13 +91,42 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
       }
     }
 
-    product.categories = categoriesArray
-    product.createdAt = Math.floor(Date.now() / 1000)
-    product.imgUrl = ''
+    const attributesArray = []
+    for (const attribute in attributes) {
+      if (attributes[attribute]) {
+        let value = attributes[attribute]
+        const existingAttribute = allAttributes.value?.find((allAttribute) => allAttribute.id === attribute)
 
-    const addProductResponse = await addProduct(product, { validationFormRef: 'productNewFormReference' })
+        if (existingAttribute?.type === 'number') {
+          value = Number(value)
+        }
 
-    if (addProductResponse.error.value || image.length === 0) {
+        if (existingAttribute && existingAttribute) attributesArray.push({ id: attribute, value })
+      }
+    }
+
+    data.attributes = attributesArray
+    data.categories = categoriesArray
+    data.createdAt = Math.floor(Date.now() / 1000)
+    data.imgUrl = ''
+
+    const productData = {
+      attributes: data.attributes,
+      categories: data.categories,
+      createdAt: data.createdAt,
+      description: data.description,
+      id: data.id,
+      imgUrl: data.imgUrl,
+      inStock: data.inStock,
+      isVisible: data.isVisible,
+      name: data.name,
+      price: Number(data.price),
+      slug: data.slug,
+    }
+
+    const addProductResponse = await addProduct(productData, { validationFormRef: 'productNewFormReference' })
+
+    if (addProductResponse.error.value || image.length === 0 || !addProductResponse.data.value) {
       return addProductResponse
     }
 

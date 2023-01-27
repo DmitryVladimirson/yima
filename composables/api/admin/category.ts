@@ -35,7 +35,7 @@ const setCategory = async (
 }
 
 const addCategory = async (
-  data: AdminCategory,
+  data: ServerCategory,
   options?: YimaFetchOptions,
   asyncDataOptions?: AsyncDataOptions<any>
 ) => {

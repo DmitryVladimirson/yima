@@ -31,7 +31,7 @@
       <div class="flex flex-col items-center gap-6">
         <TheH :level="1" class="text-center">{{ $t('confirmDeleteCategory') }}</TheH>
         <div class="flex items-center gap-2">
-          <TheButton class="btn btn-primary" @click=";[handleDeleteCategory(currentCategoryId), closeModal()]">
+          <TheButton class="btn btn-primary" @click=";[handleDeleteCategory(), closeModal()]">
             {{ $t('confirm') }}
           </TheButton>
           <TheButton class="btn" @click="closeModal">{{ $t('cancel') }}</TheButton>

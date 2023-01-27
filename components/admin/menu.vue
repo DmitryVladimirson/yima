@@ -25,6 +25,7 @@
 import { useI18n } from '#imports'
 import CubeIcon from '~icons/mdi/cube-outline'
 import FolderIcon from '~icons/mdi/folder'
+import AttributesIcon from '~icons/mdi/tag-multiple'
 
 const { t } = useI18n()
 
@@ -38,6 +39,11 @@ const menu = [
     name: t('categories'),
     link: '/admin/categories',
     icon: FolderIcon,
+  },
+  {
+    name: t('attributes'),
+    link: '/admin/attributes',
+    icon: AttributesIcon,
   },
 ]
 </script>
