@@ -1,4 +1,4 @@
-import { useCookie, useState, useFetch, useNuxtApp, useRuntimeConfig } from '#imports'
+import { useCookie, useState, useFetch, useNuxtApp, useYimaApiOrder } from '#imports'
 
 declare global {
   interface OrderProduct extends Product {
@@ -19,9 +19,11 @@ declare global {
   interface OrderState {
     products: OrderProduct[]
     shippingAddress?: ShippingAddress
-    deliveryId?: number
-    paymentId?: number
     total?: number
+  }
+
+  interface OrderToSend extends Omit<OrderState, 'products'> {
+    products: Array<{ id: string; quantity: number }>
   }
 }
 
@@ -61,35 +63,20 @@ const setShippingAddress = (address: ShippingAddress) => {
   state.value.shippingAddress = address
 }
 
-async function completeOrder() {
-  const {
-    $i18n: { t },
-  } = useNuxtApp()
+const completeOrder = async () => {
+  const { completeOrder } = useYimaApiOrder()
 
-  const config = useRuntimeConfig()
   const state = useOrderState()
-  const { shippingAddress, total, products } = state.value
 
-  let text = `*Нове замовлення*\n_${total} грн_\n\n`
+  const orderProducts: Array<{ id: string; quantity: number }> = []
 
-  for (const product of products) {
-    text += `${product.name} | ${product.quantity} ${t('piece')}\n`
+  for (const product of state.value.products) {
+    orderProducts.push({ id: product.id, quantity: product.quantity })
   }
 
-  text += '\n'
-  for (const key in shippingAddress) {
-    if (key in shippingAddress) {
-      text += `${t(key)}: ${shippingAddress[key]}\n`
-    }
-  }
+  const orderToSend = { ...state.value, products: orderProducts }
 
-  return useFetch(`https://api.telegram.org/${config.public.telegramApiKey}/sendMessage`, {
-    query: {
-      text,
-      chat_id: -1_001_743_234_280,
-      parse_mode: 'Markdown',
-    },
-  })
+  return completeOrder(orderToSend)
 }
 
 const removeOrder = () => {
