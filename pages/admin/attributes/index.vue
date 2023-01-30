@@ -3,7 +3,7 @@
     <div class="flex justify-end">
       <TheLink to="/admin/attributes/new" class="btn btn-primary">{{ $t('newAttribute') }}</TheLink>
     </div>
-    <div v-if="attributes?.length > 0" class="w-full overflow-x-auto">
+    <div v-if="attributes?.member?.length > 0" class="w-full overflow-x-auto">
       <table class="table w-full">
         <thead>
           <tr>
@@ -13,7 +13,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="attribute in attributes" :key="attribute.id" class="group relative">
+          <tr v-for="attribute in attributes.member" :key="attribute.id" class="group relative">
             <td class="group-hover:bg-base-200">
               <TheLink class="absolute inset-0 z-10" :to="`/admin/attributes/${attribute.id}`" />
               <div class="max-w-xs truncate font-bold">{{ attribute.name }}</div>

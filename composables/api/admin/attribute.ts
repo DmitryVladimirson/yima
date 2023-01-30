@@ -3,7 +3,11 @@ import type { AsyncDataOptions } from '#app'
 import type { YimaFetchOptions } from '~/plugins/http'
 
 const getAttributes = async (options?: YimaFetchOptions, asyncDataOptions?: AsyncDataOptions<any>) => {
-  return useNuxtApp().$http.get<AdminAttribute[]>(`${urlAdminPrefix}/attributes`, options, asyncDataOptions)
+  return useNuxtApp().$http.get<MemberResponse<AdminAttribute>>(
+    `${urlAdminPrefix}/attributes`,
+    options,
+    asyncDataOptions
+  )
 }
 
 const getAttribute = async (id: string, options?: YimaFetchOptions, asyncDataOptions?: AsyncDataOptions<any>) => {

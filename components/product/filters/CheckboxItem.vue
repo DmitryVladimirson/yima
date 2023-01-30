@@ -9,7 +9,7 @@
         ><ChevronIcon class="text-sm" :class="{ 'rotate-180': collapseOpen }" />
       </TheButton>
     </div>
-    <template v-if="item.children.length > 0">
+    <template v-if="item.children?.length > 0">
       <div class="collapse-content flex flex-col gap-2 p-0">
         <div v-for="child in item.children" :key="child.id" class="pl-2">
           <ProductFiltersCheckboxItem

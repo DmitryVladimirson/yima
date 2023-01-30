@@ -1,16 +1,18 @@
+import { documentId, where } from 'firebase/firestore'
 import { queryByCollection, set } from '~/server/lib/firestore'
 import { createYimaError } from '~/composables/services/admin/utils'
 
 export default defineEventHandler(async (event) => {
-  const [body, attributes] = (await Promise.all([readBody(event), queryByCollection('attribute')])) as [
-    Record<string, any>,
-    AdminAttribute[]
-  ]
   const attributeId = event.context.params.id
 
-  const existingAttribute = attributes.find((attribute) => attribute.id === attributeId)
+  const [body, attributes] = await Promise.all([
+    readBody(event),
+    queryByCollection('attribute', {
+      where: where(documentId(), '==', attributeId),
+    }),
+  ])
 
-  if (!existingAttribute) {
+  if (attributes.totalItems === 0) {
     throw createYimaError({
       statusCode: 404,
       message: "Attribute doesn't exist",

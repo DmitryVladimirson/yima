@@ -42,7 +42,7 @@ const setAttributes = async (product: AdminProduct) => {
   })
 }
 
-const setCategory = async (product: AdminProduct) => {
+const setCategories = async (product: AdminProduct) => {
   if (product.categories.length === 0) {
     return []
   }
@@ -76,10 +76,10 @@ export default defineEventHandler(async (event): Promise<Product | undefined> =>
 
     const attributesNew = await setAttributes(product)
 
-    const categoriesNew = await setCategory(product)
+    const categoriesNew = await setCategories(product)
 
     return { ...product, attributes: attributesNew, categories: categoriesNew }
-  } catch (error) {
+  } catch (error: any) {
     throw createYimaError({ statusCode: error.statusCode, message: error.message, data: { message: error.message } })
   }
 })

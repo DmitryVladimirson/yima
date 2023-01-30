@@ -9,7 +9,7 @@ import type { ComputedRef } from 'vue'
 declare global {
   interface MemberResponse<T> {
     totalItems: number
-    member: T
+    member: T[]
   }
 }
 
@@ -17,7 +17,7 @@ export interface YimaFetchOptions extends Omit<FetchOptions<any>, 'params'> {
   validationFormRef?: string
   recaptcha?: boolean
   throwToast?: boolean
-  params?: Partial<SearchParams>
+  params?: Partial<SearchParams | QueryByCollectionOptions>
 }
 
 export const baseLdJsonHeader = 'application/ld+json'

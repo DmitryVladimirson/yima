@@ -11,9 +11,9 @@
       <TheH :level="1">{{ attribute.name }}</TheH>
       <div class="flex items-center gap-4">
         <span>ID: {{ attribute.id }} </span>
+        <span>{{ $t('type') }}: {{ $t(attribute.type) }} </span>
       </div>
       <FormKit type="text" validation="required" name="name" :label="$t('name')" />
-      <FormKit type="select" validation="required" name="type" :options="typeOptions" :label="$t('type')" />
 
       <div class="flex items-center gap-4">
         <TheButton type="submit" class="btn btn-primary relative" :loading="submitPending">{{ $t('save') }}</TheButton>
@@ -78,13 +78,6 @@ formData.value = {
   name: attribute.value.name,
   type: attribute.value.type,
 }
-
-const typeOptions = computed(() => {
-  return [
-    { label: t('text'), value: 'text' },
-    { label: t('number'), value: 'number' },
-  ]
-})
 
 const { execute: handleSubmit, pending: submitPending } = waitAnd(
   async (data: AdminAttribute) => {

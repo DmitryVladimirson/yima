@@ -14,7 +14,7 @@
         class="btn btn-primary"
         :disabled="!selectedNewAttributeId || attributesOptions?.length === 0"
         @click="handleAddAttribute"
-        >{{ $t('addAttribute') }}
+        >{{ $t('add') }}
       </TheButton>
     </div>
     <FormKit v-if="allAttributes?.length > 0" type="group" :label="$t('categories')" name="attributes">

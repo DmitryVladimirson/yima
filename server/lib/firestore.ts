@@ -1,17 +1,81 @@
-import { collection, getDocs, addDoc, deleteDoc, doc, setDoc } from 'firebase/firestore'
-import { firestoreDatabase } from './firebase'
+import {
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+  setDoc,
+  query,
+  limit,
+  getCountFromServer,
+  startAfter,
+  getDoc,
+  endBefore,
+} from 'firebase/firestore'
 
-export const queryByCollection = async (col: string): Promise<Array<Record<string, any>>> => {
+import { getQuery, type H3Event } from 'h3'
+import { firestoreDatabase } from './firebase'
+import type { QueryConstraint, QueryFieldFilterConstraint } from 'firebase/firestore'
+
+declare global {
+  interface QueryByCollectionOptions {
+    per_page?: number
+    anchorDocumentId?: string
+    directionForward?: boolean
+    where?: QueryFieldFilterConstraint
+  }
+}
+
+export const getQueryByCollectionOptions = (event: H3Event) => {
+  const parsedParameters = getQuery(event)
+  const parameters: QueryByCollectionOptions = { ...parsedParameters, directionForward: true }
+
+  if (parsedParameters.directionForward === 'false') {
+    parameters.directionForward = false
+  }
+
+  return parameters
+}
+
+export const queryByCollection = async <T>(
+  col: string,
+  options: QueryByCollectionOptions = {}
+): Promise<MemberResponse<T>> => {
   const colReference = collection(firestoreDatabase, col)
 
-  const snapshot = await getDocs(colReference)
+  const { per_page = 10, directionForward = true, anchorDocumentId, where: whereOption } = options
 
-  return [...snapshot.docs].map((document_) => {
+  const queryOptions: QueryConstraint[] = []
+
+  if (per_page >= 0) {
+    queryOptions.push(limit(per_page))
+  }
+
+  if (anchorDocumentId) {
+    const documentSnap = await getDoc(doc(colReference, anchorDocumentId))
+    queryOptions.push(directionForward ? startAfter(documentSnap) : endBefore(documentSnap))
+  }
+
+  if (whereOption) {
+    queryOptions.push(whereOption)
+  }
+
+  const countResponse = await getCountFromServer(colReference)
+
+  const totalItems = countResponse.data().count
+
+  const queryResponse = query(colReference, ...queryOptions)
+
+  const snapshot = await getDocs(queryResponse)
+
+  const member = [...snapshot.docs].map((document_) => {
     return {
       ...document_.data(),
       id: document_.id,
     }
   })
+
+  return { member, totalItems }
 }
 
 export const set = async (col: string, payload: Record<string, any>, id: string) => {

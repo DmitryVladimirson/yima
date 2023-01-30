@@ -1,36 +1,32 @@
-import { createError } from '#imports'
+import { documentId, where } from 'firebase/firestore'
+import { createYimaError } from '~/composables/services/admin/utils'
 import { queryByCollection, set } from '~/server/lib/firestore'
 
 export default defineEventHandler(async (event) => {
-  const categoryCollection = 'category'
-  const changes = [] as Array<Promise<any>>
+  try {
+    const categoryCollection = 'category'
 
-  const [{ id, ...body }, categories] = (await Promise.all([
-    readBody(event),
-    queryByCollection(categoryCollection),
-  ])) as [Record<string, any>, ServerCategory[]]
+    const { id, ...body } = await readBody(event)
 
-  const existingCategory = categories.find((category) => category.id === id)
+    const existingCategory = await queryByCollection<AdminCategory>(categoryCollection, {
+      where: where(documentId(), '==', id),
+    })
 
-  if (existingCategory) {
-    throw createError({
-      statusCode: 400,
-      data: { violations: [{ propertyPath: 'id', message: 'categoryCodeExists' }] },
+    if (existingCategory.member[0]) {
+      throw createYimaError({
+        statusCode: 400,
+        data: { violations: [{ propertyPath: 'id', message: 'categoryCodeExists' }] },
+      })
+    }
+
+    await set(categoryCollection, body, id)
+
+    return {}
+  } catch (error: any) {
+    throw createYimaError({
+      statusCode: error.statusCode,
+      message: error.message,
+      data: { message: error.message, violations: error.data?.violations },
     })
   }
-
-  changes.push(set(categoryCollection, body, id))
-
-  // Set parent
-  if (body.parent) {
-    const parentCategory = categories.find((category) => category.id === body.parent)
-    if (parentCategory) {
-      parentCategory.children.push(id)
-      changes.push(set(categoryCollection, { children: parentCategory.children }, body.parent))
-    }
-  }
-
-  await Promise.all(changes)
-
-  return { id, ...body }
 })

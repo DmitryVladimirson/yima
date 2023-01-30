@@ -1,16 +1,18 @@
+import { documentId, where } from 'firebase/firestore'
 import { queryByCollection, set } from '~/server/lib/firestore'
 import { createYimaError } from '~/composables/services/admin/utils'
 
 export default defineEventHandler(async (event) => {
-  const [body, products] = (await Promise.all([readBody(event), queryByCollection('product')])) as [
-    Record<string, any>,
-    AdminProduct[]
-  ]
+  const productCollection = 'product'
   const productId = event.context.params.id
 
-  const existingProduct = products.find((product) => product.id === productId)
+  const [body, productResponse] = await Promise.all([
+    readBody(event),
+    queryByCollection<ServerCategory>(productCollection, { where: where(documentId(), '==', productId) }),
+  ])
+  const currentProduct = productResponse.member[0]
 
-  if (!existingProduct) {
+  if (!currentProduct) {
     throw createYimaError({
       statusCode: 404,
       message: "Product doesn't exist",
@@ -18,7 +20,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  await set('product', body, productId)
+  await set(productCollection, body, productId)
 
   return {}
 })

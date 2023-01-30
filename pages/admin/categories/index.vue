@@ -14,4 +14,3 @@ const { getCategories } = useYimaAdminCategory()
 
 const { data: categories } = await getCategories()
 </script>
-`

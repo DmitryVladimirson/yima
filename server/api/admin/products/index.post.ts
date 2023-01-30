@@ -1,16 +1,14 @@
 import { createError } from '#imports'
+import { where, documentId } from 'firebase/firestore'
 import { queryByCollection, set } from '~/server/lib/firestore'
 
 export default defineEventHandler(async (event) => {
-  const { id, ...body } = await readBody(event)
-
   const collection = 'product'
 
-  const products = await queryByCollection(collection)
+  const { id, ...body } = await readBody(event)
+  const existingProduct = await queryByCollection<AdminProduct>(collection, { where: where(documentId(), '==', id) })
 
-  const existingProduct = products.find((product) => product.id === id)
-
-  if (existingProduct) {
+  if (existingProduct.member[0]) {
     throw createError({
       statusCode: 400,
       data: { violations: [{ propertyPath: 'id', message: 'productCodeExists' }] },
