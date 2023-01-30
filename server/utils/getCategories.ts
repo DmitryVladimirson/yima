@@ -2,7 +2,9 @@ import { queryByCollection } from '~/server/lib/firestore'
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const getCategories = async (client?: boolean) => {
-  let categories = await queryByCollection('category')
+  const categoriesResponse = await queryByCollection<AdminCategory>('category', { per_page: -1 })
+
+  let categories = categoriesResponse.member
 
   const createChildren = (category: Record<string, any>) => {
     if (category.children.length === 0) {

@@ -7,9 +7,9 @@
   >
     <div class="collapse-title flex items-center justify-between text-xl font-medium">
       <TheLink :to="`/admin/categories/${category.id}`">{{ category.name }}</TheLink>
-      <TheButton v-if="category.children.length > 0" @click="toggleCollapse"><ChevronIcon /></TheButton>
+      <TheButton v-if="category.children?.length > 0" @click="toggleCollapse"><ChevronIcon /></TheButton>
     </div>
-    <template v-if="category.children.length > 0">
+    <template v-if="category.children?.length > 0">
       <div class="collapse-content flex flex-col gap-2">
         <AdminCategoryRowItem v-for="child in category.children" :key="child.id" :category="child" />
       </div>

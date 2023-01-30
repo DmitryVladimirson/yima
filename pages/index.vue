@@ -9,19 +9,24 @@
       <TheButton class="btn btn-primary flex h-10 items-center md:hidden" @click="showFilters = !showFilters">
         <FilterIcon class="text-lg" />
       </TheButton>
-      <FormKit
-        v-model="currentSort"
-        input-class="!border-0 shadow"
-        outer-class="ml-auto"
-        type="select"
-        :options="sortOptions"
-      />
+      <div class="ml-auto flex gap-2">
+        <FormKit v-model="currentSort" input-class="!border-0 shadow" type="select" :options="sortOptions" />
+        <FormKit v-model="itemsPerPage" input-class="!border-0 shadow" type="select" :options="itemsPerPageOptions" />
+      </div>
     </div>
     <div class="flex flex-col items-start gap-10 md:flex-row xl:gap-20">
       <div class="hidden w-full md:block md:w-1/3 lg:w-1/5 xl:w-1/6" :class="{ '!block': showFilters }">
         <ProductFilters :filters="filters" class="sticky top-4" @filters-changed="handleChangeFilters" />
       </div>
-      <ProductList :products="products" class="md:w-4/5 xl:w-5/6" />
+      <div class="flex flex-col items-center gap-4 md:w-4/5 md:items-end xl:w-5/6">
+        <ProductList :products="products.member" />
+        <ThePagination
+          v-model="currentPage"
+          :total-items="products.totalItems"
+          :items-per-page="itemsPerPage"
+          @pagination-change="updateProducts"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +40,6 @@ const { t } = useI18n()
 const route = useRoute()
 
 const showFilters = ref(false)
-const products = ref<Product[]>([])
 
 const sortOptions = computed(() => [
   { label: t('newest'), value: 'createdAt:desc' },
@@ -45,14 +49,30 @@ const sortOptions = computed(() => [
   { label: t('z-a'), value: 'name:desc' },
 ])
 
+const itemsPerPageOptions = ref([
+  { label: t('20'), value: 20 },
+  { label: t('50'), value: 50 },
+  { label: t('100'), value: 100 },
+])
+
+const itemsPerPageOptionDefault = 20
+
 const currentSort = ref(route.query.sort_by ?? '')
+const currentPage = ref(Number(route.query.page) || 1)
+const itemsPerPage = ref(Number(route.query.itemsPerPage) || itemsPerPageOptionDefault)
 const filterString = ref(route.query.filter_by ?? '')
 
-const [{ data: productsResponse }, { data: filters }] = await Promise.all([
-  getProducts({ params: { sort_by: currentSort.value, filter_by: filterString.value } }),
+const [{ data: products }, { data: filters }] = await Promise.all([
+  getProducts({
+    params: {
+      sort_by: currentSort.value,
+      filter_by: filterString.value,
+      page: currentPage.value,
+      per_page: itemsPerPage.value,
+    },
+  }),
   getProductFilters(),
 ])
-products.value = productsResponse.value?.member ?? []
 
 function handleChangeFilters(resultString: string) {
   filterString.value = resultString
@@ -66,23 +86,33 @@ function handleChangeFilters(resultString: string) {
 
 const updateProducts = useThrottleFn(async () => {
   const { data: productsResponse, error } = await getProducts({
-    params: { sort_by: currentSort.value, filter_by: filterString.value },
+    params: {
+      sort_by: currentSort.value,
+      filter_by: filterString.value,
+      page: currentPage.value,
+      per_page: itemsPerPage.value,
+    },
   })
   if (error.value || !productsResponse.value) {
     return
   }
 
-  products.value = productsResponse.value.member
+  products.value = productsResponse.value
 
   await navigateTo({
     query: {
-      ...(currentSort.value ? { sort_by: currentSort.value } : {}),
-      ...(filterString.value ? { filter_by: filterString.value } : {}),
+      ...route.query,
+      ...(currentSort.value === sortOptions.value[0].value
+        ? { sort_by: undefined }
+        : { sort_by: currentSort.value || undefined }),
+      ...(filterString.value ? { filter_by: filterString.value } : { filter_by: undefined }),
+      ...(itemsPerPage.value === itemsPerPageOptionDefault
+        ? { itemsPerPage: undefined }
+        : { itemsPerPage: itemsPerPage.value }),
     },
   })
 }, 50)
-
-watch(currentSort, async () => {
+watch([currentSort], async () => {
   await updateProducts()
 })
 

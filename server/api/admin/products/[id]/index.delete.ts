@@ -1,12 +1,15 @@
+import { where, documentId } from 'firebase/firestore'
 import { del, queryByCollection } from '~/server/lib/firestore'
 import { deleteFile } from '~/server/lib/firestorage'
 import { createYimaError } from '~/composables/services/admin/utils'
 
 export default defineEventHandler(async (event) => {
-  const products = (await queryByCollection('product')) as AdminProduct[]
   const productId = event.context.params.id
 
-  const existingProduct = products.find((product) => product.id === productId)
+  const whereOption = where(documentId(), '==', productId)
+  const existingProductResponse = await queryByCollection<AdminProduct>('product', { where: whereOption })
+
+  const existingProduct = existingProductResponse.member[0]
 
   if (!existingProduct) {
     throw createYimaError({

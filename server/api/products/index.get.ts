@@ -43,7 +43,7 @@ const setCategoriesNamesInsteadOfIDs = async (products: Product[]) => {
   return products
 }
 
-export default defineEventHandler(async (event): Promise<MemberResponse<Product[]>> => {
+export default defineEventHandler(async (event): Promise<MemberResponse<Product>> => {
   try {
     const parameters = getQuery(event)
 
@@ -63,7 +63,7 @@ export default defineEventHandler(async (event): Promise<MemberResponse<Product[
       totalItems: searchResults.found,
       member: products,
     }
-  } catch (error) {
+  } catch (error: any) {
     throw createYimaError({ statusCode: error.statusCode, message: error.message, data: { message: error.message } })
   }
 })

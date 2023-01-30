@@ -1,4 +1,4 @@
-import { useCookie, useState, useFetch, useNuxtApp, useYimaApiOrder } from '#imports'
+import { useCookie, useState, useYimaApiOrder } from '#imports'
 
 declare global {
   interface OrderProduct extends Product {

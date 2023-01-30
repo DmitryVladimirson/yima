@@ -1,23 +1,31 @@
-import { createError } from '#imports'
+import { documentId, where } from 'firebase/firestore'
+import { createYimaError } from '~/composables/services/admin/utils'
 import { queryByCollection, set } from '~/server/lib/firestore'
 
 export default defineEventHandler(async (event) => {
-  const { id, ...body } = await readBody(event)
+  try {
+    const { id, ...body } = await readBody(event)
+    const collection = 'attribute'
 
-  const collection = 'attribute'
+    const existingAttribute = await queryByCollection<AdminAttribute>(collection, {
+      where: where(documentId(), '==', id),
+    })
 
-  const attributes = await queryByCollection(collection)
+    if (existingAttribute.member[0]) {
+      throw createYimaError({
+        statusCode: 400,
+        data: { violations: [{ propertyPath: 'id', message: 'attributeCodeExists' }] },
+      })
+    }
 
-  const existingProduct = attributes.find((attribute) => attribute.id === id)
+    await set(collection, body, id)
 
-  if (existingProduct) {
-    throw createError({
-      statusCode: 400,
-      data: { violations: [{ propertyPath: 'id', message: 'attributeCodeExists' }] },
+    return {}
+  } catch (error: any) {
+    throw createYimaError({
+      statusCode: error.statusCode,
+      message: error.message,
+      data: { message: error.message, violations: error.data?.violations },
     })
   }
-
-  await set(collection, body, id)
-
-  return { id, ...body }
 })

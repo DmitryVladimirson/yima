@@ -22,7 +22,7 @@
       />
       <FormKit v-model="id" type="text" validation="required" name="id" :label="$t('id')" />
       <AdminProductCategoryList :categories="allCategories" />
-      <AdminProductAttributes :all-attributes="allAttributes" />
+      <AdminProductAttributes :all-attributes="allAttributes.member" />
       <FormKit type="textarea" name="description" :label="$t('description')" />
       <FormKit type="number" validation="required" name="price" :step="0.01" :label="$t('price')" />
       <FormKit type="file" name="image" :label="$t('image')" />
@@ -80,7 +80,10 @@ const resolveId = computed(() => {
   return transliterate(id.replaceAll(' ', '-'))
 })
 
-const [{ data: allCategories }, { data: allAttributes }] = await Promise.all([getCategories(), getAttributes()])
+const [{ data: allCategories }, { data: allAttributes }] = await Promise.all([
+  getCategories(),
+  getAttributes({ params: { per_page: -1 } }),
+])
 
 const { execute: handleSubmit, pending: submitPending } = waitAnd(
   async ({ image, categories, attributes, ...data }: Record<string, any>) => {
@@ -95,7 +98,7 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
     for (const attribute in attributes) {
       if (attributes[attribute]) {
         let value = attributes[attribute]
-        const existingAttribute = allAttributes.value?.find((allAttribute) => allAttribute.id === attribute)
+        const existingAttribute = allAttributes.value?.member.find((allAttribute) => allAttribute.id === attribute)
 
         if (existingAttribute?.type === 'number') {
           value = Number(value)

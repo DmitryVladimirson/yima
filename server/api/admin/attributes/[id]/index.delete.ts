@@ -1,31 +1,19 @@
-import { del, queryByCollection, set } from '~/server/lib/firestore'
+import { where, documentId } from 'firebase/firestore'
+import { del, queryByCollection } from '~/server/lib/firestore'
 import { createYimaError } from '~/composables/services/admin/utils'
 
-const productCollection = 'product'
 const attributeCollection = 'attribute'
 
-const deleteAttributeForProduct = (product: AdminProduct, attributeId: string) => {
-  const changes = [] as Array<Promise<void>>
-
-  const existingAttributeIndex = product.attributes.findIndex((attribute) => attribute.id === attributeId)
-  if (existingAttributeIndex === -1) {
-    return changes
-  }
-
-  product.attributes.splice(existingAttributeIndex, 1)
-  changes.push(set(productCollection, { attributes: product.attributes }, product.id))
-
-  return changes
-}
-
 export default defineEventHandler(async (event) => {
-  const [attributes, products] = (await Promise.all([
-    queryByCollection(attributeCollection),
-    queryByCollection(productCollection),
-  ])) as [AdminAttribute[], AdminProduct[]]
   const attributeId = event.context.params.id
 
-  const existingAttribute = attributes.find((attribute) => attribute.id === attributeId)
+  const whereAttributeIdOption = where(documentId(), '==', attributeId)
+
+  const attributesResponse = await queryByCollection<AdminAttribute>(attributeCollection, {
+    where: whereAttributeIdOption,
+  })
+
+  const existingAttribute = attributesResponse.member[0]
 
   if (!existingAttribute) {
     throw createYimaError({
@@ -35,16 +23,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const changes = [] as Array<Promise<void>>
-
-  changes.push(del(attributeCollection, attributeId))
-
-  // Delete attribute from products
-  for (const product of products) {
-    changes.push(...deleteAttributeForProduct(product, attributeId))
-  }
-
-  await Promise.all(changes)
+  await del(attributeCollection, attributeId)
 
   return {}
 })

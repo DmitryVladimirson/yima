@@ -79,7 +79,7 @@ const formData = ref<Record<string, any>>({})
 const deleteProductModalOpen = ref(false)
 const productId = route.params.id as string
 
-const [{ data: product }, { data: allCategories }, { data: allAttributes }] = await Promise.all([
+const [{ data: product }, { data: allCategories }, { data: allAttributesResponse }] = await Promise.all([
   getProduct(productId),
   getCategories(),
   getAttributes(),
@@ -91,6 +91,8 @@ if (!product.value) {
     statusMessage: 'Not found',
   })
 }
+
+const allAttributes = allAttributesResponse.value?.member
 
 formData.value = {
   name: product.value.name,
@@ -138,7 +140,7 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
     for (const attribute in attributes) {
       if (attributes[attribute]) {
         let value = attributes[attribute]
-        const existingAttribute = allAttributes.value?.find((allAttribute) => allAttribute.id === attribute)
+        const existingAttribute = allAttributes?.find((allAttribute) => allAttribute.id === attribute)
 
         if (existingAttribute?.type === 'number') {
           value = Number(value)

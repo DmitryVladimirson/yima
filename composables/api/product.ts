@@ -3,7 +3,7 @@ import type { AsyncDataOptions } from '#app'
 import type { YimaFetchOptions } from '~/plugins/http'
 
 const getProducts = async (options?: YimaFetchOptions, asyncDataOptions?: AsyncDataOptions<any>) => {
-  return useNuxtApp().$http.get<MemberResponse<Product[]>>(`${urlPrefix}/products`, options, asyncDataOptions)
+  return useNuxtApp().$http.get<MemberResponse<Product>>(`${urlPrefix}/products`, options, asyncDataOptions)
 }
 
 const getProductBySlug = async (slug: string, options?: YimaFetchOptions, asyncDataOptions?: AsyncDataOptions<any>) => {

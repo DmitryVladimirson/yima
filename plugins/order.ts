@@ -16,14 +16,13 @@ export default defineNuxtPlugin((nuxtApp) => {
   const { state, cookie } = plugin
 
   watch(
-    () => [state.value.products, state.value.shippingAddress, state.value.deliveryId],
+    () => [state.value.products, state.value.shippingAddress],
     () => {
-      const { products, shippingAddress, deliveryId } = state.value
+      const { products, shippingAddress } = state.value
 
       cookie.value = JSON.stringify({
         products,
         shippingAddress,
-        deliveryId,
       })
     },
     { deep: true }
