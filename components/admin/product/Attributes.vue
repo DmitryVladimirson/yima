@@ -26,7 +26,7 @@
               <CloseIcon /> {{ $t('delete') }}
             </TheButton>
           </div>
-          <FormKit :type="attribute.type" outer-class="grow" :step="0.01" validation="required" :name="attribute.id" />
+          <FormKit :type="attribute.type" outer-class="grow" :step="1" validation="required" :name="attribute.id" />
         </div>
       </div>
     </FormKit>

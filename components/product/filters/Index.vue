@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="filters.length > 0">
     <FormKit v-model="formData" type="form" form-class="flex flex-col gap-4" :actions="false">
       <TheBaseCard class="flex flex-col justify-between gap-8 overflow-visible">
         <div v-for="filter in filters" :key="filter.sectionName" class="flex flex-col gap-4">
@@ -37,6 +37,7 @@
       </TheButton>
     </FormKit>
   </div>
+  <TheMessageBox v-else :message="$t('noFilters')" />
 </template>
 
 <script setup lang="ts">
@@ -145,7 +146,11 @@ function handleChange() {
   }
 
   if (result.price.values) {
-    filterString += `&&price:${result.price.values.join('..')}`
+    if (filterString) {
+      filterString += '&&'
+    }
+
+    filterString += `price:${result.price.values.join('..')}`
   }
 
   resetFilters.value = false

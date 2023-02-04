@@ -5,29 +5,32 @@
         {{ $t('products') }}
       </TheH>
     </div>
-    <div class="flex items-center justify-between gap-4">
-      <TheButton class="btn btn-primary flex h-10 items-center md:hidden" @click="showFilters = !showFilters">
-        <FilterIcon class="text-lg" />
-      </TheButton>
-      <div class="ml-auto flex gap-2">
-        <FormKit v-model="currentSort" input-class="!border-0 shadow" type="select" :options="sortOptions" />
-        <FormKit v-model="itemsPerPage" input-class="!border-0 shadow" type="select" :options="itemsPerPageOptions" />
+    <template v-if="products.member.length > 0 || filters.length > 0">
+      <div class="flex items-center justify-between gap-4">
+        <TheButton class="btn btn-primary flex h-10 items-center md:hidden" @click="showFilters = !showFilters">
+          <FilterIcon class="text-lg" />
+        </TheButton>
+        <div class="ml-auto flex gap-2">
+          <FormKit v-model="currentSort" input-class="!border-0 shadow" type="select" :options="sortOptions" />
+          <FormKit v-model="itemsPerPage" input-class="!border-0 shadow" type="select" :options="itemsPerPageOptions" />
+        </div>
       </div>
-    </div>
-    <div class="flex flex-col items-start gap-10 md:flex-row xl:gap-20">
-      <div class="hidden w-full md:block md:w-1/3 lg:w-1/5 xl:w-1/6" :class="{ '!block': showFilters }">
-        <ProductFilters :filters="filters" class="sticky top-4" @filters-changed="handleChangeFilters" />
+      <div class="flex flex-col gap-10 md:flex-row xl:gap-20">
+        <div class="hidden w-full md:block md:w-1/3 lg:w-1/5 xl:w-1/6" :class="{ '!block': showFilters }">
+          <ProductFilters :filters="filters" class="sticky top-4" @filters-changed="handleChangeFilters" />
+        </div>
+        <div class="flex h-full flex-col items-center gap-4 md:w-4/5 md:items-end xl:w-5/6">
+          <ProductList :products="products.member" />
+          <ThePagination
+            v-model="currentPage"
+            :total-items="products.totalItems"
+            :items-per-page="itemsPerPage"
+            @pagination-change="updateProducts"
+          />
+        </div>
       </div>
-      <div class="flex flex-col items-center gap-4 md:w-4/5 md:items-end xl:w-5/6">
-        <ProductList :products="products.member" />
-        <ThePagination
-          v-model="currentPage"
-          :total-items="products.totalItems"
-          :items-per-page="itemsPerPage"
-          @pagination-change="updateProducts"
-        />
-      </div>
-    </div>
+    </template>
+    <TheMessageBox v-else :message="$t('noProductsFound')"></TheMessageBox>
   </div>
 </template>
 
@@ -50,9 +53,9 @@ const sortOptions = computed(() => [
 ])
 
 const itemsPerPageOptions = ref([
-  { label: t('20'), value: 20 },
-  { label: t('50'), value: 50 },
-  { label: t('100'), value: 100 },
+  { label: '20', value: 20 },
+  { label: '50', value: 30 },
+  { label: '100', value: 50 },
 ])
 
 const itemsPerPageOptionDefault = 20
@@ -87,7 +90,7 @@ function handleChangeFilters(resultString: string) {
 const updateProducts = useThrottleFn(async () => {
   const { data: productsResponse, error } = await getProducts({
     params: {
-      sort_by: currentSort.value,
+      sort_by: currentSort.value || undefined,
       filter_by: filterString.value,
       page: currentPage.value,
       per_page: itemsPerPage.value,

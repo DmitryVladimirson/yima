@@ -1,15 +1,15 @@
 const transliterate = (cyrillicText: string) => {
   return cyrillicText
-    .replaceAll('Ё', 'YO')
+    .replaceAll('Ё', 'Yo')
     .replaceAll('Й', 'I')
-    .replaceAll('Ц', 'TS')
+    .replaceAll('Ц', 'Ts')
     .replaceAll('У', 'U')
     .replaceAll('К', 'K')
     .replaceAll('Е', 'E')
     .replaceAll('Н', 'N')
     .replaceAll('Г', 'G')
-    .replaceAll('Ш', 'SH')
-    .replaceAll('Щ', 'SCH')
+    .replaceAll('Ш', 'Sh')
+    .replaceAll('Щ', 'Sch')
     .replaceAll('З', 'Z')
     .replaceAll('Х', 'H')
     .replaceAll('Ъ', '')
@@ -35,7 +35,7 @@ const transliterate = (cyrillicText: string) => {
     .replaceAll('О', 'O')
     .replaceAll('Л', 'L')
     .replaceAll('Д', 'D')
-    .replaceAll('Ж', 'ZH')
+    .replaceAll('Ж', 'Zh')
     .replaceAll('Э', 'E')
     .replaceAll('ф', 'f')
     .replaceAll('ы', 'i')
@@ -56,7 +56,7 @@ const transliterate = (cyrillicText: string) => {
     .replaceAll('Т', 'T')
     .replaceAll('Ь', "'")
     .replaceAll('Б', 'B')
-    .replaceAll('Ю', 'YU')
+    .replaceAll('Ю', 'Yu')
     .replaceAll('я', 'ya')
     .replaceAll('ч', 'ch')
     .replaceAll('с', 's')
@@ -74,6 +74,8 @@ const transliterate = (cyrillicText: string) => {
     .replaceAll('І', 'I')
     .replaceAll('Є', 'E')
     .replaceAll('Ґ', 'G')
+    .replaceAll('/', '-')
+    .replaceAll('%', '')
 }
 
 export const useYimaUtils = () => {

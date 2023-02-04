@@ -92,7 +92,7 @@ const loadMoreButtonEnabled = computed(() => {
     return false
   }
 
-  return products.value.member.length < 10 && products.value.totalItems > 10
+  return products.value.member.length < products.value.totalItems && products.value.totalItems > 10
 })
 
 function handleDeleteButtonClick(id: string) {

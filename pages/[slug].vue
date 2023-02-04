@@ -2,7 +2,7 @@
   <div v-if="product" class="container flex flex-col gap-10">
     <div class="grid gap-10 md:grid-cols-2 md:gap-20">
       <figure class="mx-auto flex w-1/2 items-center md:w-full">
-        <img :src="product.imgUrl" width="500" height="500" class="h-full w-full object-contain" alt="product.name" />
+        <img :src="product.imgUrl" width="500" height="500" class="h-full w-full object-contain" :alt="product.name" />
       </figure>
       <div class="flex flex-col justify-start gap-4 md:gap-6">
         <TheH :level="1">{{ product.name }}</TheH>
@@ -82,7 +82,6 @@ const { getProductBySlug, addProductToOrder } = useYimaProduct()
 const { toastSuccess } = useYimaToast()
 const { t } = useI18n()
 const route = useRoute()
-
 const quantity = ref(1)
 
 const { data: product } = await getProductBySlug(String(route.params.slug))

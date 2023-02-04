@@ -45,6 +45,8 @@ import {
   useYimaToast,
   useYimaUtils,
   useYimaAdminAttribute,
+  navigateTo,
+  useLocalePath,
 } from '#imports'
 
 const { addProduct, uploadImage, setProduct } = useYimaAdminProduct()
@@ -54,6 +56,7 @@ const { getCategories } = useYimaAdminCategory()
 const { getAttributes } = useYimaAdminAttribute()
 const { transliterate } = useYimaUtils()
 const { t } = useI18n()
+const localePath = useLocalePath()
 
 const initialFormData = { isVisible: true, inStock: true }
 
@@ -148,7 +151,7 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
 
     toastSuccess(t('adminProductAddSuccess'))
 
-    formData.value = initialFormData
+    await navigateTo(localePath('/admin/products'))
   }
 )
 
