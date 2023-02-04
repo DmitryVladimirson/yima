@@ -1,17 +1,19 @@
 <template>
-  <slot name="label" />
-  <slot :format-tooltip="formatTooltip" name="default">
-    <Slider
-      v-model="slider"
-      tooltip="text-lg"
-      :min="min"
-      :max="max"
-      :format="price && formatTooltip"
-      :step="step"
-      v-bind="$attrs"
-      class="ng-range-slider mt-5"
-    />
-  </slot>
+  <template v-if="min && max">
+    <slot name="label" />
+    <slot :format-tooltip="formatTooltip" name="default">
+      <Slider
+        v-model="slider"
+        tooltip="text-lg"
+        :min="min"
+        :max="max"
+        :format="price && formatTooltip"
+        :step="step"
+        v-bind="$attrs"
+        class="ng-range-slider mt-5"
+      />
+    </slot>
+  </template>
 </template>
 
 <script setup lang="ts">
@@ -30,9 +32,9 @@ interface Properties {
 }
 
 const properties = withDefaults(defineProps<Properties>(), {
-  max: 100,
+  max: undefined,
   maxSelected: undefined,
-  min: 1,
+  min: undefined,
   minSelected: undefined,
   price: true,
   step: 1,

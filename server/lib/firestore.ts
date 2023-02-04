@@ -11,6 +11,8 @@ import {
   startAfter,
   getDoc,
   endBefore,
+  orderBy,
+  type OrderByDirection,
 } from 'firebase/firestore'
 
 import { getQuery, type H3Event } from 'h3'
@@ -23,6 +25,8 @@ declare global {
     anchorDocumentId?: string
     directionForward?: boolean
     where?: QueryFieldFilterConstraint
+    orderByPath?: string
+    orderByDirection?: OrderByDirection
   }
 }
 
@@ -43,12 +47,23 @@ export const queryByCollection = async <T>(
 ): Promise<MemberResponse<T>> => {
   const colReference = collection(firestoreDatabase, col)
 
-  const { per_page = 10, directionForward = true, anchorDocumentId, where: whereOption } = options
+  const {
+    per_page = 10,
+    directionForward = true,
+    anchorDocumentId,
+    where: whereOption,
+    orderByPath,
+    orderByDirection = 'desc',
+  } = options
 
   const queryOptions: QueryConstraint[] = []
 
   if (per_page >= 0) {
     queryOptions.push(limit(per_page))
+  }
+
+  if (orderByPath) {
+    queryOptions.push(orderBy(orderByPath, orderByDirection))
   }
 
   if (anchorDocumentId) {

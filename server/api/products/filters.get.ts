@@ -4,7 +4,10 @@ import { client } from '~/server/lib/typesense'
 export default defineEventHandler(async () => {
   const filters = []
 
-  filters.push({ sectionName: 'categories', items: await getCategories(true) })
+  const categoryItems = await getCategories(true)
+  if (categoryItems.length > 0) {
+    filters.push({ sectionName: 'categories', items: categoryItems })
+  }
 
   const facedPriceResponse = await client
     .collections('products')
@@ -16,6 +19,11 @@ export default defineEventHandler(async () => {
   }
 
   const { min, max } = facedPriceResponse.facet_counts[0].stats
+
+  if (!min || !max) {
+    return filters
+  }
+
   filters.push({ sectionName: 'price', items: [{ min, max, type: 'range', id: 'price' }] })
 
   return filters

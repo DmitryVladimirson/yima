@@ -1,36 +1,54 @@
 import { type SearchParams } from 'typesense/lib/Typesense/Documents'
 import { getQuery } from 'h3'
-import { collection, documentId, getDocs, query, where } from 'firebase/firestore'
+import { collection, documentId, getDocs, query, type QuerySnapshot, where } from 'firebase/firestore'
 import { client } from '~/server/lib/typesense'
 import { createYimaError } from '~/composables/services/admin/utils'
 import { firestoreDatabase } from '~/server/lib/firebase'
 
 const setCategoriesNamesInsteadOfIDs = async (products: Product[]) => {
-  const foundProductCategoriesCodes: string[] = []
+  const foundProductCategoriesCodes = new Set<string>()
 
   for (const product of products) {
-    foundProductCategoriesCodes.push(...product.categories)
+    for (const categoryId of product.categories) {
+      foundProductCategoriesCodes.add(categoryId)
+    }
   }
 
-  if (foundProductCategoriesCodes.length === 0) {
+  if (foundProductCategoriesCodes.size === 0) {
     return products
   }
 
   const categoryCollectionReference = collection(firestoreDatabase, 'category')
 
-  const productCategoriesResponse = query(
-    categoryCollectionReference,
-    where(documentId(), 'in', foundProductCategoriesCodes)
-  )
+  const getDocumentsPromiseArray: Array<Promise<QuerySnapshot>> = []
 
-  const querySnapshot = await getDocs(productCategoriesResponse)
+  const foundProductCategoriesCodesArray = [...foundProductCategoriesCodes]
 
-  const foundCategories = [...querySnapshot.docs].map((document_) => {
-    return {
-      id: document_.id,
-      name: document_.data().name,
-    }
-  })
+  let index = 10
+  do {
+    const categoriesQuery = query(
+      categoryCollectionReference,
+      where(documentId(), 'in', foundProductCategoriesCodesArray.slice(0, index))
+    )
+
+    getDocumentsPromiseArray.push(getDocs(categoriesQuery))
+
+    index += 10
+  } while (index < foundProductCategoriesCodes.size)
+
+  const categoriesResponse = await Promise.all(getDocumentsPromiseArray)
+
+  const foundCategories = []
+  for (const categoriesSnap of categoriesResponse) {
+    foundCategories.push(
+      ...[...categoriesSnap.docs].map((document_) => {
+        return {
+          id: document_.id,
+          name: document_.data().name,
+        }
+      })
+    )
+  }
 
   for (const product of products) {
     const filteredCategories = foundCategories.filter((foundCategory) =>
