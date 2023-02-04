@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col gap-4">
-    <div class="flex justify-end">
+    <div class="flex items-center justify-between gap-4">
+      <div>{{ $t('totalItems') }}: {{ products.totalItems }}</div>
+
       <TheLink to="/admin/products/new" class="btn btn-primary">{{ $t('newProduct') }}</TheLink>
     </div>
     <template v-if="products.member?.length > 0">

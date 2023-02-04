@@ -115,6 +115,7 @@ const updateProducts = useThrottleFn(async () => {
     },
   })
 }, 50)
+
 watch([currentSort], async () => {
   await updateProducts()
 })

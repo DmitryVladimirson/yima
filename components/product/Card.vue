@@ -18,7 +18,7 @@
         <img :src="product.imgUrl" width="128" height="128" class="h-32 w-32 object-contain" :alt="product.name" />
       </div>
       <div class="h-full w-full">
-        <h2 class="card-title line-clamp-2">
+        <h2 class="card-title line-clamp-2 min-h-[56px]">
           {{ product.name }}
         </h2>
         <p class="line-clamp-3">
