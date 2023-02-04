@@ -24,17 +24,17 @@ const setCategoriesNamesInsteadOfIDs = async (products: Product[]) => {
 
   const foundProductCategoriesCodesArray = [...foundProductCategoriesCodes]
 
-  let index = 10
-  do {
+  let index = 0
+  while (index < foundProductCategoriesCodes.size) {
+    index += 10
+
     const categoriesQuery = query(
       categoryCollectionReference,
-      where(documentId(), 'in', foundProductCategoriesCodesArray.slice(0, index))
+      where(documentId(), 'in', foundProductCategoriesCodesArray.slice(index - 10, index))
     )
 
     getDocumentsPromiseArray.push(getDocs(categoriesQuery))
-
-    index += 10
-  } while (index < foundProductCategoriesCodes.size)
+  }
 
   const categoriesResponse = await Promise.all(getDocumentsPromiseArray)
 

@@ -1,7 +1,9 @@
 <template>
-  <div v-if="products.length > 0" class="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-    <ProductCard v-for="product in products" :key="product.id" :product="product" />
-  </div>
+  <ul v-if="products.length > 0" v-auto-animate class="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+    <li v-for="product in products" :key="product.id" class="h-full">
+      <ProductCard :product="product" />
+    </li>
+  </ul>
   <TheMessageBox v-else :message="$t('noProductsFound')"></TheMessageBox>
 </template>
 <script setup lang="ts">
