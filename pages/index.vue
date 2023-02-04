@@ -12,7 +12,13 @@
         </TheButton>
         <div class="ml-auto flex gap-2">
           <FormKit v-model="currentSort" input-class="!border-0 shadow" type="select" :options="sortOptions" />
-          <FormKit v-model="itemsPerPage" input-class="!border-0 shadow" type="select" :options="itemsPerPageOptions" />
+          <FormKit
+            v-if="products.totalItems > itemsPerPageOptionDefault"
+            v-model="itemsPerPage"
+            input-class="!border-0 shadow"
+            type="select"
+            :options="itemsPerPageOptions"
+          />
         </div>
       </div>
       <div class="flex flex-col gap-10 md:flex-row xl:gap-20">
@@ -54,8 +60,8 @@ const sortOptions = computed(() => [
 
 const itemsPerPageOptions = ref([
   { label: '20', value: 20 },
-  { label: '50', value: 30 },
-  { label: '100', value: 50 },
+  { label: '30', value: 30 },
+  { label: '50', value: 50 },
 ])
 
 const itemsPerPageOptionDefault = 20
