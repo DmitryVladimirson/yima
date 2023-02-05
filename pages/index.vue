@@ -11,7 +11,7 @@
           <FilterIcon class="text-lg" />
         </TheButton>
         <div class="ml-auto flex gap-2">
-          <FormKit v-model="currentSort" input-class="!border-0 shadow" type="select" :options="sortOptions" />
+          <FormKit v-model="currentSort" input-class="!border-0 shadow " type="select" :options="sortOptions" />
           <FormKit
             v-if="products.totalItems > itemsPerPageOptionDefault"
             v-model="itemsPerPage"
@@ -74,8 +74,7 @@ const filterString = ref(route.query.filter_by ?? '')
 const [{ data: products }, { data: filters }] = await Promise.all([
   getProducts({
     params: {
-      sort_by: currentSort.value,
-      filter_by: filterString.value,
+      sort_by: currentSort.value || undefined,
       page: currentPage.value,
       per_page: itemsPerPage.value,
     },
@@ -88,12 +87,13 @@ function handleChangeFilters(resultString: string) {
 
   setTimeout(async () => {
     if (filterString.value === resultString) {
-      await updateProducts()
+      currentPage.value = 1
+      await updateProducts(true)
     }
   }, 50)
 }
 
-const updateProducts = useThrottleFn(async () => {
+const updateProducts = useThrottleFn(async (resetPage?: boolean) => {
   const { data: productsResponse, error } = await getProducts({
     params: {
       sort_by: currentSort.value || undefined,
@@ -118,6 +118,7 @@ const updateProducts = useThrottleFn(async () => {
       ...(itemsPerPage.value === itemsPerPageOptionDefault
         ? { itemsPerPage: undefined }
         : { itemsPerPage: itemsPerPage.value }),
+      ...(resetPage === true ? { page: undefined } : {}),
     },
   })
 }, 50)

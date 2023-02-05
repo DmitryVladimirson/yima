@@ -21,9 +21,6 @@
         <h2 class="card-title line-clamp-2 min-h-[56px]">
           {{ product.name }}
         </h2>
-        <p class="line-clamp-3">
-          {{ product.description }}
-        </p>
       </div>
     </TheLink>
     <div class="flex w-full items-center justify-between gap-4 px-4 pt-0 pb-4 md:px-8 md:pb-8">

@@ -3,7 +3,7 @@ import { generateClasses } from '@formkit/themes'
 import type { DefaultConfigOptions } from '@formkit/vue'
 
 const generalClassification = {
-  input: 'input input-bordered w-full dark:text-white',
+  input: 'input input-bordered w-full dark:bg-white',
   label: 'block text-sm mb-1',
   help: 'text-xs mt-1 opacity-60',
   messages: 'text-warning mt-1',
@@ -31,7 +31,7 @@ const config: DefaultConfigOptions = {
       },
       select: {
         ...generalClassification,
-        input: 'select select-bordered w-full',
+        input: 'select select-bordered w-full dark:bg-white dark:text-neutral',
       },
       checkbox: {
         ...generalClassification,
