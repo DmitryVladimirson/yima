@@ -7,6 +7,7 @@ import daisyUI from 'daisyui'
 import tailwindcss from '@formkit/themes/tailwindcss'
 
 export default {
+  darkMode: 'class',
   content: [
     './components/**/*.{js,vue,ts}',
     './layouts/**/*.vue',
@@ -61,6 +62,9 @@ export default {
         DEFAULT: '1rem',
       },
     },
+  },
+  daisyui: {
+    themes: ['light', 'dark'],
   },
   plugins: [forms, lineClamp, typography, tailwindcss, daisyUI],
 }

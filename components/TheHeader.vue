@@ -1,8 +1,8 @@
 <template>
-  <div class="navbar container min-h-min flex-col gap-4 bg-slate-100 px-4 dark:bg-gray-800 sm:flex-row">
+  <div class="navbar container min-h-min flex-col gap-4 px-4 sm:flex-row">
     <TheLink to="/" class="flex-grow text-xl font-bold normal-case">
-      Euro
-      <span class="text-amber-400 dark:text-cyan-400">PRICE.</span>
+      <span class="dark:text-white">Euro</span>
+      <span class="dark:text-info text-amber-400">PRICE.</span>
     </TheLink>
     <div class="flex-none gap-2">
       <div ref="searchFormReference" class="form-control">
@@ -21,7 +21,7 @@
               :placeholder="$t('searchProducts')"
               :classes="{
                 input:
-                  'appearance-none border-none focus:ring-0 focus:outline-none rounded-br-none rounded-tr-none shadow-sm',
+                  'appearance-none border-none  focus:ring-0 focus:outline-none rounded-br-none rounded-tr-none shadow',
               }"
               :input-class="{ 'rounded-b-none': showHits }"
             />
@@ -49,13 +49,16 @@
           </TheButton>
         </FormKit>
       </div>
+      <TheLocaleSwitcher />
+      <TheDarkModeSwitcher />
+
       <div class="dropdown dropdown-end dropdown-hover">
         <TheLink to="/order" class="btn btn-ghost btn-circle">
           <span class="indicator">
             <CartIcon class="text-xl" />
             <span
               v-if="orderState.products.length > 0"
-              class="indicator-item bg-primary flex h-6 w-6 items-center justify-center rounded-full text-white dark:bg-cyan-400"
+              class="indicator-item bg-primary dark:bg-info flex h-6 w-6 items-center justify-center rounded-full text-white"
             >
               {{ orderState.products.length }}
             </span>
