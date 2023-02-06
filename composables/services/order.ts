@@ -1,4 +1,4 @@
-import { useCookie, useState, useYimaApiOrder } from '#imports'
+import { useCookie, useState, useYimaApiOrder, useYimaUtils } from '#imports'
 
 declare global {
   interface OrderProduct extends Product {
@@ -65,6 +65,7 @@ const setShippingAddress = (address: ShippingAddress) => {
 
 const completeOrder = async () => {
   const { completeOrder } = useYimaApiOrder()
+  const { getUnixDate } = useYimaUtils()
 
   const state = useOrderState()
 
@@ -74,7 +75,7 @@ const completeOrder = async () => {
     orderProducts.push({ id: product.id, quantity: product.quantity })
   }
 
-  const orderToSend = { ...state.value, products: orderProducts }
+  const orderToSend = { ...state.value, createdAt: getUnixDate(), products: orderProducts }
 
   return completeOrder(orderToSend)
 }

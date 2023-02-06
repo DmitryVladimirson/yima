@@ -82,8 +82,20 @@ const transliterate = (cyrillicText: string) => {
     .replaceAll(')', '')
 }
 
+const getUnixDate = () => {
+  return Math.floor(Date.now() / 1000)
+}
+
+const getDateStringFromUnix = (unixDate: number) => {
+  const dateObject = new Date(unixDate * 1000)
+
+  return dateObject.toLocaleString('uk-UA', { timeStyle: 'short', dateStyle: 'short' })
+}
+
 export const useYimaUtils = () => {
   return {
+    getDateStringFromUnix,
+    getUnixDate,
     transliterate,
   }
 }

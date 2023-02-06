@@ -2,7 +2,7 @@
   <div class="container flex flex-col gap-6">
     <div class="flex items-center gap-6">
       <TheH>
-        {{ $t('products') }}
+        {{ $t('allProducts') }}
       </TheH>
     </div>
     <template v-if="products.member.length > 0 || filters.length > 0">

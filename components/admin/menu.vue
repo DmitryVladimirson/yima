@@ -24,6 +24,7 @@
 <script setup lang="ts">
 import { useI18n } from '#imports'
 import CubeIcon from '~icons/mdi/cube-outline'
+import CartIcon from '~icons/mdi/cart'
 import FolderIcon from '~icons/mdi/folder'
 import AttributesIcon from '~icons/mdi/tag-multiple'
 
@@ -31,7 +32,12 @@ const { t } = useI18n()
 
 const menu = [
   {
-    name: t('products'),
+    name: t('orders'),
+    link: '/admin/orders',
+    icon: CartIcon,
+  },
+  {
+    name: t('allProducts'),
     link: '/admin/products',
     icon: CubeIcon,
   },
