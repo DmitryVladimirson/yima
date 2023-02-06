@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-4">
     <div class="flex items-center justify-between gap-4">
-      <h1>{{ $t('lastOrders') }}</h1>
+      <h1>{{ $t('orders') }}</h1>
     </div>
     <template v-if="orders.member?.length > 0">
       <div class="flex flex-col items-center gap-4">
@@ -32,6 +32,9 @@
             </tbody>
           </table>
         </div>
+        <TheButton v-if="loadMoreButtonEnabled" class="btn btn-primary" @click="handleLoadMore">
+          {{ $t('loadMore') }}
+        </TheButton>
       </div>
     </template>
     <TheMessageBox v-else :message="$t('noOrdersFound')" />
@@ -45,4 +48,23 @@ const { getOrders } = useYimaAdminOrder()
 const { getDateStringFromUnix } = useYimaUtils()
 
 const { data: orders } = await getOrders()
+
+const loadMoreButtonEnabled = computed(() => {
+  if (!orders.value?.member || !orders.value?.totalItems) {
+    return false
+  }
+
+  return orders.value.member.length < orders.value.totalItems && orders.value.totalItems > 10
+})
+
+async function handleLoadMore() {
+  const { data } = await getOrders({
+    params: { anchorDocumentId: orders.value?.member.at(-1)?.id },
+  })
+  if (!data.value?.member) {
+    return
+  }
+
+  orders.value?.member.push(...data.value.member)
+}
 </script>

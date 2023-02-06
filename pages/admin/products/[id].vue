@@ -64,6 +64,7 @@ import {
   useYimaHttp,
   useYimaToast,
   useYimaAdminAttribute,
+  useYimaUtils,
 } from '#imports'
 
 const { getProduct, setProduct, uploadImage, deleteProduct } = useYimaAdminProduct()
@@ -71,6 +72,7 @@ const { getAttributes } = useYimaAdminAttribute()
 const { waitAnd } = useYimaHttp()
 const { toastSuccess } = useYimaToast()
 const { getCategories } = useYimaAdminCategory()
+const { getDateStringFromUnix } = useYimaUtils()
 const { t } = useI18n()
 const route = useRoute()
 const localPath = useLocalePath()
@@ -114,9 +116,7 @@ onMounted(() => {
 })
 
 const resolveDate = computed(() => {
-  const dateObject = new Date(product.value.createdAt * 1000)
-
-  return dateObject.toLocaleString('uk-UA', { timeStyle: 'short', dateStyle: 'short' }) // 2019-12-9 10:30:15
+  return getDateStringFromUnix(product.value.createdAt)
 })
 
 const { execute: handleSubmit, pending: submitPending } = waitAnd(

@@ -54,7 +54,7 @@ const { waitAnd } = useYimaHttp()
 const { toastSuccess } = useYimaToast()
 const { getCategories } = useYimaAdminCategory()
 const { getAttributes } = useYimaAdminAttribute()
-const { transliterate } = useYimaUtils()
+const { transliterate, getUnixDate } = useYimaUtils()
 const { t } = useI18n()
 const localePath = useLocalePath()
 
@@ -113,7 +113,7 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
 
     data.attributes = attributesArray
     data.categories = categoriesArray
-    data.createdAt = Math.floor(Date.now() / 1000)
+    data.createdAt = getUnixDate()
     data.imgUrl = ''
 
     const productData = {
