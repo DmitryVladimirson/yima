@@ -1,4 +1,4 @@
-import { useNuxtApp, useLocalePath, navigateTo } from '#imports'
+import { useNuxtApp, navigateTo } from '#imports'
 
 export default defineNuxtRouteMiddleware(async (to) => {
   const {
@@ -6,8 +6,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   } = useNuxtApp()
 
   if (orderState.value.products.length === 0 && to.path !== '/order') {
-    const localePath = useLocalePath()
-
-    return navigateTo(localePath('/order'))
+    return navigateTo(`/order`)
   }
 })

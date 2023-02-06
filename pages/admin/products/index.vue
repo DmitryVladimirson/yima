@@ -1,9 +1,12 @@
 <template>
   <div class="flex flex-col gap-4">
-    <div class="flex items-center justify-between gap-4">
-      <div>{{ $t('totalItems') }}: {{ products.totalItems }}</div>
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <TheH :level="1">{{ $t('products') }}</TheH>
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>{{ $t('totalItems') }}: {{ products.totalItems }}</div>
 
-      <TheLink to="/admin/products/new" class="btn btn-primary">{{ $t('newProduct') }}</TheLink>
+        <TheLink to="/admin/products/new" class="btn btn-primary">{{ $t('newProduct') }}</TheLink>
+      </div>
     </div>
     <template v-if="products.member?.length > 0">
       <div class="flex flex-col items-center gap-4">

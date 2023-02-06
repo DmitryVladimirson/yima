@@ -1,9 +1,11 @@
 <template>
   <NuxtLoadingIndicator />
-  <div class="grid h-screen grid-cols-12">
-    <AdminMenu class="col-span-2" />
-    <div class="col-span-10 py-20 px-20">
-      <NuxtPage />
+  <div class="flex flex-col gap-4 lg:gap-10">
+    <AdminHeader />
+    <div class="container grid h-screen grid-cols-12 lg:max-w-full">
+      <div class="col-span-12 lg:col-span-10 lg:col-start-3 lg:px-20">
+        <NuxtPage />
+      </div>
     </div>
   </div>
 </template>

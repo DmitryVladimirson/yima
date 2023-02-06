@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col gap-4">
-    <div class="flex justify-end">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <TheH :level="1">{{ $t('products') }}</TheH>
+
       <TheLink to="/admin/attributes/new" class="btn btn-primary">{{ $t('newAttribute') }}</TheLink>
     </div>
     <div v-if="attributes?.member?.length > 0" class="w-full overflow-x-auto">
