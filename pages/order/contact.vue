@@ -36,6 +36,9 @@
             <FormKit type="text" name="country" validation="required" :label="$t('country')" />
           </TheBaseCard>
         </div>
+        <TheButton class="btn btn-primary md:hidden" type="submit" :disabled="!formValid">
+          {{ $t('submit') }}
+        </TheButton>
       </div>
       <div class="hidden w-1/3 md:block">
         <div class="sticky top-4 flex flex-col gap-2">

@@ -55,3 +55,7 @@
 .collapse:not(.collapse-close) input[type='checkbox']:checked ~ .collapse-content {
   max-height: none;
 }
+
+.table th:first-child{
+  position: static;
+}

@@ -12,5 +12,6 @@ export const client = new Typesense.Client({
     },
   ],
   apiKey: config.public.typesenseApiKey,
-  connectionTimeoutSeconds: 2,
+  connectionTimeoutSeconds: 10,
+  retryIntervalSeconds: 10,
 })

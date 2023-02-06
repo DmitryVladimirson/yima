@@ -46,9 +46,26 @@
         <div class="flex grow flex-col gap-3">
           <TheH :level="2">{{ $t('contactInfo') }}</TheH>
 
-          <div v-for="(item, key) in order.shippingAddress" :key="key">
-            {{ $t(key) }}:
-            {{ item }}
+          <div class="leading-relaxed">
+            <div>
+              <span class="font-medium">{{ $t('fullName') }}:</span>
+              {{ order.shippingAddress.firstName }} {{ order.shippingAddress.lastName }}
+            </div>
+            <div>
+              <span class="font-medium">{{ $t('email') }}:</span>
+              {{ order.shippingAddress.email }}
+            </div>
+            <div>
+              <span class="font-medium">{{ $t('phoneNumber') }}:</span>
+              {{ order.shippingAddress.phoneNumber }}
+            </div>
+            <div>
+              <span class="font-medium">{{ $t('address') }}:</span>
+              {{ order.shippingAddress.streetAndNum }},
+              {{ order.shippingAddress.city }}
+              {{ order.shippingAddress.postCode }},
+              {{ order.shippingAddress.country }}
+            </div>
           </div>
         </div>
       </div>

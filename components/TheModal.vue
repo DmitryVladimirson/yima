@@ -3,9 +3,9 @@
     <div>
       <input id="my-modal-4" :checked="modalOpen" type="checkbox" class="modal-toggle" @click="closeModal" />
       <label for="my-modal-4" class="modal cursor-pointer" :class="{ 'modal-open': modalOpen }">
-        <label class="modal-box relative">
+        <div class="modal-box relative">
           <slot :close-modal="closeModal" />
-        </label>
+        </div>
       </label>
     </div>
   </Teleport>

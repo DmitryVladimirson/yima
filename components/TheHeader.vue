@@ -1,15 +1,12 @@
 <template>
   <div class="navbar container min-h-min flex-col gap-4 px-4 sm:flex-row">
-    <TheLink to="/" class="flex-grow text-xl font-bold normal-case">
-      <span class="dark:text-white">Euro</span>
-      <span class="dark:text-info text-amber-400">PRICE.</span>
-    </TheLink>
-    <div class="flex-none gap-2">
+    <TheLogo />
+    <div class="flex flex-grow flex-wrap justify-end gap-2 sm:flex-nowrap">
       <div ref="searchFormReference" class="form-control">
         <FormKit
           v-model="formData"
           type="form"
-          form-class="input-group"
+          form-class="input-group max-w-[200px] md:max-w-full"
           :actions="false"
           @submit="handleSearch"
           @input="handleSearch"
@@ -21,7 +18,7 @@
               :placeholder="$t('searchProducts')"
               :classes="{
                 input:
-                  'appearance-none border-none  focus:ring-0 focus:outline-none rounded-br-none rounded-tr-none shadow',
+                  'appearance-none border-none flex-shrink focus:ring-0 focus:outline-none rounded-br-none rounded-tr-none shadow',
               }"
               :input-class="{ 'rounded-b-none': showHits }"
             />
@@ -51,7 +48,6 @@
       </div>
       <TheLocaleSwitcher />
       <TheDarkModeSwitcher />
-
       <div class="dropdown dropdown-end dropdown-hover">
         <TheLink to="/order" class="btn btn-ghost btn-circle">
           <span class="indicator">
