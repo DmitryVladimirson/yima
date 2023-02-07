@@ -37,6 +37,7 @@ const setAttributes = async (product: AdminProduct) => {
 
     return {
       name,
+      id: attribute.id,
       value: attribute.value,
     }
   })

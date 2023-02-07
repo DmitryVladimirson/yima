@@ -25,7 +25,7 @@
     </TheLink>
     <div class="flex w-full items-center justify-between gap-4 px-4 pt-0 pb-4 md:px-8 md:pb-8">
       <ThePrice class="text-lg font-bold" :value="product.price" />
-      <TheButton class="btn btn-primary relative" @click="handleAddToOrder">
+      <TheButton :disabled="!product.inStock" class="btn btn-primary relative" @click="handleAddToOrder">
         {{ $t('buy') }}
       </TheButton>
     </div>
@@ -48,7 +48,17 @@ const { toastSuccess } = useYimaToast()
 const { t } = useI18n()
 
 const { product } = toRefs(properties)
-const quantity = ref(1)
+
+const minPurchaseAmount = computed(() => {
+  const amountAttribute = product.value?.attributes.find((attribute) => attribute.id === "Kil'kist'-v-upakovtsi-(sht.)")
+  if (!amountAttribute) {
+    return 1
+  }
+
+  return Number(amountAttribute.value)
+})
+
+const quantity = ref(minPurchaseAmount.value)
 
 function handleAddToOrder() {
   addProductToOrder(product.value, quantity.value)

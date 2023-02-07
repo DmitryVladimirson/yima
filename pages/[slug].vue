@@ -8,9 +8,9 @@
         <TheH :level="1">{{ product.name }}</TheH>
         <TheBaseCard class="gap-6 p-8">
           <div class="flex flex-row justify-between">
-            <div class="flex flex-col">
-              <span class="pb-2 font-bold">{{ $t('amount') }}:</span>
-              <QuantityBox v-model="quantity" />
+            <div class="flex flex-col gap-2">
+              <span class="font-bold">{{ $t('amount') }}:</span>
+              <QuantityBox v-model="quantity" :min="minPurchaseAmount" />
             </div>
 
             <div class="flex flex-col gap-2">
@@ -36,7 +36,11 @@
           </div>
 
           <div class="flex flex-wrap gap-2 sm:flex-nowrap">
-            <TheButton class="btn btn-primary grow gap-4 text-base sm:w-auto" @click="handleAddToOrder">
+            <TheButton
+              :disabled="!product.inStock"
+              class="btn btn-primary grow gap-4 text-base sm:w-auto"
+              @click="handleAddToOrder"
+            >
               <AddToCartIcon class="h-auto w-6" />
               <span class="text-sm lg:text-base">{{ $t('addToCart') }}</span>
             </TheButton>
@@ -82,7 +86,6 @@ const { getProductBySlug, addProductToOrder } = useYimaProduct()
 const { toastSuccess } = useYimaToast()
 const { t } = useI18n()
 const route = useRoute()
-const quantity = ref(1)
 
 const { data: product } = await getProductBySlug(String(route.params.slug))
 
@@ -92,6 +95,17 @@ if (!product.value) {
     statusMessage: 'Not found',
   })
 }
+
+const minPurchaseAmount = computed(() => {
+  const amountAttribute = product.value?.attributes.find((attribute) => attribute.id === "Kil'kist'-v-upakovtsi-(sht.)")
+  if (!amountAttribute) {
+    return 1
+  }
+
+  return Number(amountAttribute.value)
+})
+
+const quantity = ref(minPurchaseAmount.value)
 
 function handleAddToOrder() {
   addProductToOrder(product.value, quantity.value)
