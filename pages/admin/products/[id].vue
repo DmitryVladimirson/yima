@@ -17,9 +17,9 @@
       <FormKit type="file" name="image" :label="$t('image')" />
       <FormKit type="text" name="name" :label="$t('name')" />
       <FormKit type="text" name="slug" :label="$t('slug')" :help="$t('productPath')" />
-
       <FormKit type="textarea" name="description" :label="$t('description')" />
       <FormKit type="number" name="price" :step="0.01" :label="$t('price')" />
+      <FormKit type="number" name="minAmountToPurchase" :step="1" :min="1" :label="$t('minAmountToPurchase')" />
       <AdminProductCategoryList :categories="allCategories" />
       <AdminProductAttributes :all-attributes="allAttributes" :product-attributes="product.attributes" />
       <FormKit type="checkbox" :value="false" name="inStock" :label="$t('inStock')" />
@@ -102,6 +102,7 @@ formData.value = {
   slug: product.value.slug,
   isVisible: product.value.isVisible,
   inStock: product.value.inStock,
+  minAmountToPurchase: Number(product.value.minAmountToPurchase),
   price: Number(product.value.price),
 }
 
@@ -159,6 +160,7 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
       description: data.description,
       inStock: data.inStock,
       isVisible: data.isVisible,
+      minAmountToPurchase: Number(data.minAmountToPurchase),
       name: data.name,
       price: Number(data.price),
       slug: data.slug,

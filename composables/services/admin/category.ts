@@ -6,11 +6,8 @@ declare global {
   interface AdminCategory {
     id: string
     name: string
-    isVisible: boolean
     children: AdminCategory[]
     parent: string
-    createdAt: string
-    updatedAt: string
   }
 }
 

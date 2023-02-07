@@ -13,7 +13,6 @@
 
       <FormKit type="text" name="name" :label="$t('name')" />
       <FormKit type="select" :options="categoriesOptions" name="parent" :label="$t('parentCategory')" />
-      <FormKit type="checkbox" name="isVisible" :label="$t('visibility')" />
 
       <div class="flex items-center gap-4">
         <TheButton type="submit" class="btn btn-primary relative" :loading="submitPending">{{ $t('save') }}</TheButton>

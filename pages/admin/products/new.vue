@@ -25,6 +25,7 @@
       <AdminProductAttributes :all-attributes="allAttributes.member" />
       <FormKit type="textarea" name="description" :label="$t('description')" />
       <FormKit type="number" validation="required" name="price" :step="0.01" :label="$t('price')" />
+      <FormKit type="number" name="minAmountToPurchase" :step="1" :min="1" :label="$t('minAmountToPurchase')" />
       <FormKit type="file" name="image" :label="$t('image')" />
       <FormKit type="checkbox" name="inStock" :label="$t('inStock')" />
       <FormKit type="checkbox" name="isVisible" :label="$t('visibility')" />
@@ -125,6 +126,7 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
       imgUrl: data.imgUrl,
       inStock: data.inStock,
       isVisible: data.isVisible,
+      minAmountToPurchase: Number(data.minAmountToPurchase),
       name: data.name,
       price: Number(data.price),
       slug: data.slug,
