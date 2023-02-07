@@ -10,7 +10,7 @@
           <div class="flex flex-row justify-between">
             <div class="flex flex-col gap-2">
               <span class="font-bold">{{ $t('amount') }}:</span>
-              <QuantityBox v-model="quantity" :min="minPurchaseAmount" />
+              <QuantityBox v-model="quantity" :min="product.minAmountToPurchase" />
             </div>
 
             <div class="flex flex-col gap-2">
@@ -96,16 +96,7 @@ if (!product.value) {
   })
 }
 
-const minPurchaseAmount = computed(() => {
-  const amountAttribute = product.value?.attributes.find((attribute) => attribute.id === "Kil'kist'-v-upakovtsi-(sht.)")
-  if (!amountAttribute) {
-    return 1
-  }
-
-  return Number(amountAttribute.value)
-})
-
-const quantity = ref(minPurchaseAmount.value)
+const quantity = ref(product.value?.minAmountToPurchase ?? 1)
 
 function handleAddToOrder() {
   addProductToOrder(product.value, quantity.value)

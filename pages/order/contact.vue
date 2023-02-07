@@ -27,7 +27,22 @@
             />
           </TheBaseCard>
         </div>
-        <div class="flex flex-col gap-2">
+
+        <FormKit
+          type="select"
+          name="shippingMethod"
+          :options="shippingOptions"
+          validation="required"
+          :label="$t('shippingMethod')"
+        />
+
+        <div v-if="formData.shippingMethod === 'novaPoshta'" class="flex flex-col gap-2">
+          <TheH :level="2">{{ $t('novaPoshta') }}</TheH>
+          <TheBaseCard class="p-4">
+            <FormKit type="text" name="novaPoshtaAddress" validation="required" :label="$t('novaPoshtaAddress')" />
+          </TheBaseCard>
+        </div>
+        <div v-else class="flex flex-col gap-2">
           <TheH :level="2">{{ $t('address') }}</TheH>
           <TheBaseCard class="grid gap-4 p-4 sm:grid-cols-2">
             <FormKit type="text" name="city" validation="required" :label="$t('city')" />
@@ -76,14 +91,20 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useNuxtApp, navigateTo, useLocalePath, ref } from '#imports'
+import { useNuxtApp, navigateTo, useLocalePath, ref, useI18n } from '#imports'
 
 const {
   $order: { state: orderState, setShippingAddress, completeOrder, removeOrder },
 } = useNuxtApp()
 const localePath = useLocalePath()
+const { t } = useI18n()
 
 const formData = ref<Record<string, any>>({})
+
+const shippingOptions = [
+  { label: t('novaPoshta'), value: 'novaPoshta' },
+  { label: t('toAddress'), value: 'toAddress' },
+]
 
 if (orderState.value.shippingAddress) {
   formData.value = { ...orderState.value.shippingAddress }

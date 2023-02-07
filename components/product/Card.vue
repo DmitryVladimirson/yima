@@ -32,7 +32,7 @@
   </TheBaseCard>
 </template>
 <script setup lang="ts">
-import { useYimaProduct, ref, toRefs, useYimaToast, useI18n } from '#imports'
+import { useYimaProduct, toRefs, useYimaToast, useI18n } from '#imports'
 import { withDefaults } from 'vue'
 
 interface popperProperties {
@@ -49,19 +49,8 @@ const { t } = useI18n()
 
 const { product } = toRefs(properties)
 
-const minPurchaseAmount = computed(() => {
-  const amountAttribute = product.value?.attributes.find((attribute) => attribute.id === "Kil'kist'-v-upakovtsi-(sht.)")
-  if (!amountAttribute) {
-    return 1
-  }
-
-  return Number(amountAttribute.value)
-})
-
-const quantity = ref(minPurchaseAmount.value)
-
 function handleAddToOrder() {
-  addProductToOrder(product.value, quantity.value)
+  addProductToOrder(product.value, product.value.minAmountToPurchase ?? 1)
   toastSuccess(t('addedToCart', { productName: product.value.name }))
 }
 </script>

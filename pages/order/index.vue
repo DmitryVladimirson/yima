@@ -32,7 +32,11 @@
           </div>
 
           <div class="flex items-center justify-start sm:col-span-3 md:col-span-2 md:justify-end">
-            <QuantityBox :value="item.quantity" @changed="changeProductOrderQuantity(item.id, $event)" />
+            <QuantityBox
+              :value="item.quantity"
+              :min="item.minAmountToPurchase"
+              @changed="changeProductOrderQuantity(item.id, $event)"
+            />
           </div>
 
           <div class="flex flex items-center justify-end sm:col-span-2 sm:hidden md:flex">
@@ -74,6 +78,8 @@ import ChevronIcon from '~icons/mdi/chevron-right'
 const {
   $order: { state: orderState },
 } = useNuxtApp()
+
+console.log(orderState.value)
 
 const { removeProductFromOrder, changeProductOrderQuantity } = useYimaProduct()
 </script>

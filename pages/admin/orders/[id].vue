@@ -44,6 +44,23 @@
           </div>
         </div>
         <div class="flex grow flex-col gap-3">
+          <TheH :level="2">{{ $t('shippingMethod') }}</TheH>
+
+          <div class="leading-relaxed">
+            {{ $t(order.shippingAddress.shippingMethod) }}
+          </div>
+          <div>
+            <span class="font-medium">{{ $t('address') }}: </span>
+            <template v-if="order.shippingAddress.shippingMethod === 'toAddress'">
+              {{ order.shippingAddress.streetAndNum }},
+              {{ order.shippingAddress.city }}
+              {{ order.shippingAddress.postCode }},
+              {{ order.shippingAddress.country }}
+            </template>
+            <template v-else> {{ order.shippingAddress.novaPoshtaAddress }} </template>
+          </div>
+        </div>
+        <div class="flex grow flex-col gap-3">
           <TheH :level="2">{{ $t('contactInfo') }}</TheH>
 
           <div class="leading-relaxed">
@@ -58,13 +75,6 @@
             <div>
               <span class="font-medium">{{ $t('phoneNumber') }}:</span>
               {{ order.shippingAddress.phoneNumber }}
-            </div>
-            <div>
-              <span class="font-medium">{{ $t('address') }}:</span>
-              {{ order.shippingAddress.streetAndNum }},
-              {{ order.shippingAddress.city }}
-              {{ order.shippingAddress.postCode }},
-              {{ order.shippingAddress.country }}
             </div>
           </div>
         </div>

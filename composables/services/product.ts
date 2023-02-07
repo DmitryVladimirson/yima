@@ -2,13 +2,14 @@ import { useNuxtApp, useYimaApiProduct } from '#imports'
 
 declare global {
   interface Product {
-    categories: string[]
     attributes: Array<{ name: string; value: string | number; id: string }>
+    categories: string[]
     createdAt: number
     description: string
     id: string
     imgUrl: string
     inStock: boolean
+    minAmountToPurchase: number
     name: string
     price: number
     slug: string
