@@ -1,13 +1,21 @@
 <template>
   <div v-if="product" class="container flex flex-col gap-10">
     <div class="grid gap-10 md:grid-cols-2 md:gap-20">
-      <figure class="mx-auto flex w-1/2 items-center md:w-full">
-        <img :src="product.imgUrl" width="500" height="500" class="h-full w-full object-contain" :alt="product.name" />
-      </figure>
+      <div class="mx-auto flex w-1/2 items-center md:w-full">
+        <TheBaseCard class="w-full">
+          <img
+            :src="product.imgUrl"
+            width="500"
+            height="500"
+            class="h-full w-full object-contain"
+            :alt="product.name"
+          />
+        </TheBaseCard>
+      </div>
       <div class="flex flex-col justify-start gap-4 md:gap-6">
         <TheH :level="1">{{ product.name }}</TheH>
         <TheBaseCard class="gap-6 p-8">
-          <div class="flex flex-row justify-between">
+          <div class="flex flex-wrap justify-between">
             <div class="flex flex-col gap-2">
               <span class="font-bold">{{ $t('amount') }}:</span>
               <QuantityBox v-model="quantity" :min="product.minAmountToPurchase" />
@@ -23,7 +31,7 @@
             </div>
           </div>
 
-          <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center justify-between gap-4">
             <div>
               <div class="flex">
                 <ProductStock class="grow" :in-stock="product.inStock" />

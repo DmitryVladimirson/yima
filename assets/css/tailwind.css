@@ -27,9 +27,9 @@
 @layer components {
 
   .ng-range-slider {
-    --slider-connect-bg: theme('colors.primary.DEFAULT');
-    --slider-tooltip-bg: theme('colors.primary.DEFAULT');
-    --slider-handle-ring-color: theme('colors.primary.DEFAULT');
+    --slider-connect-bg: theme('colors.secondary.DEFAULT');
+    --slider-tooltip-bg: theme('colors.secondary.DEFAULT');
+    --slider-handle-ring-color: theme('colors.secondary.DEFAULT');
   }
 
   .scrollbar-hide::-webkit-scrollbar {
@@ -58,4 +58,23 @@
 
 .table th:first-child{
   position: static;
+}
+
+.swiper {
+.swiper-button-prev,
+.swiper-button-next {
+  @apply flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 p-0 hover:bg-gray-200 transition-colors active:bg-gray-300;
+
+&:after {
+   @apply text-xl text-primary;
+ }
+}
+
+.swiper-button-prev {
+  @apply left-2 pr-1;
+}
+
+.swiper-button-next {
+  @apply right-2 pl-1;
+}
 }

@@ -5,8 +5,9 @@ import typography from '@tailwindcss/typography'
 import daisyUI from 'daisyui'
 // eslint-disable-next-line import/no-unresolved
 import tailwindcss from '@formkit/themes/tailwindcss'
+import type { Config } from 'tailwindcss'
 
-export default {
+const config: Config = {
   darkMode: 'class',
   content: [
     './components/**/*.{js,vue,ts}',
@@ -21,9 +22,14 @@ export default {
     extend: {
       colors: {
         primary: {
-          light: colors.amber[400],
+          light: '#8c59fa',
+          DEFAULT: '#570df8',
+          dark: '#3b05b1',
+        },
+        secondary: {
+          light: colors.amber[200],
           DEFAULT: colors.amber[400],
-          dark: colors.cyan['400'],
+          dark: colors.cyan['600'],
         },
         /**
          * General color variants
@@ -68,3 +74,5 @@ export default {
   },
   plugins: [forms, lineClamp, typography, tailwindcss, daisyUI],
 }
+
+export default config

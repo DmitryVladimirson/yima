@@ -1,7 +1,7 @@
 <template>
   <Switch
     v-model="enabled"
-    :class="enabled ? 'bg-info' : 'bg-warning'"
+    :class="enabled ? 'bg-info' : 'bg-secondary'"
     class="relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent shadow transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
   >
     <span
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, useLocalStorage } from '#imports'
+import { ref, watch, useLocalStorage, onMounted } from '#imports'
 import SunIcon from '~icons/mdi/white-balance-sunny'
 import MoonIcon from '~icons/mdi/moon-waning-crescent'
 import { Switch } from '@headlessui/vue'

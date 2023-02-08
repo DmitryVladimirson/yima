@@ -50,7 +50,11 @@ const setCategories = async (product: AdminProduct) => {
 
   const categoryColReference = collection(firestoreDatabase, 'category')
 
-  const categoryQueryResponse = query(categoryColReference, where(documentId(), 'in', product.categories))
+  const categoryQueryResponse = query(
+    categoryColReference,
+    where(documentId(), 'in', product.categories),
+    where('isVisible', '==', true)
+  )
 
   const categoryQuerySnapshot = await getDocs(categoryQueryResponse)
 

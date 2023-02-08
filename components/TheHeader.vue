@@ -6,7 +6,7 @@
         <FormKit
           v-model="formData"
           type="form"
-          form-class="input-group max-w-[200px] md:max-w-full"
+          form-class="input-group sm:max-w-[200px] md:max-w-full"
           :actions="false"
           @submit="handleSearch"
           @input="handleSearch"
@@ -22,7 +22,7 @@
               }"
               :input-class="{ 'rounded-b-none': showHits }"
             />
-            <TheBaseCard v-if="showHits" class="absolute top-full w-full rounded-tr-none rounded-tl-none p-0">
+            <TheBaseCard v-if="showHits" class="absolute top-full z-50 w-full rounded-tr-none rounded-tl-none p-0">
               <div v-if="searchHasHits" class="scroller max-h-[200px] w-full overflow-auto">
                 <TheLink
                   v-for="product in searchHits"
@@ -54,7 +54,7 @@
             <CartIcon class="text-xl" />
             <span
               v-if="orderState.products.length > 0"
-              class="indicator-item bg-primary dark:bg-info flex h-6 w-6 items-center justify-center rounded-full text-white"
+              class="indicator-item bg-secondary dark:bg-info flex h-6 w-6 items-center justify-center rounded-full text-white"
             >
               {{ orderState.products.length }}
             </span>
