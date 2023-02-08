@@ -7,7 +7,7 @@
       </div>
       <div class="flex gap-4">
         <TheLink
-          to="https://www.instagram.com/euro_price/?igshid=YmMyMTA2M2Y%3D"
+          to="https://instagram.com/europrice_ua?igshid=YmMyMTA2M2Y="
           class="hover:text-primary-light transition"
         >
           <InstagramIcon class="text-lg" />
@@ -18,6 +18,9 @@
         >
           <ViberIcon class="text-lg" />
         </TheLink>
+        <TheLink to="https://t.me/europriceua" class="hover:text-primary-light transition">
+          <TelegramIcon class="text-lg" />
+        </TheLink>
       </div>
     </div>
   </footer>
@@ -26,4 +29,5 @@
 <script setup lang="ts">
 import InstagramIcon from '~icons/mdi/instagram'
 import ViberIcon from '~icons/mdi/whatsapp'
+import TelegramIcon from '~icons/mdi/telegram'
 </script>
