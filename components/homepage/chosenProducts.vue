@@ -1,4 +1,14 @@
 <template>
+  <section class="container flex items-center justify-around rounded-xl bg-white p-8">
+    <DeliveryIcon style="color: black" class="max-lg:hidden" width="100" height="100" />
+    <div class="container m-0 flex w-fit flex-col">
+      <h2 class="mb-4 text-black">Запускаємо безкоштовну доставку по Ужгороду!</h2>
+      <p class="text-black">
+        Просто замовляй, а ми доставимо <span class="text-success">ШВИДКО</span> та
+        <span class="text-success">БЕЗКОШТОВНО</span>.
+      </p>
+    </div>
+  </section>
   <section class="container flex flex-col gap-6">
     <TheH :level="2" class="text-center">
       {{ $t('productsOfTheWeek') }}
@@ -27,6 +37,7 @@
 </template>
 
 <script lang="ts" setup>
+import DeliveryIcon from '~icons/mdi/truck-delivery-outline'
 import { useAppConfig } from '#imports'
 import { withDefaults } from 'vue'
 
