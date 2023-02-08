@@ -1,14 +1,22 @@
+import { where } from 'firebase/firestore'
 import { queryByCollection } from '~/server/lib/firestore'
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const getCategories = async (client?: boolean) => {
-  const categoriesResponse = await queryByCollection<AdminCategory>('category', { per_page: -1 })
+  const categoriesResponse = await queryByCollection<AdminCategory>('category', {
+    per_page: -1,
+    ...(client ? { where: where('isVisible', '==', true) } : {}),
+  })
 
   let categories = categoriesResponse.member
 
   const createChildren = (category: Record<string, any>) => {
     if (category.children.length === 0) {
       return
+    }
+
+    if (!category.childrenNew) {
+      category.childrenNew = []
     }
 
     for (const children of category.children) {
@@ -18,10 +26,6 @@ export const getCategories = async (client?: boolean) => {
       }
 
       createChildren(existingCategory)
-
-      if (!category.childrenNew) {
-        category.childrenNew = []
-      }
 
       category.childrenNew.push(
         client

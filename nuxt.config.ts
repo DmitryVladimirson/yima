@@ -4,6 +4,10 @@ import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import Components from 'unplugin-vue-components/vite'
+import resolveConfig from 'tailwindcss/resolveConfig'
+import tailwindConfig from './tailwind.config'
+
+const resolvedConfig = resolveConfig(tailwindConfig)
 
 export default defineNuxtConfig({
   modules: [
@@ -22,6 +26,15 @@ export default defineNuxtConfig({
         { name: 'description', content: '' },
         { name: 'format-detection', content: 'telephone=no' },
       ],
+    },
+  },
+  appConfig: {
+    theme: {
+      screens: resolvedConfig.theme?.screens,
+      colors: {
+        // @ts-expect-error This is ok
+        primary: resolvedConfig.theme?.colors.primary,
+      },
     },
   },
   tailwindcss: {

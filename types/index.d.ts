@@ -25,3 +25,14 @@ declare module 'nuxt/dist/app/nuxt' {
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties extends PluginsInjections {}
 }
+
+declare module '@nuxt/schema' {
+  interface AppConfig {
+    [key: string]: any
+    theme: {
+      [key: string]: any
+      colors: Record<string, any>
+      screens: Record<string, any>
+    }
+  }
+}

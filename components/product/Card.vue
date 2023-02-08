@@ -9,7 +9,11 @@
         class="scrollbar-hide absolute right-2 right-2 left-2 top-2 flex overflow-scroll"
       >
         <div class="ml-auto flex gap-2">
-          <span v-for="category in product.categories" :key="category" class="badge badge-md whitespace-nowrap text-xs">
+          <span
+            v-for="category in product.categories"
+            :key="category"
+            class="badge badge-md whitespace-nowrap text-xs text-white"
+          >
             {{ category }}
           </span>
         </div>

@@ -1,42 +1,50 @@
 <template>
-  <div class="container flex flex-col gap-6">
-    <div class="flex items-center gap-6">
-      <TheH>
-        {{ $t('allProducts') }}
-      </TheH>
-    </div>
-    <template v-if="products.member.length > 0 || filters.length > 0">
-      <div class="flex items-center justify-between gap-4">
-        <TheButton class="btn btn-primary flex h-10 items-center md:hidden" @click="showFilters = !showFilters">
-          <FilterIcon class="text-lg" />
-        </TheButton>
-        <div class="ml-auto flex gap-2">
-          <FormKit v-model="currentSort" input-class="!border-0 shadow " type="select" :options="sortOptions" />
-          <FormKit
-            v-if="products.totalItems > itemsPerPageOptionDefault"
-            v-model="itemsPerPage"
-            input-class="!border-0 shadow"
-            type="select"
-            :options="itemsPerPageOptions"
-          />
+  <div class="flex flex-col gap-10 lg:gap-20">
+    <HomepageChosenProducts :chosen-products="chosenProducts.member" />
+    <section>
+      <div class="container flex flex-col gap-6">
+        <div class="block md:hidden">
+          <TheH>
+            {{ $t('allProducts') }}
+          </TheH>
         </div>
+        <template v-if="products.member.length > 0 || filters.length > 0">
+          <div class="flex items-center justify-between gap-4">
+            <TheH class="hidden md:block">
+              {{ $t('allProducts') }}
+            </TheH>
+            <TheButton class="btn btn-primary flex h-10 items-center md:hidden" @click="showFilters = !showFilters">
+              <FilterIcon class="text-lg" />
+            </TheButton>
+            <div class="ml-auto flex gap-2">
+              <FormKit v-model="currentSort" input-class="!border-0 shadow " type="select" :options="sortOptions" />
+              <FormKit
+                v-if="products.totalItems > itemsPerPageOptionDefault"
+                v-model="itemsPerPage"
+                input-class="!border-0 shadow"
+                type="select"
+                :options="itemsPerPageOptions"
+              />
+            </div>
+          </div>
+          <div class="flex flex-col gap-10 md:flex-row xl:gap-20">
+            <div class="hidden w-full md:block md:w-1/3 lg:w-1/5 xl:w-1/6" :class="{ '!block': showFilters }">
+              <ProductFilters :filters="filters" class="sticky top-4" @filters-changed="handleChangeFilters" />
+            </div>
+            <div class="flex h-full flex-col items-center gap-4 md:w-4/5 md:items-end xl:w-5/6">
+              <ProductList :products="products.member" />
+              <ThePagination
+                v-model="currentPage"
+                :total-items="products.totalItems"
+                :items-per-page="itemsPerPage"
+                @pagination-change="updateProducts"
+              />
+            </div>
+          </div>
+        </template>
+        <TheMessageBox v-else :message="$t('noProductsFound')"></TheMessageBox>
       </div>
-      <div class="flex flex-col gap-10 md:flex-row xl:gap-20">
-        <div class="hidden w-full md:block md:w-1/3 lg:w-1/5 xl:w-1/6" :class="{ '!block': showFilters }">
-          <ProductFilters :filters="filters" class="sticky top-4" @filters-changed="handleChangeFilters" />
-        </div>
-        <div class="flex h-full flex-col items-center gap-4 md:w-4/5 md:items-end xl:w-5/6">
-          <ProductList :products="products.member" />
-          <ThePagination
-            v-model="currentPage"
-            :total-items="products.totalItems"
-            :items-per-page="itemsPerPage"
-            @pagination-change="updateProducts"
-          />
-        </div>
-      </div>
-    </template>
-    <TheMessageBox v-else :message="$t('noProductsFound')"></TheMessageBox>
+    </section>
   </div>
 </template>
 
@@ -71,7 +79,7 @@ const currentPage = ref(Number(route.query.page) || 1)
 const itemsPerPage = ref(Number(route.query.itemsPerPage) || itemsPerPageOptionDefault)
 const filterString = ref(route.query.filter_by ?? '')
 
-const [{ data: products }, { data: filters }] = await Promise.all([
+const [{ data: products }, { data: filters }, { data: chosenProducts }] = await Promise.all([
   getProducts({
     params: {
       sort_by: currentSort.value || undefined,
@@ -80,6 +88,11 @@ const [{ data: products }, { data: filters }] = await Promise.all([
     },
   }),
   getProductFilters(),
+  getProducts({
+    params: {
+      filter_by: 'categories:[chosen-products]',
+    },
+  }),
 ])
 
 function handleChangeFilters(resultString: string) {

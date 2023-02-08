@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto w-full">
-    <div class="mx-0 py-4 sm:px-16 md:px-24 md:pt-8 md:pb-10 lg:px-8">
+    <div class="mx-0 py-4 sm:px-16 md:px-24 md:pb-10 lg:px-8">
       <div class="flex items-center justify-between">
         <template v-for="item in basketSteps.steps" :key="item.route">
           <TheLink

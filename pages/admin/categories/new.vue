@@ -21,6 +21,7 @@
         name="parent"
         :label="$t('parentCategory')"
       />
+      <FormKit type="checkbox" :value="false" name="isVisible" :label="$t('visibility')" />
       <TheButton type="submit" class="btn btn-primary relative" :loading="submitPending">
         {{ $t('save') }}
       </TheButton>
@@ -39,7 +40,7 @@ const { t } = useI18n()
 
 const { data: allCategories } = await getCategories()
 
-const initialFormData = { parent: '' }
+const initialFormData = { isVisible: true, parent: '' }
 const formData = ref<Record<string, any>>(initialFormData)
 const categoryNewFormReference = ref()
 const id = ref('')

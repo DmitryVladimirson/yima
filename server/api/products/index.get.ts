@@ -30,7 +30,8 @@ const setCategoriesNamesInsteadOfIDs = async (products: Product[]) => {
 
     const categoriesQuery = query(
       categoryCollectionReference,
-      where(documentId(), 'in', foundProductCategoriesCodesArray.slice(index - 10, index))
+      where(documentId(), 'in', foundProductCategoriesCodesArray.slice(index - 10, index)),
+      where('isVisible', '==', true)
     )
 
     getDocumentsPromiseArray.push(getDocs(categoriesQuery))

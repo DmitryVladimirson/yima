@@ -79,7 +79,5 @@ const {
   $order: { state: orderState },
 } = useNuxtApp()
 
-console.log(orderState.value)
-
 const { removeProductFromOrder, changeProductOrderQuantity } = useYimaProduct()
 </script>

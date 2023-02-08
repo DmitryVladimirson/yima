@@ -6,7 +6,7 @@
         <span>ID: {{ order.id }} </span>
         <span>{{ $t('createdAt') }}: {{ resolveDate }}</span>
       </div>
-      <div class="flex flex-col gap-6 xl:flex-row">
+      <div class="flex flex-col gap-6">
         <div class="flex grow flex-col gap-3">
           <TheH :level="2">{{ $t('products') }}</TheH>
           <div class="flex flex-col items-center gap-4">
