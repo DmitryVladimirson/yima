@@ -81,12 +81,14 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      telegramApiKey: '',
-      typesenseApiKey: '',
+      typesenseApiKey: process.env.NUXT_PUBLIC_TYPESENSE_API_KEY ?? '',
     },
   },
   imports: {
     dirs: ['composables/**'],
   },
   css: ['@vueform/slider/themes/default.css', 'firebaseui/dist/firebaseui.css'],
+  nitro: {
+    preset: 'firebase',
+  },
 })
