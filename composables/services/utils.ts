@@ -80,6 +80,11 @@ const transliterate = (cyrillicText: string) => {
     .replaceAll("'", '')
     .replaceAll('(', '')
     .replaceAll(')', '')
+    .replaceAll(',', '-')
+    .replaceAll(':', '-')
+    .replaceAll('\\', '-')
+    .replaceAll('*', '-')
+    .replaceAll('"', '')
 }
 
 const getUnixDate = () => {

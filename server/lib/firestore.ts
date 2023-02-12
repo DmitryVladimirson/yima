@@ -94,11 +94,19 @@ export const queryByCollection = async <T>(
 }
 
 export const set = async (col: string, payload: Record<string, any>, id: string) => {
+  if (Buffer.isBuffer(payload)) {
+    payload = JSON.parse(payload.toString())
+  }
+
   return setDoc(doc(collection(firestoreDatabase, col), id), payload, { merge: true })
 }
 
-export const add = async (col: string, payload: Record<string, unknown>) => {
+export const add = async (col: string, payload: any) => {
   const colReference = collection(firestoreDatabase, col)
+
+  if (Buffer.isBuffer(payload)) {
+    payload = JSON.parse(payload.toString())
+  }
 
   return addDoc(colReference, payload)
 }

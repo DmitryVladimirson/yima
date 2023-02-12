@@ -1,13 +1,14 @@
 import { where, documentId } from 'firebase/firestore'
 import { queryByCollection, set } from '~/server/lib/firestore'
 import { createYimaError } from '~/composables/services/admin/utils'
+import { yimaReadBody } from '~/server/utils/h3'
 
 export default defineEventHandler(async (event) => {
   const categoryCollection = 'category'
   const categoryId = event.context.params.id
 
   const [body, currentCategoryResponse] = await Promise.all([
-    readBody(event),
+    yimaReadBody(event),
     queryByCollection<ServerCategory>(categoryCollection, { where: where(documentId(), '==', categoryId) }),
   ])
 
