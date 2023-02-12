@@ -1,11 +1,12 @@
 import { createError } from '#imports'
 import { where, documentId } from 'firebase/firestore'
 import { queryByCollection, set } from '~/server/lib/firestore'
+import { yimaReadBody } from '~/server/utils/h3'
 
 export default defineEventHandler(async (event) => {
   const collection = 'product'
 
-  const { id, ...body } = await readBody(event)
+  const { id, ...body } = await yimaReadBody(event)
   const existingProduct = await queryByCollection<AdminProduct>(collection, { where: where(documentId(), '==', id) })
 
   if (existingProduct.member[0]) {

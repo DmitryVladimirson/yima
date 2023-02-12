@@ -2,7 +2,7 @@
   <div class="navbar container min-h-min flex-col gap-4 px-4 sm:flex-row">
     <TheLogo />
     <div class="flex flex-grow flex-wrap justify-end gap-2 sm:flex-nowrap">
-      <div ref="searchFormReference" class="form-control">
+      <div ref="searchFormReference" class="form-control w-full sm:w-auto">
         <FormKit
           v-model="formData"
           type="form"
@@ -11,7 +11,7 @@
           @submit="handleSearch"
           @input="handleSearch"
         >
-          <div class="relative">
+          <div class="relative w-full">
             <FormKit
               type="text"
               name="searchText"

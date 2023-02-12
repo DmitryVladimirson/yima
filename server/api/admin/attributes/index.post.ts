@@ -1,10 +1,11 @@
 import { documentId, where } from 'firebase/firestore'
 import { createYimaError } from '~/composables/services/admin/utils'
 import { queryByCollection, set } from '~/server/lib/firestore'
+import { yimaReadBody } from '~/server/utils/h3'
 
 export default defineEventHandler(async (event) => {
   try {
-    const { id, ...body } = await readBody(event)
+    const { id, ...body } = await yimaReadBody(event)
     const collection = 'attribute'
 
     const existingAttribute = await queryByCollection<AdminAttribute>(collection, {
