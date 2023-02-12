@@ -1,5 +1,7 @@
-import { TYPE, useToast } from 'vue-toastification'
+import * as toastification from 'vue-toastification'
 import type { ToastOptions } from 'vue-toastification/src/types'
+
+const { TYPE, useToast } = toastification
 
 const instance = () => useToast()
 

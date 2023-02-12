@@ -91,12 +91,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useNuxtApp, navigateTo, useLocalePath, ref, useI18n } from '#imports'
+import { useNuxtApp, navigateTo, useLocalePath, ref, useI18n, useYimaHttp } from '#imports'
 
 const {
   $order: { state: orderState, setShippingAddress, completeOrder, removeOrder },
 } = useNuxtApp()
 const localePath = useLocalePath()
+const { waitAnd } = useYimaHttp()
 const { t } = useI18n()
 
 const formData = ref<Record<string, any>>({})
@@ -110,13 +111,20 @@ if (orderState.value.shippingAddress) {
   formData.value = { ...orderState.value.shippingAddress }
 }
 
-async function handleSubmit(data: Record<string, any>) {
-  setShippingAddress(data as ShippingAddress)
+const { execute: handleSubmit } = waitAnd(
+  (data: Record<string, any>) => {
+    setShippingAddress(data as ShippingAddress)
 
-  await completeOrder()
+    return completeOrder()
+  },
+  async (response) => {
+    if (response.error.value) {
+      return
+    }
 
-  await navigateTo(localePath('/order/complete'))
+    await navigateTo(localePath('/order/complete'))
 
-  removeOrder()
-}
+    removeOrder()
+  }
+)
 </script>
