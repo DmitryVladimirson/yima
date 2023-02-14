@@ -19,9 +19,10 @@
             <FormKit type="text" name="firstName" validation="required" :label="$t('firstName')" />
             <FormKit type="text" name="lastName" validation="required" :label="$t('lastName')" />
             <FormKit
+              value="+380"
               type="text"
               name="phoneNumber"
-              validation="required"
+              validation="required|matches:/^\+?380\d+$/|length:4,30"
               outer-class="col-span-full"
               :label="$t('phoneNumber')"
             />

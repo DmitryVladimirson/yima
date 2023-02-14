@@ -101,6 +101,7 @@
           </div>
         </div>
       </div>
+      <TheLink to="/login">login</TheLink>
     </div>
   </div>
 </template>
