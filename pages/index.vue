@@ -17,7 +17,7 @@
               <FilterIcon class="text-lg" />
             </TheButton>
             <div class="ml-auto flex gap-2">
-              <FormKit v-model="currentSort" input-class="!border-0 shadow " type="select" :options="sortOptions" />
+              <FormKit v-model="currentSort" input-class="!border-0 shadow" type="select" :options="sortOptions" />
               <FormKit
                 v-if="products.totalItems > itemsPerPageOptionDefault"
                 v-model="itemsPerPage"

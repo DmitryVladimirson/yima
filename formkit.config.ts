@@ -3,7 +3,7 @@ import { generateClasses } from '@formkit/themes'
 import type { DefaultConfigOptions } from '@formkit/vue'
 
 const generalClassification = {
-  input: 'input input-bordered w-full dark:bg-white',
+  input: 'input input-bordered text-gray-800 border-gray-800/20 w-full bg-white',
   label: 'block text-sm mb-1',
   help: 'text-xs mt-1 opacity-60',
   messages: 'text-warning mt-1',
@@ -22,7 +22,7 @@ const config: DefaultConfigOptions = {
       tel: generalClassification,
       textarea: {
         ...generalClassification,
-        input: 'textarea w-full textarea-bordered focus:border-current focus:ring-0 ',
+        input: 'textarea bg-white w-full textarea-bordered focus:border-current focus:ring-0 ',
       },
       file: {
         input: 'file-input file-input-bordered',
@@ -31,13 +31,13 @@ const config: DefaultConfigOptions = {
       },
       select: {
         ...generalClassification,
-        input: 'select select-bordered w-full dark:bg-white dark:text-neutral',
+        input: 'select bg-white !text-gray-800 select-bordered w-full dark:bg-white dark:text-neutral',
       },
       checkbox: {
         ...generalClassification,
         wrapper: 'flex items-center gap-2 cursor-pointer',
         inner: 'flex items-center  cursor-pointer',
-        input: 'checkbox w-5 h-5 !bg-50% focus:ring-0',
+        input: 'checkbox checked:bg-gray-800 w-5 h-5 !bg-75% border-gray-800/20  focus:ring-0 focus:ring-transparent',
         options: 'gap-2 flex flex-col',
         label: 'block text-sm',
       },
