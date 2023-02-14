@@ -4,20 +4,6 @@
       :to="`/${product.slug}`"
       class="relative flex h-full w-full flex-col items-center gap-4 p-4 pt-6 pb-0 md:px-8 md:pt-8"
     >
-      <div
-        v-if="product.categories.length > 0"
-        class="scrollbar-hide absolute right-2 right-2 left-2 top-2 flex overflow-scroll"
-      >
-        <div class="ml-auto flex gap-2">
-          <span
-            v-for="category in product.categories"
-            :key="category"
-            class="badge badge-md whitespace-nowrap text-xs text-white"
-          >
-            {{ category }}
-          </span>
-        </div>
-      </div>
       <div class="flex items-center justify-center">
         <img :src="product.imgUrl" width="128" height="128" class="h-32 w-32 object-contain" :alt="product.name" />
       </div>
