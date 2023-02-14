@@ -21,16 +21,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          light: '#8c59fa',
-          DEFAULT: '#570df8',
-          dark: '#3b05b1',
-        },
-        secondary: {
-          light: colors.amber[200],
-          DEFAULT: colors.amber[400],
-          dark: colors.cyan['600'],
-        },
         /**
          * General color variants
          */
@@ -70,7 +60,30 @@ const config: Config = {
     },
   },
   daisyui: {
-    themes: ['light', 'dark'],
+    themes: [
+      {
+        light: {
+          primary: colors.gray[800],
+          secondary: colors.amber[400],
+          'primary-content': colors.amber[400],
+          'base-content': colors.gray[800],
+          neutral: colors.gray[800],
+          'neutral-content': colors.white,
+          'base-100': colors.white,
+        },
+      },
+      {
+        dark: {
+          primary: colors.amber[400],
+          secondary: colors.gray[800],
+          'primary-content': colors.gray[800],
+          'base-content': colors.white,
+          neutral: colors.white,
+          'neutral-content': colors.gray[800],
+          'base-100': colors.gray[800],
+        },
+      },
+    ],
   },
   plugins: [forms, lineClamp, typography, tailwindcss, daisyUI],
 }
