@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     $order: { state: orderState },
   } = useNuxtApp()
 
-  if (orderState.value.products.length === 0 && to.path !== '/order') {
+  if (orderState.value.products.length === 0 && !to.path.startsWith('/order')) {
     return navigateTo(`/order`)
   }
 })
