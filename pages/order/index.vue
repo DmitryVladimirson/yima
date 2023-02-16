@@ -26,9 +26,9 @@
           <div
             class="col-span-full flex items-center justify-center gap-6 sm:col-span-5 sm:justify-start md:col-span-4"
           >
-            <span class="font-semibold leading-tight">
-              {{ item.name }}
-            </span>
+            <TheLink :to="`/${item.slug}`" class="font-semibold leading-tight">
+              {{ item.name }} {{ item.flavour }}
+            </TheLink>
           </div>
 
           <div class="flex items-center justify-start sm:col-span-3 md:col-span-2 md:justify-end">

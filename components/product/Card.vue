@@ -40,7 +40,7 @@ const { t } = useI18n()
 const { product } = toRefs(properties)
 
 function handleAddToOrder() {
-  addProductToOrder(product.value, product.value.minAmountToPurchase ?? 1)
+  addProductToOrder(product.value, product.value.minAmountToPurchase ?? 1, product.value.flavours?.[0])
   toastSuccess(t('addedToCart', { productName: product.value.name }))
 }
 </script>

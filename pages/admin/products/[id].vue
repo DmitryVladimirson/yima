@@ -22,6 +22,7 @@
       <FormKit type="number" name="minAmountToPurchase" :step="1" :min="1" :label="$t('minAmountToPurchase')" />
       <AdminProductCategoryList :categories="allCategories" />
       <AdminProductAttributes :all-attributes="allAttributes" :product-attributes="product.attributes" />
+      <AdminProductFlavours v-model="flavours" />
       <FormKit type="checkbox" :value="false" name="inStock" :label="$t('inStock')" />
       <FormKit type="checkbox" :value="false" name="isVisible" :label="$t('visibility')" />
       <div class="flex items-center gap-4">
@@ -106,6 +107,8 @@ formData.value = {
   price: Number(product.value.price),
 }
 
+const flavours = ref(product.value.flavours ?? [])
+
 onMounted(() => {
   for (const category of product.value.categories) {
     formData.value.categories[category] = true
@@ -164,6 +167,7 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
       name: data.name,
       price: Number(data.price),
       slug: data.slug,
+      flavours: flavours.value,
       ...(data.imgUrl ? { imgUrl: data.imgUrl } : {}),
     }
 

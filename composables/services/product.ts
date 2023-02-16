@@ -4,6 +4,7 @@ declare global {
   interface Product {
     attributes: Array<{ name: string; value: string | number; id: string }>
     categories: string[]
+    flavours: string[]
     createdAt: number
     description: string
     id: string
@@ -21,12 +22,14 @@ declare global {
   }
 }
 
-const addProductToOrder = (product: Product, quantity: number) => {
+const addProductToOrder = (product: Product, quantity: number, flavour?: string) => {
   const {
     $order: { state: orderState },
   } = useNuxtApp()
 
-  const existingProduct = orderState.value.products.find((productItem) => productItem.id === product.id)
+  const existingProduct = orderState.value.products.find(
+    (productItem) => productItem.id === product.id && productItem.flavour === flavour
+  )
 
   if (existingProduct) {
     existingProduct.quantity += quantity
@@ -34,7 +37,17 @@ const addProductToOrder = (product: Product, quantity: number) => {
     return
   }
 
-  orderState.value.products.push({ ...product, quantity })
+  const orderProduct: OrderProduct = {
+    slug: product.slug,
+    name: product.name,
+    id: product.id,
+    price: product.price,
+    imgUrl: product.imgUrl,
+    quantity,
+    flavour,
+  }
+
+  orderState.value.products.push(orderProduct)
 }
 
 const removeProductFromOrder = (id: string) => {
