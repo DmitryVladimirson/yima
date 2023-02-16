@@ -1,8 +1,14 @@
 import { useCookie, useState, useYimaApiOrder, useYimaUtils } from '#imports'
 
 declare global {
-  interface OrderProduct extends Product {
+  interface OrderProduct {
+    slug: string
+    id: string
+    name: string
+    price: number
+    imgUrl: string
     quantity: number
+    flavour?: string
   }
 
   interface ShippingAddress extends Record<string, any> {

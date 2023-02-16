@@ -51,6 +51,7 @@
     "typesense": "^1.4.4",
     "unplugin-icons": "^0.15.1",
     "unplugin-vue-components": "^0.22.12",
-    "vue-toastification": "^2.0.0-rc.5"
+    "vue-toastification": "^2.0.0-rc.5",
+    "vue3-tags-input": "^1.0.6"
   }
 }

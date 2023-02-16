@@ -23,6 +23,7 @@
       <FormKit v-model="id" type="text" validation="required" name="id" :label="$t('id')" />
       <AdminProductCategoryList :categories="allCategories" />
       <AdminProductAttributes :all-attributes="allAttributes.member" />
+      <AdminProductFlavours v-model="flavours" />
       <FormKit type="textarea" name="description" :label="$t('description')" />
       <FormKit type="number" validation="required" name="price" :step="0.01" :label="$t('price')" />
       <FormKit type="number" name="minAmountToPurchase" :step="1" :min="1" :label="$t('minAmountToPurchase')" />
@@ -65,6 +66,7 @@ const formData = ref<Record<string, any>>(initialFormData)
 const productNewFormReference = ref()
 const slug = ref('')
 const id = ref('')
+const flavours = ref([])
 
 const resolveSlug = computed(() => {
   const slug = formData.value.name
@@ -126,10 +128,11 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
       imgUrl: data.imgUrl,
       inStock: data.inStock,
       isVisible: data.isVisible,
-      minAmountToPurchase: Number(data.minAmountToPurchase),
+      minAmountToPurchase: Number(data.minAmountToPurchase ?? 0),
       name: data.name,
       price: Number(data.price),
       slug: data.slug,
+      flavours: flavours.value,
     }
 
     const addProductResponse = await addProduct(productData, { validationFormRef: 'productNewFormReference' })

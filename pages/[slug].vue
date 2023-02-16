@@ -43,6 +43,14 @@
             </div>
           </div>
 
+          <FormKit
+            v-if="product.flavours?.length > 0"
+            v-model="flavour"
+            :label="$t('flavours')"
+            type="select"
+            :options="product.flavours"
+          />
+
           <div class="flex flex-wrap gap-2 sm:flex-nowrap">
             <TheButton
               :disabled="!product.inStock"
@@ -105,9 +113,10 @@ if (!product.value) {
 }
 
 const quantity = ref(product.value?.minAmountToPurchase ?? 1)
+const flavour = ref(product.value?.flavours?.[0])
 
 function handleAddToOrder() {
-  addProductToOrder(product.value, quantity.value)
+  addProductToOrder(product.value, quantity.value, flavour.value)
   toastSuccess(t('addedToCart', { productName: product.value.name }))
 }
 </script>
