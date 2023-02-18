@@ -45,11 +45,8 @@
         </div>
         <div v-else class="flex flex-col gap-2">
           <TheH :level="2">{{ $t('address') }}</TheH>
-          <TheBaseCard class="grid gap-4 p-4 sm:grid-cols-2">
-            <FormKit type="text" name="city" validation="required" :label="$t('city')" />
-            <FormKit type="text" name="streetAndNum" validation="required" :label="$t('streetAndNum')" />
-            <FormKit type="text" name="postCode" validation="required" :label="$t('postCode')" />
-            <FormKit type="text" name="country" validation="required" :label="$t('country')" />
+          <TheBaseCard class="p-4">
+            <OrderAddressAutocomplete id="map" name="address" validation="reqired" :placeholder="$t('enterAddress')" />
           </TheBaseCard>
         </div>
         <TheButton class="btn btn-primary md:hidden" type="submit" :disabled="!formValid">
@@ -128,4 +125,14 @@ const { execute: handleSubmit } = waitAnd(
     removeOrder()
   }
 )
+
+onMounted(() => {
+  useHead({
+    script: [
+      {
+        src: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAFVwbDomYWdvmJZ5ZPhSKwrLZKWsKySqE&libraries=places',
+      },
+    ],
+  })
+})
 </script>
