@@ -12,16 +12,12 @@ declare global {
   }
 
   interface ShippingAddress extends Record<string, any> {
-    city?: string
-    country?: string
     email?: string
     firstName?: string
     lastName?: string
-    postCode?: string
-    streetAndNum?: string
-    phoneNumber: string
-    shippingMethod: string
-    novaPoshtaAddress: string
+    phoneNumber?: string
+    novaPoshtaAddress?: string
+    address?: string
   }
 
   interface OrderState {
