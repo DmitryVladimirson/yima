@@ -1,10 +1,20 @@
 import { getQuery } from 'h3'
+import { where } from 'firebase/firestore'
 import { getQueryByCollectionOptions, queryByCollection } from '~/server/lib/firestore'
 import { getOrderProductsNames } from '~/server/lib/utils'
 
 export default defineEventHandler(async (event) => {
   const queryOptions = getQuery(event)
-  const parameters: QueryByCollectionOptions = { ...getQueryByCollectionOptions(event), orderByPath: 'createdAt' }
+  const fromDateQuery: QueryByCollectionOptions = {}
+  if (queryOptions.fromDate) {
+    fromDateQuery.where = where('createdAt', '>=', Number(queryOptions.fromDate))
+  }
+
+  const parameters: QueryByCollectionOptions = {
+    ...getQueryByCollectionOptions(event),
+    orderByPath: 'createdAt',
+    ...fromDateQuery,
+  }
 
   const ordersResponse = await queryByCollection<AdminOrder>('order', parameters)
 
