@@ -1,10 +1,18 @@
 <template>
   <div>
     <div class="flex flex-col gap-4">
-      <TheH :level="1">{{ $t('order') }}</TheH>
-      <div class="flex flex-wrap items-center gap-4">
-        <span>ID: {{ order.id }} </span>
-        <span>{{ $t('createdAt') }}: {{ resolveDate }}</span>
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <TheH :level="1">{{ $t('order') }}</TheH>
+          <div class="flex flex-wrap items-center gap-4">
+            <span>ID: {{ order.id }} </span>
+            <span>{{ $t('createdAt') }}: {{ resolveDate }}</span>
+          </div>
+        </div>
+
+        <TheButton class="btn btn-primary relative" :loading="exportOrdersPending" @click="handleExportOrder">
+          <DownloadIcon class="text-lg" />
+        </TheButton>
       </div>
       <div class="flex flex-col gap-6">
         <div class="flex grow flex-col gap-3">
@@ -116,8 +124,9 @@ import {
   useYimaToast,
   useYimaUtils,
 } from '#imports'
+import DownloadIcon from '~icons/mdi/download'
 
-const { getOrder, deleteOrder } = useYimaAdminOrder()
+const { getOrder, deleteOrder, exportOrder } = useYimaAdminOrder()
 const { waitAnd } = useYimaHttp()
 const { toastSuccess } = useYimaToast()
 const { getDateStringFromUnix } = useYimaUtils()
@@ -157,4 +166,6 @@ const { execute: handleDeleteOrder, pending: orderDeletePending } = waitAnd(
     await navigateTo(localPath('/admin/orders'))
   }
 )
+
+const { execute: handleExportOrder, pending: exportOrdersPending } = waitAnd(() => exportOrder(orderId))
 </script>

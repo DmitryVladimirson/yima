@@ -1,4 +1,4 @@
-import { add } from '~/server/lib/firestore'
+import { set } from '~/server/lib/firestore'
 import { yimaReadBody } from '~/server/lib/utils'
 
 export default defineEventHandler(async (event) => {
@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const collection = 'order'
 
-  await add(collection, body)
+  await set(collection, body, String(body.createdAt))
 
   return {}
 })

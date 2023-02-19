@@ -38,6 +38,10 @@ export const getQueryByCollectionOptions = (event: H3Event) => {
     parameters.directionForward = false
   }
 
+  if (parameters.per_page) {
+    parameters.per_page = Number(parsedParameters.per_page)
+  }
+
   return parameters
 }
 
