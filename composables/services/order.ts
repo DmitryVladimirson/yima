@@ -18,6 +18,7 @@ declare global {
     phoneNumber?: string
     novaPoshtaAddress?: string
     address?: string
+    shippingMethod?: string
   }
 
   interface OrderState {

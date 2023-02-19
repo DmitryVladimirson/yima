@@ -1,7 +1,7 @@
 import { createError } from '#imports'
 import { where, documentId } from 'firebase/firestore'
 import { queryByCollection, set } from '~/server/lib/firestore'
-import { yimaReadBody } from '~/server/utils/h3'
+import { yimaReadBody } from '~/server/lib/utils'
 
 export default defineEventHandler(async (event) => {
   const collection = 'product'

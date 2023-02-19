@@ -1,4 +1,4 @@
-import { getCategories } from '~/server/utils/getCategories'
+import { getCategories } from '~/server/lib/utils'
 import { client } from '~/server/lib/typesense'
 
 export default defineEventHandler(async () => {

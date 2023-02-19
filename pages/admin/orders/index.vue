@@ -2,6 +2,7 @@
   <div class="flex flex-col gap-4">
     <div class="flex items-center justify-between gap-4">
       <h1>{{ $t('orders') }}</h1>
+      <TheButton class="btn btn-primary" @click="handleExportOrders"><DownloadIcon class="text-lg" /></TheButton>
     </div>
     <template v-if="orders.member?.length > 0">
       <div class="flex flex-col items-center gap-4">
@@ -43,8 +44,9 @@
 
 <script setup lang="ts">
 import { useYimaAdminOrder, useYimaUtils } from '#imports'
+import DownloadIcon from '~icons/mdi/download'
 
-const { getOrders } = useYimaAdminOrder()
+const { getOrders, exportOrders } = useYimaAdminOrder()
 const { getDateStringFromUnix } = useYimaUtils()
 
 const { data: orders } = await getOrders()
@@ -66,5 +68,9 @@ async function handleLoadMore() {
   }
 
   orders.value?.member.push(...data.value.member)
+}
+
+async function handleExportOrders() {
+  await exportOrders()
 }
 </script>

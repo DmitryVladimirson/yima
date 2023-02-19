@@ -52,10 +52,7 @@
           <div>
             <span class="font-medium">{{ $t('address') }}: </span>
             <template v-if="order.shippingAddress.shippingMethod === 'toAddress'">
-              {{ order.shippingAddress.streetAndNum }},
-              {{ order.shippingAddress.city }}
-              {{ order.shippingAddress.postCode }},
-              {{ order.shippingAddress.country }}
+              {{ order.shippingAddress.address }},
             </template>
             <template v-else> {{ order.shippingAddress.novaPoshtaAddress }} </template>
           </div>
