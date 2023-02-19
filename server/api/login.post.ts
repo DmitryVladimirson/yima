@@ -1,7 +1,7 @@
 import admin from 'firebase-admin'
 import { setCookie } from 'h3'
 import serviceAccount from '~/serviceAccountKey.json'
-import { yimaReadBody } from '~/server/utils/h3'
+import { yimaReadBody } from '~/server/lib/utils'
 
 admin.initializeApp({ credential: admin.credential.cert(serviceAccount) })
 

@@ -1,5 +1,5 @@
 import { add } from '~/server/lib/firestore'
-import { yimaReadBody } from '~/server/utils/h3'
+import { yimaReadBody } from '~/server/lib/utils'
 
 export default defineEventHandler(async (event) => {
   const body = await yimaReadBody(event)

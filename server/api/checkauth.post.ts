@@ -1,6 +1,6 @@
 import admin from 'firebase-admin'
 import { createYimaError } from '~/composables/services/admin/utils'
-import { yimaReadBody } from '~/server/utils/h3'
+import { yimaReadBody } from '~/server/lib/utils'
 
 export default defineEventHandler(async (event) => {
   const body = await yimaReadBody(event)

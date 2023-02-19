@@ -1,7 +1,7 @@
 import { documentId, where } from 'firebase/firestore'
 import { createYimaError } from '~/composables/services/admin/utils'
 import { queryByCollection, set } from '~/server/lib/firestore'
-import { yimaReadBody } from '~/server/utils/h3'
+import { yimaReadBody } from '~/server/lib/utils'
 
 export default defineEventHandler(async (event) => {
   try {
