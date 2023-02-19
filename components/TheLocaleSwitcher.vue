@@ -17,7 +17,7 @@ const currentLocale = ref(locale.value)
 
 const localeOptions = [
   { value: 'uk', label: 'UA' },
-  { value: 'ru', label: 'RU' },
+  { value: 'en', label: 'EN' },
 ]
 
 async function handleSwitchLocale() {

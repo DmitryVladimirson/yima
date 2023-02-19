@@ -61,9 +61,9 @@
           <TheH :level="3" class="inline font-medium">{{ $t('totalPrice') }}: </TheH>
           <ThePrice class="text-xl font-bold leading-tight" :value="orderState.total" />
         </div>
-        <TheLink to="/order/contact" class="btn btn-primary"
-          >{{ $t('fillInContactData') }} <ChevronIcon class="text-lg"
-        /></TheLink>
+        <TheLink to="/order/contact" class="btn btn-primary">
+          {{ $t('fillInContactData') }} <ChevronIcon class="text-lg" />
+        </TheLink>
       </div>
     </div>
     <TheMessageBox v-else :message="$t('yourCartIsEmpty')" />
