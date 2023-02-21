@@ -82,6 +82,7 @@
   "number": "Число",
   "order": "Замовлення",
   "orderCompleteSuccess": "Замовлення відправленно успішно",
+  "shipping": "Доставка",
   "orderCompleted": "Замовлення завершено",
   "orderCreate": "Оформлення Замовлення",
   "orderDeleteSuccess": "Замовлення видалено",

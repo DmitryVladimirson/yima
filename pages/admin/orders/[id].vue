@@ -10,7 +10,12 @@
           </div>
         </div>
 
-        <TheButton class="btn btn-primary relative" :loading="exportOrdersPending" @click="handleExportOrder">
+        <TheButton
+          :disabled="buttonsDisabled"
+          class="btn btn-primary relative"
+          :loading="exportOrdersPending"
+          @click="handleExportOrder"
+        >
           <DownloadIcon class="text-lg" />
         </TheButton>
       </div>
@@ -25,6 +30,7 @@
                     <th class="bg-neutral text-neutral-content">{{ $t('image') }}</th>
                     <th class="bg-neutral text-neutral-content">{{ $t('name') }}</th>
                     <th class="bg-neutral text-neutral-content">{{ $t('amount') }}</th>
+                    <th class="bg-neutral text-neutral-content">{{ $t('price') }}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -43,57 +49,68 @@
                       <div class="max-w-xs truncate font-bold">{{ product.name }}</div>
                     </td>
                     <td class="group-hover:bg-base-200">
-                      {{ product.quantity }}
+                      <QuantityBox
+                        v-model="product.quantity"
+                        :disabled="buttonsDisabled"
+                        class="relative z-10 w-fit"
+                        @changed="handleSetOrderItemQuantity(product.id, $event)"
+                      />
+                    </td>
+                    <td class="group-hover:bg-base-200">
+                      <ThePrice :value="product.price" />
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
-        </div>
-        <div class="flex grow flex-col gap-3">
-          <TheH :level="2">{{ $t('shippingMethod') }}</TheH>
-
-          <div class="leading-relaxed">
-            {{ $t(order.shippingAddress.shippingMethod) }}
-          </div>
-          <div>
-            <span class="font-medium">{{ $t('address') }}: </span>
-            <template v-if="order.shippingAddress.shippingMethod === 'toAddress'">
-              {{ order.shippingAddress.address }},
-            </template>
-            <template v-else> {{ order.shippingAddress.novaPoshtaAddress }} </template>
+          <div class="text-right">
+            <TheH :level="3">{{ $t('totalPrice') }}: <ThePrice :value="resolveOrderTotal" /></TheH>
           </div>
         </div>
-        <div class="flex grow flex-col gap-3">
-          <TheH :level="2">{{ $t('contactInfo') }}</TheH>
-
-          <div class="leading-relaxed">
-            <div>
-              <span class="font-medium">{{ $t('fullName') }}:</span>
-              {{ order.shippingAddress.firstName }} {{ order.shippingAddress.lastName }}
-            </div>
-            <div>
-              <span class="font-medium">{{ $t('email') }}:</span>
-              {{ order.shippingAddress.email }}
-            </div>
-            <div>
-              <span class="font-medium">{{ $t('phoneNumber') }}:</span>
-              {{ order.shippingAddress.phoneNumber }}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-4">
-        <TheButton
-          type="button"
-          class="btn btn-error relative text-white"
-          :loading="orderDeletePending"
-          @click="handleDeleteButtonClick"
+        <FormKit
+          v-model="formData"
+          type="form"
+          :actions="false"
+          form-class="flex flex-col gap-6"
+          @submit="handleSaveOrder"
         >
-          {{ $t('delete') }}
-        </TheButton>
+          <div class="flex grow flex-col gap-3">
+            <TheH :level="2">{{ $t('shipping') }}</TheH>
+
+            <FormKit type="text" :label="$t('shippingMethod')" name="shippingMethod" />
+            <FormKit type="text" :label="$t('address')" name="address" />
+          </div>
+          <div class="flex grow flex-col gap-3">
+            <TheH :level="2">{{ $t('contactInfo') }}</TheH>
+
+            <div class="flex grow flex-col gap-3">
+              <FormKit type="text" :label="$t('firstName')" name="firstName" />
+              <FormKit type="text" :label="$t('lastName')" name="lastName" />
+              <FormKit type="text" :label="$t('email')" name="email" />
+              <FormKit type="text" :label="$t('phoneNumber')" name="phoneNumber" />
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <TheButton
+              type="submit"
+              :loading="saveOrderPending"
+              :disabled="buttonsDisabled"
+              class="btn btn-primary relative"
+            >
+              {{ $t('save') }}
+            </TheButton>
+            <TheButton
+              :disabled="buttonsDisabled"
+              type="button"
+              class="btn btn-error relative text-white"
+              :loading="orderDeletePending"
+              @click="handleDeleteButtonClick"
+            >
+              {{ $t('delete') }}
+            </TheButton>
+          </div>
+        </FormKit>
       </div>
     </div>
 
@@ -126,7 +143,7 @@ import {
 } from '#imports'
 import DownloadIcon from '~icons/mdi/download'
 
-const { getOrder, deleteOrder, exportOrder } = useYimaAdminOrder()
+const { getOrder, deleteOrder, exportOrder, setOrderItemQuantity, setOrderShippingAddress } = useYimaAdminOrder()
 const { waitAnd } = useYimaHttp()
 const { toastSuccess } = useYimaToast()
 const { getDateStringFromUnix } = useYimaUtils()
@@ -136,6 +153,7 @@ const localPath = useLocalePath()
 
 const deleteOrderModalOpen = ref(false)
 const orderId = route.params.id as string
+const formData = ref<Record<string, any>>({})
 
 const { data: order } = await getOrder(orderId)
 
@@ -146,8 +164,22 @@ if (!order.value) {
   })
 }
 
+formData.value = {
+  ...order.value.shippingAddress,
+}
+
 const resolveDate = computed(() => {
   return getDateStringFromUnix(order.value.createdAt)
+})
+
+const resolveOrderTotal = computed(() => {
+  let total = 0
+
+  for (const product of order.value.products) {
+    total += product.price * product.quantity
+  }
+
+  return total
 })
 
 function handleDeleteButtonClick() {
@@ -168,4 +200,13 @@ const { execute: handleDeleteOrder, pending: orderDeletePending } = waitAnd(
 )
 
 const { execute: handleExportOrder, pending: exportOrdersPending } = waitAnd(() => exportOrder(orderId))
+const { execute: handleSetOrderItemQuantity, pending: setOrderItemQuantityPending } = waitAnd(
+  (productId: string, quantity: number) => setOrderItemQuantity(orderId, productId, quantity)
+)
+
+const { execute: handleSaveOrder, pending: saveOrderPending } = waitAnd((data: ShippingAddress) =>
+  setOrderShippingAddress(orderId, data)
+)
+
+const buttonsDisabled = computed(() => setOrderItemQuantityPending.value || saveOrderPending.value)
 </script>

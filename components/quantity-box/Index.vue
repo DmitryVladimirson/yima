@@ -1,5 +1,5 @@
 <template>
-  <div class="flex overflow-hidden rounded-md border bg-white p-1" v-bind="$attrs">
+  <div class="flex justify-between overflow-hidden rounded-md border bg-white p-1" v-bind="$attrs">
     <TheButton
       v-if="!disableButtons"
       class="flex items-center justify-center"
