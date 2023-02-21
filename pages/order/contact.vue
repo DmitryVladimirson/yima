@@ -36,14 +36,7 @@
           validation="required"
           :label="$t('shippingMethod')"
         />
-
-        <div v-if="formData.shippingMethod === 'novaPoshta'" class="flex flex-col gap-2">
-          <TheH :level="2">{{ $t('novaPoshta') }}</TheH>
-          <TheBaseCard class="p-4">
-            <FormKit type="text" name="novaPoshtaAddress" validation="required" :label="$t('novaPoshtaAddress')" />
-          </TheBaseCard>
-        </div>
-        <div v-else class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2">
           <TheH :level="2">{{ $t('address') }}</TheH>
           <TheBaseCard class="p-4">
             <OrderAddressAutocomplete id="map" name="address" validation="reqired" :placeholder="$t('enterAddress')" />
@@ -89,20 +82,22 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useNuxtApp, navigateTo, useLocalePath, ref, useI18n, useYimaHttp } from '#imports'
+import { useNuxtApp, navigateTo, useLocalePath, ref, useYimaHttp } from '#imports'
 
 const {
   $order: { state: orderState, setShippingAddress, completeOrder, removeOrder },
 } = useNuxtApp()
 const localePath = useLocalePath()
 const { waitAnd } = useYimaHttp()
-const { t } = useI18n()
 
 const formData = ref<Record<string, any>>({})
 
 const shippingOptions = [
-  { label: t('novaPoshta'), value: 'novaPoshta' },
-  { label: t('toAddress'), value: 'toAddress' },
+  'Нова пошта доставка до відділення',
+  "Нова пошта доставка кур'єром",
+  'Делівері доставка до відділення',
+  "Делівері доставка кур'єром",
+  'Доставка за адресою в Ужгороді',
 ]
 
 if (orderState.value.shippingAddress) {
