@@ -16,7 +16,6 @@ declare global {
     firstName?: string
     lastName?: string
     phoneNumber?: string
-    novaPoshtaAddress?: string
     address?: string
     shippingMethod?: string
   }

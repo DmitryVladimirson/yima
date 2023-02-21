@@ -1,4 +1,4 @@
-import { useYimaAdminApiOrder, useYimaUtils, useNuxtApp } from '#imports'
+import { useYimaAdminApiOrder, useYimaUtils } from '#imports'
 import XLSX from 'xlsx-js-style'
 import type { RowInfo } from 'xlsx-js-style'
 
@@ -27,9 +27,6 @@ const getOrderRows = (order: AdminOrder) => {
   const textCenterStyle = { alignment: { horizontal: 'center' } }
   const textRightStyle = { alignment: { horizontal: 'right' } }
   const fontBoldStyle = { font: { bold: true } }
-  const {
-    $i18n: { t },
-  } = useNuxtApp()
 
   rows.push(
     [],
@@ -42,11 +39,11 @@ const getOrderRows = (order: AdminOrder) => {
         s: { ...borderCellStyle, ...fontBoldStyle },
       },
     ],
-    ['', { v: `Доставка: ${t(order.shippingAddress.shippingMethod)}`, s: { ...borderCellStyle, ...fontBoldStyle } }],
+    ['', { v: `Доставка: ${order.shippingAddress.shippingMethod}`, s: { ...borderCellStyle, ...fontBoldStyle } }],
     [
       '',
       {
-        v: `Адреса: ${order.shippingAddress.novaPoshtaAddress ?? order.shippingAddress.address}`,
+        v: `Адреса: ${order.shippingAddress.address}`,
         s: { ...borderCellStyle, ...fontBoldStyle },
       },
     ],
