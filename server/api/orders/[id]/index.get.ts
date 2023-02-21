@@ -9,7 +9,7 @@ export default defineEventHandler(async (event): Promise<AdminOrder> => {
 
   const order = orders.member[0]
   if (!order) {
-    throw createYimaError({ statusCode: 404, statusMessage: 'Not Found', data: { message: 'noProductFound' } })
+    throw createYimaError({ statusCode: 404, statusMessage: 'Not Found', data: { message: 'noOrderFound' } })
   }
 
   order.products = await getOrderProductsNames(order.products)
