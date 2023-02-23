@@ -25,7 +25,7 @@ const isDarkMode = useLocalStorage('isDarkModeEnabled', false)
 const enabled = ref(false)
 
 onMounted(() => {
-  if (isDarkMode.value || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  if (isDarkMode.value) {
     document.documentElement.classList.remove('bg-slate-100')
     enabled.value = true
   }
