@@ -1,6 +1,8 @@
 <template>
   <Switch
+    ref="themeSwitcher"
     v-model="enabled"
+    data-toggle-theme="dark,light"
     :class="enabled ? 'bg-info' : 'bg-secondary'"
     class="relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent text-gray-800 shadow transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
   >
@@ -15,33 +17,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, useLocalStorage, onMounted } from '#imports'
+import { ref, onMounted } from '#imports'
 import SunIcon from '~icons/mdi/white-balance-sunny'
 import MoonIcon from '~icons/mdi/moon-waning-crescent'
 import { Switch } from '@headlessui/vue'
+import { themeChange } from 'theme-change'
 
-const isDarkMode = useLocalStorage('isDarkModeEnabled', false)
+const isDarkMode = useLocalStorage('theme', 'light')
 
 const enabled = ref(false)
+const themeSwitcher = ref()
 
 onMounted(() => {
-  if (isDarkMode.value) {
-    document.documentElement.classList.remove('bg-slate-100')
+  themeChange(false)
+
+  if (isDarkMode.value === 'dark') {
     enabled.value = true
   }
-})
-
-watch(enabled, (value) => {
-  if (!value) {
-    document.documentElement.classList.remove('dark')
-    document.documentElement.dataset.theme = ''
-    isDarkMode.value = false
-
-    return
-  }
-
-  document.documentElement.classList.add('dark')
-  document.documentElement.dataset.theme = 'dark'
-  isDarkMode.value = true
 })
 </script>

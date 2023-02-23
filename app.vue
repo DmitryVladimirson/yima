@@ -1,5 +1,5 @@
 <template>
-  <Html lang="uk" :class="{ 'bg-slate-100': !isDarkMode }">
+  <Html lang="uk" class="bg-[color:var(--bg-color)]">
     <Body class="min-h-screen">
       <NuxtLayout>
         <NuxtPage />
@@ -9,9 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { useLocalStorage, useNuxtApp } from '#imports'
-
-const isDarkMode = useLocalStorage('isDarkModeEnabled', false)
+import { useNuxtApp } from '#imports'
 
 const {
   $order: { refreshOrder },
