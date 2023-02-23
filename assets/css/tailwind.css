@@ -88,3 +88,11 @@
   @apply bg-gray-800
 }
 
+:root {
+  --bg-color:rgb(241, 245, 249);
+}
+
+[data-theme='dark'] {
+  --bg-color: rgb(31,41,55);
+}
+
