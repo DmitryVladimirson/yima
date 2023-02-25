@@ -21,7 +21,6 @@ import { ref, onMounted } from '#imports'
 import SunIcon from '~icons/mdi/white-balance-sunny'
 import MoonIcon from '~icons/mdi/moon-waning-crescent'
 import { Switch } from '@headlessui/vue'
-import { themeChange } from 'theme-change'
 
 const isDarkMode = useLocalStorage('theme', 'light')
 
@@ -29,8 +28,6 @@ const enabled = ref(false)
 const themeSwitcher = ref()
 
 onMounted(() => {
-  themeChange(false)
-
   if (isDarkMode.value === 'dark') {
     enabled.value = true
   }
