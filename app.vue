@@ -9,11 +9,16 @@
 </template>
 
 <script setup lang="ts">
-import { useNuxtApp } from '#imports'
+import { onMounted, useNuxtApp } from '#imports'
+import { themeChange } from 'theme-change'
 
 const {
   $order: { refreshOrder },
 } = useNuxtApp()
 
 refreshOrder()
+
+onMounted(() => {
+  themeChange(false)
+})
 </script>
