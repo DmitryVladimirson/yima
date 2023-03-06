@@ -1,5 +1,9 @@
 <template>
-  <ul v-if="products.length > 0" v-auto-animate class="grid w-full gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+  <ul
+    v-if="products.length > 0"
+    v-auto-animate
+    class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
+  >
     <li v-for="product in products" :key="product.id" class="h-full">
       <ProductCard :product="product" />
     </li>
