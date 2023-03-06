@@ -29,11 +29,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   )
 
   watchEffect(() => {
-    state.value.total = 0
-
-    for (const product of state.value.products) {
-      state.value.total += product.price * product.quantity
-    }
+    state.value.total = state.value.products.reduce((result, product) => result + product.price * product.quantity, 0)
   })
 
   nuxtApp.provide('order', plugin)
