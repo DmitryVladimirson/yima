@@ -1,5 +1,5 @@
 <template>
-  <TheBaseCard class="items-center gap-4 p-0">
+  <TheBaseCard class="gap-4 p-0">
     <TheLink
       :to="`/${product.slug}`"
       class="relative flex h-full w-full flex-col items-center gap-4 p-4 pt-6 pb-0 md:px-8 md:pt-8"
@@ -13,16 +13,17 @@
         </h2>
       </div>
     </TheLink>
-    <div class="flex w-full items-center justify-between gap-4 px-4 pt-0 pb-4 md:px-8 md:pb-8">
-      <ThePrice class="text-lg font-bold" :value="product.price" />
-      <TheButton :disabled="!product.inStock" class="btn btn-primary relative" @click="handleAddToOrder">
+    <ThePrice class="px-4 text-lg font-bold md:px-8" :value="product.price" />
+    <div class="flex w-full flex-wrap justify-between gap-2 px-4 pt-0 pb-4 md:px-8 md:pb-8">
+      <QuantityBox v-model="quantity" class="grow" :disabled="!product.inStock" :min="product.minAmountToPurchase" />
+      <TheButton :disabled="!product.inStock" class="btn btn-primary relative grow" @click="handleAddToOrder">
         {{ $t('buy') }}
       </TheButton>
     </div>
   </TheBaseCard>
 </template>
 <script setup lang="ts">
-import { useYimaProduct, toRefs, useYimaToast, useI18n } from '#imports'
+import { useYimaProduct, toRefs, ref, useYimaToast, useI18n } from '#imports'
 import { withDefaults } from 'vue'
 
 interface popperProperties {
@@ -39,8 +40,10 @@ const { t } = useI18n()
 
 const { product } = toRefs(properties)
 
+const quantity = ref(product.value.minAmountToPurchase ?? 1)
+
 function handleAddToOrder() {
-  addProductToOrder(product.value, product.value.minAmountToPurchase ?? 1, product.value.flavours?.[0])
+  addProductToOrder(product.value, quantity.value, product.value.flavours?.[0])
   toastSuccess(t('addedToCart', { productName: product.value.name }))
 }
 </script>
