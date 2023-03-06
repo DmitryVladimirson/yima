@@ -1,4 +1,4 @@
-import { useYimaAdminApiOrder, useYimaUtils } from '#imports'
+import { useYimaAdminApiOrder, useYimaToast, useNuxtApp } from '#imports'
 import XLSX from 'xlsx-js-style'
 import type { RowInfo } from 'xlsx-js-style'
 
@@ -13,8 +13,6 @@ declare global {
 }
 
 const getOrderRows = (order: AdminOrder) => {
-  const { getDateStringFromUnix } = useYimaUtils()
-
   const rows: any[][] = []
   const borderCellStyle = {
     border: {
@@ -30,8 +28,6 @@ const getOrderRows = (order: AdminOrder) => {
 
   rows.push(
     [],
-    ['', { v: `Замовлення №${order.id}`, s: { ...borderCellStyle, ...fontBoldStyle } }],
-    ['', { v: `Дата: ${getDateStringFromUnix(order.createdAt)}`, s: { ...borderCellStyle, ...fontBoldStyle } }],
     [
       '',
       {
@@ -93,6 +89,10 @@ const getOrderRows = (order: AdminOrder) => {
 
 const exportOrders = async (fromDate?: number) => {
   const { getOrders } = useYimaAdminOrder()
+  const { toastError } = useYimaToast()
+  const {
+    $i18n: { t },
+  } = useNuxtApp()
 
   const ordersResponse = await getOrders({
     params: { per_page: -1, withProductNames: true, fromDate },
@@ -103,6 +103,12 @@ const exportOrders = async (fromDate?: number) => {
   }
 
   const orders = ordersResponse.data.value?.member ?? []
+
+  if (orders.length === 0) {
+    toastError(t('noOrdersFound'))
+
+    return
+  }
 
   const ws_data = []
 

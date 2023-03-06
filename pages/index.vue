@@ -28,7 +28,11 @@
             </div>
           </div>
           <div class="flex flex-col gap-10 md:flex-row xl:gap-20">
-            <div class="hidden w-full md:block md:w-1/3 lg:w-1/5 xl:w-1/6" :class="{ '!block': showFilters }">
+            <div
+              ref="productFiltersWrapper"
+              class="hidden w-full md:block md:w-1/3 lg:w-1/5 xl:w-1/6"
+              :class="{ '!block': showFilters }"
+            >
               <ProductFilters :filters="filters" class="sticky top-4" @filters-changed="handleChangeFilters" />
             </div>
             <div class="flex h-full flex-col items-center gap-4 md:w-4/5 md:items-end xl:w-5/6">
@@ -49,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { useYimaProduct, ref, useI18n, useRoute, navigateTo, watch, useThrottleFn } from '#imports'
+import { useYimaProduct, ref, useI18n, useRoute, navigateTo, watch, useThrottleFn, onMounted } from '#imports'
 import FilterIcon from '~icons/mdi/filter'
 
 const { getProducts, getProductFilters } = useYimaProduct()
@@ -73,7 +77,7 @@ const itemsPerPageOptions = ref([
 ])
 
 const itemsPerPageOptionDefault = 20
-
+const productFiltersWrapper = ref()
 const currentSort = ref(route.query.sort_by ?? '')
 const currentPage = ref(Number(route.query.page) || 1)
 const itemsPerPage = ref(Number(route.query.itemsPerPage) || itemsPerPageOptionDefault)
@@ -138,6 +142,21 @@ const updateProducts = useThrottleFn(async (resetPage?: boolean) => {
 
 watch([currentSort], async () => {
   await updateProducts()
+})
+
+onMounted(() => {
+  const productFilters = productFiltersWrapper.value.querySelector('div')
+  const filtersHeight = productFilters.clientHeight
+  const targetHeight = window.innerHeight - 25
+  const categoriesList = productFilters.querySelector('#categories')
+  const categoriesListHeight = categoriesList.clientHeight
+  if (filtersHeight < targetHeight) {
+    return
+  }
+
+  const endHeight = Math.max(categoriesListHeight - (filtersHeight - targetHeight), 200)
+  categoriesList.style.height = `${endHeight}px`
+  categoriesList.classList.add('overflow-auto', 'pr-2')
 })
 
 /**

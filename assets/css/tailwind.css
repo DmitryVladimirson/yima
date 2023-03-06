@@ -41,6 +41,23 @@
     scrollbar-width: none;
   }
 
+  .scroller {
+    scrollbar-color: theme('colors.gray.100');
+    scrollbar-width: thin;
+  }
+
+  .scroller::-webkit-scrollbar {
+    @apply w-1.5 h-1.5;
+  }
+
+  .scroller::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+
+  .scroller::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-gray-300 hover:bg-gray-400;
+  }
+
 }
 
 

@@ -1,12 +1,12 @@
 <template>
-  <div v-if="filters.length > 0">
+  <div v-if="filters.length > 0" v-bind="$attrs">
     <FormKit v-model="formData" type="form" form-class="flex flex-col gap-4" :actions="false">
       <TheBaseCard class="flex flex-col justify-between gap-8 overflow-visible">
         <div v-for="filter in filters" :key="filter.sectionName" class="flex flex-col gap-4">
           <TheH :level="4">{{ $t(filter.sectionName) }}</TheH>
           <FormKit type="group" :name="filter.sectionName">
-            <ul class="flex flex-col gap-4">
-              <li v-for="item in filter.items" :key="item.id" class="">
+            <ul :id="filter.sectionName" class="scroller flex w-full flex-col gap-4">
+              <li v-for="item in filter.items" :key="item.id">
                 <template v-if="item.type === 'range'">
                   <TheSlider
                     :min-selected="priceSelectedValues.min"
