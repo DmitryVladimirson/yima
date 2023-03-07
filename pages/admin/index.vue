@@ -11,7 +11,7 @@
               <tr>
                 <th class="bg-neutral text-neutral-content">{{ $t('order') }}</th>
                 <th class="bg-neutral text-neutral-content">{{ $t('itemsNumber') }}</th>
-                <th class="bg-neutral text-neutral-content">{{ $t('price') }}</th>
+                <th class="bg-neutral text-neutral-content">{{ $t('totalPriceProduct') }}</th>
                 <th class="bg-neutral text-neutral-content">{{ $t('date') }}</th>
               </tr>
             </thead>
