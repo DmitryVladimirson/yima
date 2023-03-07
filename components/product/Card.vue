@@ -14,10 +14,10 @@
       </div>
     </TheLink>
     <ThePrice class="px-4 text-lg font-bold md:px-8" :value="product.price" />
-    <div class="flex w-full flex-wrap justify-between gap-2 px-4 pt-0 pb-4 md:px-8 md:pb-8">
+    <div class="flex w-full flex-col justify-between gap-2 px-4 pt-0 pb-4 md:px-8 md:pb-8">
       <QuantityBox v-model="quantity" class="grow" :disabled="!product.inStock" :min="product.minAmountToPurchase" />
       <TheButton :disabled="!product.inStock" class="btn btn-primary relative grow" @click="handleAddToOrder">
-        {{ $t('buy') }}
+        {{ product.inStock ? $t('buy') : $t('notInStock') }}
       </TheButton>
     </div>
   </TheBaseCard>
