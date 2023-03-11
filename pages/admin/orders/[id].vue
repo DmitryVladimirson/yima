@@ -89,6 +89,7 @@
               <FormKit type="text" :label="$t('lastName')" name="lastName" />
               <FormKit type="text" :label="$t('email')" name="email" />
               <FormKit type="text" :label="$t('phoneNumber')" name="phoneNumber" />
+              <FormKit type="text" :label="$t('comment')" name="comment" />
             </div>
           </div>
           <div class="flex items-center gap-4">

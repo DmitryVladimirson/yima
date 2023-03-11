@@ -19,6 +19,7 @@ declare global {
     phoneNumber?: string
     address?: string
     shippingMethod?: string
+    comment?: string
   }
 
   interface OrderState {

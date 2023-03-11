@@ -42,6 +42,11 @@
             <OrderAddressAutocomplete id="map" name="address" validation="reqired" :placeholder="$t('enterAddress')" />
           </TheBaseCard>
         </div>
+        <FormKit type="checkbox" name="commentEnabled" outer-class="w-fit" :label="$t('addComment')" />
+        <TheBaseCard v-show="formData.commentEnabled" class="p-4">
+          <FormKit type="textarea" name="comment" :placeholder="$t('enterComment')" />
+        </TheBaseCard>
+
         <TheButton class="btn btn-primary md:hidden" type="submit" :disabled="!formValid">
           {{ $t('submit') }}
         </TheButton>
@@ -106,7 +111,17 @@ if (orderState.value.shippingAddress) {
 
 const { execute: handleSubmit } = waitAnd(
   (data: Record<string, any>) => {
-    setShippingAddress(data as ShippingAddress)
+    const payload: ShippingAddress = {
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      phoneNumber: data.phoneNumber,
+      address: data.address,
+      shippingMethod: data.shippingMethod,
+      ...(data.commentEnabled ? { comment: data.comment } : {}),
+    }
+
+    setShippingAddress(payload)
 
     return completeOrder()
   },
