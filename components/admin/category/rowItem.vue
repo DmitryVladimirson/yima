@@ -2,7 +2,7 @@
   <div
     v-if="category"
     tabindex="0"
-    class="border-base-300 bg-base-100 rounded-box collapse border"
+    class="border-base-300 bg-base-100 rounded-box dark:bg-neutral dark:text-neutral-content collapse border"
     :class="[collapseOpen ? 'collapse-open' : 'collapse-close']"
   >
     <div class="collapse-title flex items-center justify-between text-xl font-medium">

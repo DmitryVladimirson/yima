@@ -8,7 +8,8 @@ import tailwindcss from '@formkit/themes/tailwindcss'
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
-  darkMode: 'class',
+  darkMode: ['class', '[data-theme="dark"]'],
+  // ...
   content: [
     './components/**/*.{js,vue,ts}',
     './layouts/**/*.vue',
