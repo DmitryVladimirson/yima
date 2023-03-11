@@ -40,7 +40,7 @@
                     {{ product.isVisible ? $t('visible') : $t('hidden') }}
                   </span>
                 </td>
-                <th class="group-hover:bg-base-200">
+                <td class="group-hover:bg-base-200">
                   <div class="relative z-20 flex items-center justify-center gap-2">
                     <TheLink :to="`/admin/products/${product.id}`" class="btn"><DetailsIcon class="text-xl" /></TheLink>
                     <TheButton
@@ -51,7 +51,7 @@
                       <DeleteIcon class="text-lg" />
                     </TheButton>
                   </div>
-                </th>
+                </td>
               </tr>
             </tbody>
           </table>

@@ -23,7 +23,7 @@
             <td class="group-hover:bg-base-200">
               {{ $t(attribute.type) }}
             </td>
-            <th class="group-hover:bg-base-200">
+            <td class="group-hover:bg-base-200">
               <div class="relative z-20 flex items-center justify-center gap-2">
                 <TheLink :to="`/admin/attributes/${attribute.id}`" class="btn"><DetailsIcon class="text-xl" /></TheLink>
                 <TheButton
@@ -34,7 +34,7 @@
                   <DeleteIcon class="text-lg" />
                 </TheButton>
               </div>
-            </th>
+            </td>
           </tr>
         </tbody>
       </table>

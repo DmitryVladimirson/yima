@@ -4,7 +4,7 @@
     :class="{ loading: loading }"
     :aria-disabled="disabled"
     :disabled="disabled || loading"
-    class="before:hidden"
+    class="before:hidden disabled:bg-gray-200 disabled:text-gray-300"
   >
     <transition
       v-if="loading"

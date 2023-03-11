@@ -58,6 +58,13 @@
     @apply rounded-full bg-gray-300 hover:bg-gray-400;
   }
 
+  .table td {
+    @apply dark:bg-neutral dark:text-neutral-content;
+  }
+  .table tr:hover td {
+    @apply dark:bg-gray-200;
+  }
+
 }
 
 
