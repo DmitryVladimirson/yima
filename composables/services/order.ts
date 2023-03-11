@@ -9,6 +9,7 @@ declare global {
     imgUrl: string
     quantity: number
     flavour?: string
+    minAmountToPurchase: number
   }
 
   interface ShippingAddress extends Record<string, any> {
