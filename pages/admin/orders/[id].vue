@@ -31,6 +31,7 @@
                     <th class="bg-neutral text-neutral-content">{{ $t('name') }}</th>
                     <th class="bg-neutral text-neutral-content">{{ $t('amount') }}</th>
                     <th class="bg-neutral text-neutral-content">{{ $t('price') }}</th>
+                    <th class="bg-neutral text-neutral-content"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -58,6 +59,15 @@
                     </td>
                     <td class="group-hover:bg-base-200">
                       <ThePrice :value="product.price" />
+                    </td>
+                    <td class="group-hover:bg-base-200 relative z-10">
+                      <TheButton
+                        class="btn btn-error relative w-fit text-white"
+                        :loading="handleDeleteProductPending"
+                        @click="handleDeleteProduct(product.id)"
+                      >
+                        <DeleteIcon class="text-lg" />
+                      </TheButton>
                     </td>
                   </tr>
                 </tbody>
@@ -142,9 +152,11 @@ import {
   useYimaToast,
   useYimaUtils,
 } from '#imports'
+import DeleteIcon from '~icons/mdi/trash'
 import DownloadIcon from '~icons/mdi/download'
 
-const { getOrder, deleteOrder, exportOrder, setOrderItemQuantity, setOrderShippingAddress } = useYimaAdminOrder()
+const { getOrder, deleteOrder, exportOrder, setOrderItemQuantity, setOrderShippingAddress, setOrderProducts } =
+  useYimaAdminOrder()
 const { waitAnd } = useYimaHttp()
 const { toastSuccess } = useYimaToast()
 const { getDateStringFromUnix } = useYimaUtils()
@@ -201,6 +213,7 @@ const { execute: handleDeleteOrder, pending: orderDeletePending } = waitAnd(
 )
 
 const { execute: handleExportOrder, pending: exportOrdersPending } = waitAnd(() => exportOrder(orderId))
+
 const { execute: handleSetOrderItemQuantity, pending: setOrderItemQuantityPending } = waitAnd(
   (productId: string, quantity: number) => setOrderItemQuantity(orderId, productId, quantity)
 )
@@ -210,4 +223,19 @@ const { execute: handleSaveOrder, pending: saveOrderPending } = waitAnd((data: S
 )
 
 const buttonsDisabled = computed(() => setOrderItemQuantityPending.value || saveOrderPending.value)
+
+const { execute: handleDeleteProduct, pending: handleDeleteProductPending } = waitAnd(
+  (id: string) => {
+    order.value.products = order.value.products.filter((product) => product.id !== id)
+
+    return setOrderProducts(orderId, order.value.products)
+  },
+  async (response) => {
+    if (response.error.value) {
+      return
+    }
+
+    toastSuccess(t('productDeleteSuccess'))
+  }
+)
 </script>

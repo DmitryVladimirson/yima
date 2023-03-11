@@ -5,7 +5,7 @@ import type { RowInfo } from 'xlsx-js-style'
 declare global {
   interface AdminOrder {
     id: string
-    products: Array<{ id: string; name: string; quantity: number; imgUrl: string; price: number }>
+    products: OrderProduct[]
     shippingAddress: ShippingAddress
     createdAt: number
     total: number

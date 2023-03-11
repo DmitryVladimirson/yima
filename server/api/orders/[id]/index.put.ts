@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  await set(orderCollection, { shippingAddress: body.shippingAddress }, orderId)
+  await set(orderCollection, { ...body }, orderId)
 
   return {}
 })

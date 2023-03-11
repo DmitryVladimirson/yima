@@ -36,6 +36,9 @@ export const getOrderProductsNames = async (orderProducts: Array<{ id: string; q
         const productData = product.data()
 
         return {
+          slug: productData.slug,
+          flavour: productData.flavour,
+          minAmountToPurchase: productData.minAmountToPurchase,
           price: productData.price,
           imgUrl: productData.imgUrl,
           id: product.id,
