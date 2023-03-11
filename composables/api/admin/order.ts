@@ -47,6 +47,22 @@ const setOrderShippingAddress = async (
   )
 }
 
+const setOrderProducts = async (
+  orderId: string,
+  products: OrderProduct[],
+  options?: YimaFetchOptions,
+  asyncDataOptions?: AsyncDataOptions<any>
+) => {
+  return useNuxtApp().$http.put(
+    `${urlPrefix}/orders/${orderId}`,
+    {
+      body: { products },
+      ...options,
+    },
+    asyncDataOptions
+  )
+}
+
 export const useYimaAdminApiOrder = () => {
   return {
     deleteOrder,
@@ -54,5 +70,6 @@ export const useYimaAdminApiOrder = () => {
     getOrders,
     setOrderItemQuantity,
     setOrderShippingAddress,
+    setOrderProducts,
   }
 }

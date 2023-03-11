@@ -42,6 +42,7 @@ import CubeIcon from '~icons/mdi/cube-outline'
 import CartIcon from '~icons/mdi/cart'
 import FolderIcon from '~icons/mdi/folder'
 import AttributesIcon from '~icons/mdi/tag-multiple'
+import SettingsIcon from '~icons/mdi/settings'
 
 const { t } = useI18n()
 const drawerVisible = ref(false)
@@ -70,7 +71,7 @@ const menu = [
   {
     name: t('settings'),
     link: '/admin/settings',
-    icon: AttributesIcon,
+    icon: SettingsIcon,
   },
 ]
 
