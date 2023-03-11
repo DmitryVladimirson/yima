@@ -43,6 +43,7 @@ const addProductToOrder = (product: Product, quantity: number, flavour?: string)
     id: product.id,
     price: product.price,
     imgUrl: product.imgUrl,
+    minAmountToPurchase: product.minAmountToPurchase,
     quantity,
     flavour,
   }

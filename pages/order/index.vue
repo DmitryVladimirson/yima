@@ -1,6 +1,6 @@
 <template>
   <div class="container flex flex-col items-center gap-6">
-    <div v-if="orderState.products.length > 0" class="grid w-full max-w-4xl grid-flow-row">
+    <div v-if="orderState.products.length > 0" class="grid w-full max-w-4xl grid-flow-row gap-4">
       <div class="hidden grid-flow-row grid-cols-1 gap-3 py-3 px-4 sm:grid sm:grid-cols-12 md:gap-4">
         <div class="col-span-6 flex items-center gap-3 md:col-span-5" />
         <div class="col-span-3 flex items-center justify-center text-center md:col-span-2">
@@ -56,14 +56,18 @@
           </div>
         </article>
       </TheBaseCard>
-      <div class="ml-auto mt-10 flex flex-col gap-4">
+      <TheMessageBox v-show="isNextStepDisabled">
+        <div>{{ $t('minPurchasePrice') }}: <ThePrice class="font-bold" :value="settings.minPurchasePrice" /></div>
+      </TheMessageBox>
+      <div class="ml-auto flex flex-col gap-4">
         <div>
           <TheH :level="3" class="inline font-medium">{{ $t('totalPrice') }}: </TheH>
           <ThePrice class="text-xl font-bold leading-tight" :value="orderState.total" />
         </div>
-        <TheLink to="/order/contact" class="btn btn-primary">
+
+        <TheButton :disabled="isNextStepDisabled" class="btn btn-primary" @click="handleNextStep">
           {{ $t('fillInContactData') }} <ChevronIcon class="text-lg" />
-        </TheLink>
+        </TheButton>
       </div>
     </div>
     <TheMessageBox v-else :message="$t('yourCartIsEmpty')" />
@@ -71,13 +75,28 @@
 </template>
 
 <script setup lang="ts">
-import { useNuxtApp, useYimaProduct } from '#imports'
+import { useNuxtApp, useYimaProduct, useYimaSettings, navigateTo, useLocalePath } from '#imports'
 import TrashIcon from '~icons/mdi/delete'
 import ChevronIcon from '~icons/mdi/chevron-right'
 
 const {
   $order: { state: orderState },
 } = useNuxtApp()
+const { getSettings } = useYimaSettings()
+const { data: settings } = await getSettings()
+const localePath = useLocalePath()
 
 const { removeProductFromOrder, changeProductOrderQuantity } = useYimaProduct()
+
+const isNextStepDisabled = computed(() => {
+  if (!settings.value?.minPurchasePrice || !orderState.value.total) {
+    return false
+  }
+
+  return settings.value.minPurchasePrice > orderState.value.total
+})
+
+async function handleNextStep() {
+  await navigateTo(localePath('/order/contact'))
+}
 </script>

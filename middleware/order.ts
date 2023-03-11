@@ -1,4 +1,4 @@
-import { useNuxtApp, navigateTo } from '#imports'
+import { useNuxtApp, navigateTo, useYimaSettings } from '#imports'
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const {
@@ -8,9 +8,16 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     refreshOrder()
   }
 
+  const { getSettings } = useYimaSettings()
+  const { data: settings } = await getSettings()
+
   if (
     (orderState.value.products.length === 0 && to.path !== '/order') ||
-    (from.path !== '/order/contact' && to.path === '/order/complete')
+    (from.path !== '/order/contact' && to.path === '/order/complete') ||
+    (settings.value?.minPurchasePrice &&
+      orderState.value.total &&
+      settings.value.minPurchasePrice > orderState.value.total &&
+      to.path !== '/order')
   ) {
     return navigateTo(`/order`)
   }

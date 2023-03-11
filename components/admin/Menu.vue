@@ -67,6 +67,11 @@ const menu = [
     link: '/admin/attributes',
     icon: AttributesIcon,
   },
+  {
+    name: t('settings'),
+    link: '/admin/settings',
+    icon: AttributesIcon,
+  },
 ]
 
 function handleShowDrawer() {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-4 flex w-full items-center gap-3 rounded p-3 text-sm"
+    class="flex w-full items-center gap-3 rounded p-3 text-sm"
     :class="[
       {
         'bg-info': type === 'info',
@@ -27,10 +27,12 @@
       </template>
     </slot>
     <div class="flex flex-col">
-      <div v-if="title" class="font-bold">
-        {{ title }}
-      </div>
-      <div v-if="message" v-html="message"></div>
+      <slot name="default">
+        <div v-if="title" class="font-bold">
+          {{ title }}
+        </div>
+        <div v-if="message" v-html="message"></div>
+      </slot>
     </div>
   </div>
 </template>
