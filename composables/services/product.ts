@@ -13,6 +13,7 @@ declare global {
     minAmountToPurchase: number
     name: string
     price: number
+    oldPrice: number | undefined
     slug: string
   }
 

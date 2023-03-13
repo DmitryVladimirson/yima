@@ -21,7 +21,8 @@
               <QuantityBox v-model="quantity" :min="product.minAmountToPurchase" />
             </div>
 
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col-reverse">
+              <ThePrice v-if="product.oldPrice" class="text-xl line-through" :value="product.oldPrice"></ThePrice>
               <div class="flex flex-col">
                 <span class="font-bold">{{ $t('price') }}:</span>
                 <span class="self-start text-3xl font-bold text-black">

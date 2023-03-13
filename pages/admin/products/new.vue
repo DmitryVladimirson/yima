@@ -26,6 +26,7 @@
       <AdminProductFlavours v-model="flavours" />
       <FormKit type="textarea" name="description" :label="$t('description')" />
       <FormKit type="number" validation="required" name="price" :step="0.01" :label="$t('price')" />
+      <FormKit type="number" validation="required" name="oldPrice" :step="0.01" :label="$t('oldPrice')" />
       <FormKit type="number" name="minAmountToPurchase" :step="1" :min="1" :label="$t('minAmountToPurchase')" />
       <FormKit type="file" name="image" :label="$t('image')" />
       <FormKit type="checkbox" name="inStock" :label="$t('inStock')" />
@@ -128,9 +129,10 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
       imgUrl: data.imgUrl,
       inStock: data.inStock,
       isVisible: data.isVisible,
-      minAmountToPurchase: Number(data.minAmountToPurchase ?? 0),
+      minAmountToPurchase: Number(data.minAmountToPurchase ?? 1),
       name: data.name,
       price: Number(data.price),
+      oldPrice: Number(data.oldPrice),
       slug: data.slug,
       flavours: flavours.value,
     }

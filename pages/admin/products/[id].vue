@@ -19,6 +19,7 @@
       <FormKit type="text" name="slug" :label="$t('slug')" :help="$t('productPath')" />
       <FormKit type="textarea" name="description" :label="$t('description')" />
       <FormKit type="number" name="price" :step="0.01" :label="$t('price')" />
+      <FormKit type="number" name="oldPrice" :step="0.01" :label="$t('oldPrice')" />
       <FormKit type="number" name="minAmountToPurchase" :step="1" :min="1" :label="$t('minAmountToPurchase')" />
       <AdminProductCategoryList :categories="allCategories" />
       <AdminProductAttributes :all-attributes="allAttributes" :product-attributes="product.attributes" />
@@ -105,6 +106,7 @@ formData.value = {
   inStock: product.value.inStock,
   minAmountToPurchase: Number(product.value.minAmountToPurchase),
   price: Number(product.value.price),
+  oldPrice: Number(product.value.oldPrice),
 }
 
 const flavours = ref(product.value.flavours ?? [])
@@ -166,6 +168,7 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
       minAmountToPurchase: Number(data.minAmountToPurchase),
       name: data.name,
       price: Number(data.price),
+      oldPrice: Number(data.oldPrice),
       slug: data.slug,
       flavours: flavours.value,
       ...(data.imgUrl ? { imgUrl: data.imgUrl } : {}),

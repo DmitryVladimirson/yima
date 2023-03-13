@@ -1,10 +1,10 @@
 <template>
   <section class="container flex flex-col gap-6">
     <TheH :level="2" class="text-center">
-      {{ $t('productsOfTheWeek') }}
+      {{ $t('sale') }}
     </TheH>
 
-    <ProductSlider :products="chosenProducts" />
+    <ProductSlider :products="saleProducts" />
   </section>
 </template>
 
@@ -12,10 +12,10 @@
 import { withDefaults } from 'vue'
 
 interface Properties {
-  chosenProducts: Product[]
+  saleProducts: Product[]
 }
 
 withDefaults(defineProps<Properties>(), {
-  chosenProducts: () => [],
+  saleProducts: () => [],
 })
 </script>
