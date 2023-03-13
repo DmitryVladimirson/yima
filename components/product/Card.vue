@@ -13,7 +13,10 @@
         </h2>
       </div>
     </TheLink>
-    <ThePrice class="px-4 text-lg font-bold md:px-8" :value="product.price" />
+    <div class="flex items-end justify-start gap-2 px-4 md:px-8">
+      <ThePrice class="text-lg font-bold" :value="product.price" />
+      <ThePrice v-if="product.oldPrice" class="line-through" :value="product.oldPrice" />
+    </div>
     <div class="flex w-full flex-wrap justify-between gap-2 px-4 pt-0 pb-4 md:px-8 md:pb-8">
       <QuantityBox v-model="quantity" class="grow" :disabled="!product.inStock" :min="product.minAmountToPurchase" />
       <TheButton :disabled="!product.inStock" class="btn btn-primary relative grow" @click="handleAddToOrder">
