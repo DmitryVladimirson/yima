@@ -51,5 +51,5 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  return { member: orders, totalItems: ordersResponse.totalItems, fromDateQuery }
+  return { member: orders, totalItems: ordersResponse.totalItems }
 })
