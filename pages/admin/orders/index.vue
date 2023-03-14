@@ -2,11 +2,18 @@
   <div class="flex flex-col gap-4">
     <div class="flex items-center justify-between gap-4">
       <h1>{{ $t('orders') }}</h1>
-      <div class="flex flex-wrap gap-4">
-        <FormKit v-model="fromDate" type="select" :options="fromDatesOptions" />
-        <TheButton class="btn btn-primary relative" :loading="exportOrdersPending" @click="handleExportOrders">
-          <DownloadIcon class="text-lg" />
-        </TheButton>
+      <div>
+        <div class="dropdown dropdown-end">
+          <TheButton class="btn btn-primary relative" :loading="exportOrdersPending">
+            <span class="indicator">
+              <DownloadIcon class="text-lg" />
+            </span>
+          </TheButton>
+
+          <div tabindex="0" class="dropdown-content">
+            <VueDatePicker v-model="fromDate" inline range @update:model-value="handleExportOrders" />
+          </div>
+        </div>
       </div>
     </div>
     <template v-if="orders.member?.length > 0">
@@ -48,28 +55,18 @@
 </template>
 
 <script setup lang="ts">
-import { useYimaAdminOrder, useYimaUtils, useYimaHttp, useI18n, ref } from '#imports'
+import { useYimaAdminOrder, useYimaUtils, useYimaHttp, ref } from '#imports'
 import DownloadIcon from '~icons/mdi/download'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
 
 const { getOrders, exportOrders } = useYimaAdminOrder()
 const { getDateStringFromUnix, getUnixDate } = useYimaUtils()
 const { waitAnd } = useYimaHttp()
-const { t } = useI18n()
 
 const { data: orders } = await getOrders()
 
-const fromDatesOptions = computed(() => {
-  const dateNowUnix = getUnixDate()
-
-  return [
-    { value: dateNowUnix - 86_400, label: t('lastDay') },
-    { value: dateNowUnix - 604_800, label: t('lastWeek') },
-    { value: dateNowUnix - 2_629_743, label: t('lastMonth') },
-    { value: undefined, label: t('allTime') },
-  ]
-})
-
-const fromDate = ref(fromDatesOptions.value[0].value)
+const fromDate = ref()
 
 const loadMoreButtonEnabled = computed(() => {
   if (!orders.value?.member || !orders.value?.totalItems) {
@@ -90,5 +87,19 @@ async function handleLoadMore() {
   orders.value?.member.push(...data.value.member)
 }
 
-const { execute: handleExportOrders, pending: exportOrdersPending } = waitAnd(() => exportOrders(fromDate.value))
+const { execute: handleExportOrders, pending: exportOrdersPending } = waitAnd(() => {
+  const finalDateFrom = getUnixDate(fromDate.value[0])
+  let finalDateTo = getUnixDate(fromDate.value[1])
+  if (finalDateTo === finalDateFrom) {
+    finalDateTo += 86_400
+  }
+
+  return exportOrders(finalDateFrom, finalDateTo)
+})
+
+onMounted(() => {
+  const startDate = new Date()
+  const endDate = new Date(new Date().setDate(startDate.getDate() + 1))
+  fromDate.value = [startDate, endDate]
+})
 </script>

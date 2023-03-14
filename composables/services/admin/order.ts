@@ -87,7 +87,7 @@ const getOrderRows = (order: AdminOrder) => {
   return rows
 }
 
-const exportOrders = async (fromDate?: number) => {
+const exportOrders = async (fromDate?: number, toDate?: number) => {
   const { getOrders } = useYimaAdminOrder()
   const { toastError } = useYimaToast()
   const {
@@ -95,7 +95,7 @@ const exportOrders = async (fromDate?: number) => {
   } = useNuxtApp()
 
   const ordersResponse = await getOrders({
-    params: { per_page: -1, withProductNames: true, fromDate },
+    params: { per_page: -1, withProductNames: true, fromDate, toDate },
   })
 
   if (ordersResponse.error.value || !ordersResponse.data.value) {

@@ -87,8 +87,10 @@ const transliterate = (cyrillicText: string) => {
     .replaceAll('"', '')
 }
 
-const getUnixDate = () => {
-  return Math.floor(Date.now() / 1000)
+const getUnixDate = (date?: Date) => {
+  const finalDate = date?.getTime() ?? Date.now()
+
+  return Math.floor(finalDate / 1000)
 }
 
 const getDateStringFromUnix = (unixDate: number) => {
