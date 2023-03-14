@@ -21,6 +21,7 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.8",
     "@vueform/slider": "^2.1.7",
+    "@vuepic/vue-datepicker": "^4.2.0",
     "@vueuse/nuxt": "^9.11.1",
     "daisyui": "^2.46.1",
     "firebase": "^9.15.0",

@@ -12,19 +12,19 @@ import {
   getDoc,
   endBefore,
   orderBy,
-  type OrderByDirection,
+  QueryFieldFilterConstraint,
 } from 'firebase/firestore'
 
 import { getQuery, type H3Event } from 'h3'
 import { firestoreDatabase } from './firebase'
-import type { QueryConstraint, QueryFieldFilterConstraint } from 'firebase/firestore'
+import type { OrderByDirection, QueryConstraint } from 'firebase/firestore'
 
 declare global {
   interface QueryByCollectionOptions {
     per_page?: number
     anchorDocumentId?: string
     directionForward?: boolean
-    where?: QueryFieldFilterConstraint
+    where?: QueryFieldFilterConstraint | QueryFieldFilterConstraint[]
     orderByPath?: string
     orderByDirection?: OrderByDirection
   }
@@ -76,7 +76,13 @@ export const queryByCollection = async <T>(
   }
 
   if (whereOption) {
-    queryOptions.push(whereOption)
+    if (whereOption instanceof Array<QueryFieldFilterConstraint>) {
+      queryOptions.push(...whereOption)
+    }
+
+    if (whereOption instanceof QueryFieldFilterConstraint) {
+      queryOptions.push(whereOption)
+    }
   }
 
   const countResponse = await getCountFromServer(colReference)

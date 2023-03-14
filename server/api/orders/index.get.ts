@@ -6,8 +6,14 @@ import { getOrderProductsNames } from '~/server/lib/utils'
 export default defineEventHandler(async (event) => {
   const queryOptions = getQuery(event)
   const fromDateQuery: QueryByCollectionOptions = {}
+  fromDateQuery.where = []
+
   if (queryOptions.fromDate) {
-    fromDateQuery.where = where('createdAt', '>=', Number(queryOptions.fromDate))
+    fromDateQuery.where.push(where('createdAt', '>=', Number(queryOptions.fromDate)))
+  }
+
+  if (queryOptions.toDate) {
+    fromDateQuery.where.push(where('createdAt', '<=', Number(queryOptions.toDate)))
   }
 
   const parameters: QueryByCollectionOptions = {
@@ -45,5 +51,5 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  return { member: orders, totalItems: ordersResponse.totalItems }
+  return { member: orders, totalItems: ordersResponse.totalItems, fromDateQuery }
 })
