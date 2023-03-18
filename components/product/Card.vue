@@ -20,7 +20,7 @@
     <div class="flex w-full flex-wrap justify-between gap-2 px-4 pt-0 pb-4 md:px-8 md:pb-8">
       <QuantityBox v-model="quantity" class="grow" :disabled="!product.inStock" :min="product.minAmountToPurchase" />
       <TheButton :disabled="!product.inStock" class="btn btn-primary relative grow" @click="handleAddToOrder">
-        {{ $t('buy') }}
+        {{ product.inStock ? $t('buy') : $t('notInStock') }}
       </TheButton>
     </div>
   </TheBaseCard>
