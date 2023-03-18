@@ -8,11 +8,12 @@
       :actions="false"
       @submit="handleSubmit"
     >
-      <div class="flex grow flex-col gap-8">
+      <div class="flex w-2/3 grow flex-col gap-8">
         <div class="flex flex-col gap-2">
           <TheH :level="2">{{ $t('email') }}</TheH>
           <FormKit type="email" name="email" validation="required|email" />
         </div>
+
         <div class="flex flex-col gap-2">
           <TheH :level="2">{{ $t('contactInfo') }}</TheH>
           <TheBaseCard class="grid gap-4 p-4 sm:grid-cols-2">
@@ -31,18 +32,30 @@
 
         <FormKit
           type="select"
+          :value="currentShippingOption.label"
           name="shippingMethod"
-          :options="shippingOptions"
           validation="required"
           :label="$t('shippingMethod')"
+        >
+          <option
+            v-for="(option, index) in shippingOptions"
+            :key="option.label"
+            :disabled="index === 0"
+            :value="option.label"
+          >
+            {{ option.label }}
+          </option>
+        </FormKit>
+
+        <LazyOrderAddressBlock
+          v-if="formData.shippingMethod !== shippingOptions[0].label"
+          :key="currentShippingOption.label"
+          v-model="selectedShippingAddress"
+          :shipping-option="currentShippingOption"
         />
-        <div class="flex flex-col gap-2">
-          <TheH :level="2">{{ $t('address') }}</TheH>
-          <TheBaseCard class="p-4">
-            <OrderAddressAutocomplete id="map" name="address" validation="reqired" :placeholder="$t('enterAddress')" />
-          </TheBaseCard>
-        </div>
+
         <FormKit type="checkbox" name="commentEnabled" outer-class="w-fit" :label="$t('addComment')" />
+
         <TheBaseCard v-show="formData.commentEnabled" class="p-4">
           <FormKit type="textarea" name="comment" :placeholder="$t('enterComment')" />
         </TheBaseCard>
@@ -73,11 +86,11 @@
           <div
             class="ml-auto mt-4"
             :class="{
-              'tooltip tooltip-bottom': !formValid,
+              'tooltip tooltip-bottom': !formValid || !selectedShippingAddress,
             }"
             :data-tip="$t('provideData')"
           >
-            <TheButton class="btn btn-primary" type="submit" :disabled="!formValid">
+            <TheButton class="btn btn-primary" type="submit" :disabled="!formValid || !selectedShippingAddress">
               {{ $t('submit') }}
             </TheButton>
           </div>
@@ -97,17 +110,62 @@ const { waitAnd } = useYimaHttp()
 
 const formData = ref<Record<string, any>>({})
 
-const shippingOptions = [
-  'Нова пошта доставка на відділення',
-  "Нова пошта доставка кур'єром",
-  'Делівері доставка на відділення',
-  "Делівері доставка кур'єром",
-  'Доставка за адресою в Ужгороді',
+const shippingOptions: { label: string; department: boolean; service: string }[] = [
+  {
+    label: 'Виберіть спосіб доставки',
+    department: false,
+    service: '',
+  },
+  {
+    label: 'Нова пошта доставка на відділення',
+    department: true,
+    service: 'novaposhta',
+  },
+  {
+    label: "Нова пошта доставка кур'єром",
+    department: false,
+    service: 'novaposhta',
+  },
+  {
+    label: 'Делівері доставка на відділення',
+    department: true,
+    service: 'delivery',
+  },
+  {
+    label: "Делівері доставка кур'єром",
+    department: false,
+    service: 'delivery',
+  },
+  {
+    label: 'Доставка за адресою в Ужгороді',
+    department: false,
+    service: '',
+  },
 ]
 
+const selectedShippingAddress = ref('')
+
 if (orderState.value.shippingAddress) {
-  formData.value = { ...orderState.value.shippingAddress }
+  formData.value = {
+    email: orderState.value.shippingAddress.email,
+    firstName: orderState.value.shippingAddress.firstName,
+    lastName: orderState.value.shippingAddress.lastName,
+    phoneNumber: orderState.value.shippingAddress.phoneNumber,
+    shippingMethod: orderState.value.shippingAddress.shippingMethod,
+  }
 }
+
+const currentShippingOption = computed(() => {
+  if (!formData.value.shippingMethod && orderState.value?.shippingAddress) {
+    return shippingOptions.find((option) => orderState.value.shippingAddress?.shippingMethod === option.label)
+  }
+
+  if (!formData.value.shippingMethod && !orderState.value?.shippingAddress) {
+    return shippingOptions[0]
+  }
+
+  return shippingOptions.find((option) => formData.value.shippingMethod === option.label)
+})
 
 const { execute: handleSubmit } = waitAnd(
   (data: Record<string, any>) => {
@@ -116,7 +174,7 @@ const { execute: handleSubmit } = waitAnd(
       firstName: data.firstName,
       lastName: data.lastName,
       phoneNumber: data.phoneNumber,
-      address: data.address,
+      address: selectedShippingAddress.value,
       shippingMethod: data.shippingMethod,
       ...(data.commentEnabled ? { comment: data.comment } : {}),
     }
@@ -135,14 +193,11 @@ const { execute: handleSubmit } = waitAnd(
     removeOrder()
   }
 )
-
-onMounted(() => {
-  useHead({
-    script: [
-      {
-        src: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAFVwbDomYWdvmJZ5ZPhSKwrLZKWsKySqE&libraries=places',
-      },
-    ],
-  })
-})
+watch(
+  currentShippingOption,
+  () => {
+    selectedShippingAddress.value = ''
+  },
+  { deep: true }
+)
 </script>

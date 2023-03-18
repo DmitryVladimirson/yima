@@ -82,6 +82,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       typesenseApiKey: process.env.NUXT_PUBLIC_TYPESENSE_API_KEY ?? '',
+      novaposhtaApiKey: process.env.NUXT_PUBLIC_NOVAPOSHTA_API_KEY ?? '',
     },
   },
   imports: {
