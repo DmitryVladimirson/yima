@@ -6,7 +6,7 @@ const config = useRuntimeConfig()
 export const client = new Typesense.Client({
   nodes: [
     {
-      host: 'iwsc34ytvrjq02gkp-1.a1.typesense.net',
+      host: 'uc3apwgxjodk5zhbp-1.a1.typesense.net',
       port: 443,
       protocol: 'https',
     },
