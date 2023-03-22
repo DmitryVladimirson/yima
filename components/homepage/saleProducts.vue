@@ -1,6 +1,6 @@
 <template>
   <section class="container flex flex-col gap-6">
-    <TheH :level="2" class="text-center">
+    <TheH :level="2" class="text-error text-center">
       {{ $t('sale') }}
     </TheH>
 
