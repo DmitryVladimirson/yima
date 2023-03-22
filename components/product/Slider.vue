@@ -1,7 +1,7 @@
 <template>
   <TheSwiper
     navigation
-    autoplay
+    :autoplay="{ pauseOnMouseEnter: true }"
     :modules="[SwiperNavigation, SwiperAutoplay]"
     :slides-per-view="1"
     :slides-per-group="1"
