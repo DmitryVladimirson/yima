@@ -5,7 +5,7 @@
         class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
       >
         <ComboboxInput
-          class="input input-bordered w-full focus:ring-0 disabled:pointer-events-none"
+          class="input input-bordered w-full border-gray-800/20 bg-white focus:ring-0 disabled:pointer-events-none dark:disabled:opacity-50"
           :display-value="(data) => data.description"
           :disabled="disabled"
           @change="query = $event.target.value"
