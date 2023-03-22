@@ -233,7 +233,7 @@ const { execute: searchDepartments } = waitAnd(
 
     if (isDelivery.value) {
       departments.value = response.data.value.data.map((address: Record<string, any>) => {
-        return { id: address.id, description: address.address }
+        return { id: address.id, description: `${address.name}, ${address.address}` }
       })
     }
   }
