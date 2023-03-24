@@ -46,7 +46,6 @@
           </TheButton>
         </FormKit>
       </div>
-      <TheLocaleSwitcher />
       <TheDarkModeSwitcher />
       <div class="dropdown dropdown-end dropdown-hover">
         <TheLink to="/order" class="btn btn-ghost btn-circle">
