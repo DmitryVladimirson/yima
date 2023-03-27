@@ -11,7 +11,7 @@
     </div>
     <template v-if="item.children?.length > 0">
       <div class="collapse-content flex flex-col gap-2 p-0">
-        <div v-for="child in item.children" :key="child.id" class="pl-2">
+        <div v-for="child in item.children" :key="child.id">
           <ProductFiltersCheckboxItem
             :form-data="formData"
             :section-name="sectionName"
