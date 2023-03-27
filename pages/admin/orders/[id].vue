@@ -89,7 +89,13 @@
             <TheH :level="2">{{ $t('shipping') }}</TheH>
 
             <FormKit type="text" :label="$t('shippingMethod')" name="shippingMethod" />
-            <FormKit type="text" :label="$t('address')" name="address" />
+            <FormKit
+              type="text"
+              validation="required"
+              validation-visibility="live"
+              :label="$t('address')"
+              name="address"
+            />
           </div>
           <div class="flex grow flex-col gap-3">
             <TheH :level="2">{{ $t('contactInfo') }}</TheH>
