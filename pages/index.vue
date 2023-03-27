@@ -70,7 +70,7 @@
 <script setup lang="ts">
 import { useYimaProduct, ref, useI18n, useRoute, navigateTo, watch, useThrottleFn, onMounted } from '#imports'
 import DeliveryIcon from '~icons/mdi/truck-delivery-outline'
-import FilterIcon from '~icons/mdi/filter'
+import FilterIcon from '~icons/mdi/menu'
 
 const { getProducts, getProductFilters } = useYimaProduct()
 const { t } = useI18n()
