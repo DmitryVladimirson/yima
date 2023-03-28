@@ -1,5 +1,6 @@
 <template>
   <div v-if="product" class="container flex flex-col gap-10">
+    <TheLink to="/" class="btn btn-primary mt-2 flex w-fit items-center gap-2"> На головну </TheLink>
     <div class="grid gap-10 md:grid-cols-2 md:gap-20">
       <div class="mx-auto flex w-1/2 items-center md:w-full">
         <TheBaseCard class="w-full">
