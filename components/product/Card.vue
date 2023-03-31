@@ -14,7 +14,7 @@
       </div>
     </TheLink>
     <div class="flex items-end justify-start gap-2 px-4 md:px-8">
-      <ThePrice class="text-lg font-bold" :class="{ 'text-red-700': product.oldPrice }" :value="product.price" />
+      <ThePrice class="text-lg font-bold" :class="{ 'old-price': product.oldPrice }" :value="product.price" />
       <ThePrice v-if="product.oldPrice" class="line-through" :value="product.oldPrice" />
     </div>
     <div class="flex w-full flex-wrap justify-between gap-2 px-4 pt-0 pb-4 md:px-8 md:pb-8">
