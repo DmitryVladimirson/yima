@@ -1,5 +1,5 @@
 <template>
-  <section class="sales-slider container flex flex-col gap-6">
+  <section v-if="saleProducts.length > 0" class="sales-slider container flex flex-col gap-6">
     <TheH :level="2" class="text-center">
       {{ $t('sale') }}
     </TheH>

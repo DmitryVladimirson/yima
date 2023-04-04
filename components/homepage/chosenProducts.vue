@@ -1,5 +1,5 @@
 <template>
-  <section class="container flex flex-col gap-6">
+  <section v-if="chosenProducts.length > 0" class="container flex flex-col gap-6">
     <TheH :level="2" class="text-center">
       {{ $t('productsOfTheWeek') }}
     </TheH>
