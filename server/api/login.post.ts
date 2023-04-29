@@ -7,7 +7,8 @@ admin.initializeApp({ credential: admin.credential.cert(serviceAccount) })
 
 export default defineEventHandler(async (event) => {
   let body = await yimaReadBody(event)
-  const expiresIn = 60 * 60 * 60 * 24 * 5 * 1000
+  // One week
+  const expiresIn = 604_800_000
 
   if (Buffer.isBuffer(body)) {
     body = JSON.parse(body.toString())
