@@ -145,7 +145,7 @@ function handleChange() {
     }
   }
 
-  if (result.price.values) {
+  if (result.price?.values) {
     if (filterString) {
       filterString += '&&'
     }

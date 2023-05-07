@@ -18,7 +18,7 @@
       <FormKit type="text" name="name" :label="$t('name')" />
       <FormKit type="text" name="slug" :label="$t('slug')" :help="$t('productPath')" />
       <FormKit type="textarea" name="description" :label="$t('description')" />
-      <FormKit type="number" name="price" :step="0.01" :label="$t('price')" />
+      <FormKit type="number" name="price" :min="1" :step="0.01" :label="$t('price')" />
       <FormKit type="number" name="oldPrice" :step="0.01" :label="$t('oldPrice')" />
       <FormKit type="number" name="minAmountToPurchase" :step="1" :min="1" :label="$t('minAmountToPurchase')" />
       <AdminProductCategoryList :categories="allCategories" />

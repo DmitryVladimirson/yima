@@ -25,7 +25,7 @@
       <AdminProductAttributes :all-attributes="allAttributes.member" />
       <AdminProductFlavours v-model="flavours" />
       <FormKit type="textarea" name="description" :label="$t('description')" />
-      <FormKit type="number" validation="required" name="price" :step="0.01" :label="$t('price')" />
+      <FormKit type="number" validation="required" name="price" :min="1" :step="0.01" :label="$t('price')" />
       <FormKit type="number" validation="required" name="oldPrice" :step="0.01" :label="$t('oldPrice')" />
       <FormKit type="number" name="minAmountToPurchase" :step="1" :min="1" :label="$t('minAmountToPurchase')" />
       <FormKit type="file" name="image" :label="$t('image')" />
