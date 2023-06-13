@@ -1,5 +1,9 @@
 <template>
   <Html lang="uk" class="bg-[color:var(--bg-color)]">
+    <Head>
+      <link rel="icon" href="/favicon.ico" />
+      <title>Euro Price</title>
+    </Head>
     <Body class="min-h-screen">
       <NuxtLayout>
         <NuxtPage />

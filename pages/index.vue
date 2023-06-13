@@ -179,13 +179,6 @@ onMounted(() => {
   categoriesList.style.height = `${endHeight}px`
   categoriesList.classList.add('overflow-auto', 'pr-2')
 })
-
-/**
- * SEO meta tags
- */
-useHead({
-  title: 'Homepage',
-})
 </script>
 
 <style lang=""></style>
