@@ -90,6 +90,6 @@ export default defineNuxtConfig({
   },
   css: ['@vueform/slider/themes/default.css', 'firebaseui/dist/firebaseui.css'],
   nitro: {
-    preset: 'firebase',
+    preset: 'aws-lambda',
   },
 })

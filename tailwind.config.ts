@@ -1,6 +1,5 @@
 import colors from 'tailwindcss/colors'
 import forms from '@tailwindcss/forms'
-import lineClamp from '@tailwindcss/line-clamp'
 import typography from '@tailwindcss/typography'
 import daisyUI from 'daisyui'
 // eslint-disable-next-line import/no-unresolved
@@ -86,7 +85,7 @@ const config: Config = {
       },
     ],
   },
-  plugins: [forms, lineClamp, typography, tailwindcss, daisyUI],
+  plugins: [forms,  typography, tailwindcss, daisyUI],
 }
 
 export default config
