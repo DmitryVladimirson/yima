@@ -1,10 +1,10 @@
-import { getCategories } from '~/server/lib/utils'
-import { client } from '~/server/lib/typesense'
+import {client} from '~/server/lib/typesense'
+import {ClientCategoryCache} from "~/server/lib/clientCategoryCache";
 
 export default defineEventHandler(async () => {
   const filters = []
 
-  const categoryItems = await getCategories(true)
+  const categoryItems = await ClientCategoryCache.getCustomerCategories()
   if (categoryItems.length > 0) {
     filters.push({ sectionName: 'categories', items: categoryItems })
   }
