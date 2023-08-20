@@ -2,6 +2,7 @@ import { where, documentId } from 'firebase/firestore'
 import { queryByCollection, set } from '~/server/lib/firestore'
 import { createYimaError } from '~/composables/services/admin/utils'
 import { yimaReadBody } from '~/server/lib/utils'
+import {ClientCategoryCache} from "~/server/lib/clientCategoryCache";
 
 export default defineEventHandler(async (event) => {
   const categoryCollection = 'category'
@@ -22,7 +23,8 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  await set(categoryCollection, body, categoryId)
+  await set(categoryCollection, body, categoryId);
+  ClientCategoryCache.invalidateCustomerCategories();
 
   return {}
 })
