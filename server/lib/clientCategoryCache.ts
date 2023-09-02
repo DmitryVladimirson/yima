@@ -1,34 +1,44 @@
 import {getCategories} from "~/server/lib/utils";
 
 const EXPIRE_MILLIS : number = 3 * 60 * 60 * 1000;
+
 export class ClientCategoryCache {
   private readonly expirationTime: Date;
   private expired: boolean;
   private readonly categories: Category[];
-  private static instance: ClientCategoryCache;
+  private static instance: ClientCategoryCache | null = null;
+  private static instanceLock: boolean = false;
 
-  constructor(categories : Category[]) {
+  private constructor(categories: Category[]) {
     this.categories = categories;
     this.expirationTime = new Date(Date.now() + EXPIRE_MILLIS);
     this.expired = false;
   }
 
-  static getInstance = async (onExpireCategorySupplier: () => Promise<Category[]>) => {
+  public static async getInstance(onExpireCategorySupplier: () => Promise<Category[]>): Promise<ClientCategoryCache> {
     if (!this.instance || this.instance.isExpired()) {
-      this.instance = new ClientCategoryCache(await onExpireCategorySupplier());
+      if (!this.instanceLock) {
+        this.instanceLock = true;
+        this.instance = new ClientCategoryCache(await onExpireCategorySupplier());
+        this.instanceLock = false;
+      } else {
+        while (!this.instance) {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+      }
     }
-    return this.instance;
+    return this.instance!;
   }
 
-  public static getCustomerCategories = async () => {
-    const current = (await ClientCategoryCache
-      .getInstance(() => getCategories(true)))
-      .getCategories();
+  public static async getCustomerCategories(): Promise<Category[]> {
+    const current = (await ClientCategoryCache.getInstance(() => getCategories(true))).getCategories();
     return [...current];
   }
 
-  public static invalidateCustomerCategories () {
-    this.instance?.invalidate();
+  public static invalidateCustomerCategories() {
+    if (this.instance) {
+      this.instance.invalidate();
+    }
   }
 
   private isExpired(): boolean {
@@ -46,5 +56,4 @@ export class ClientCategoryCache {
   protected invalidate() {
     this.expired = true;
   }
-
 }
