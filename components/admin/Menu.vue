@@ -5,14 +5,14 @@
     </TheButton>
 
     <div
-      class="drawer drawer-mobile fixed top-0 left-0 grid-cols-12"
+      class="drawer-mobile drawer fixed left-0 top-0 grid-cols-12"
       :class="[drawerVisible ? 'z-50 ' : '-z-10 delay-300 lg:z-0']"
     >
       <input id="admin-menu" v-model="drawerVisible" type="checkbox" class="drawer-toggle" />
       <div class="drawer-side col-span-12 block lg:col-span-2">
         <label for="admin-menu" class="drawer-overlay"></label>
         <div
-          class="bg-neutral text-neutral-content z-50 flex w-1/2 flex-col items-center justify-start divide-y lg:w-full"
+          class="z-50 flex w-1/2 flex-col items-center justify-start divide-y bg-neutral text-neutral-content lg:w-full"
         >
           <TheLogo to="/admin" class="flex-grow py-6" />
 
@@ -20,7 +20,7 @@
             <TheLink
               v-for="item in menu"
               :key="item.name"
-              class="hover:bg-neutral-focus flex items-center gap-2 px-4 py-3 transition hover:text-white"
+              class="flex items-center gap-2 px-4 py-3 transition hover:bg-neutral-focus hover:text-white"
               :to="item.link"
             >
               <component :is="item.icon" class="text-sm" />

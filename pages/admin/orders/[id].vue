@@ -60,7 +60,7 @@
                     <td class="group-hover:bg-base-200">
                       <ThePrice :value="product.price" />
                     </td>
-                    <td class="group-hover:bg-base-200 relative z-10">
+                    <td class="relative z-10 group-hover:bg-base-200">
                       <TheButton
                         class="btn btn-error relative w-fit text-white"
                         :loading="handleDeleteProductPending"

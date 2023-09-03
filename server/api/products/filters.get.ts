@@ -1,5 +1,5 @@
-import {client} from '~/server/lib/typesense'
-import {ClientCategoryCache} from "~/server/lib/clientCategoryCache";
+import { client } from '~/server/lib/typesense'
+import { ClientCategoryCache } from '~/server/lib/clientCategoryCache'
 
 export default defineEventHandler(async () => {
   const filters = []

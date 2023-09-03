@@ -106,7 +106,7 @@ export const getCategories = async (client?: boolean) => {
 
   if (client) {
     return categories.map((category) => {
-      return category as Category;
+      return category as Category
     })
   }
 

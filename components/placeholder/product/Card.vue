@@ -11,11 +11,11 @@
         />
       </div>
       <div class="h-full w-full">
-        <div class="card-title h-5 w-full rounded-full bg-gray-200 dark:bg-gray-700"></div>
+        <div class="card-title h-5 w-full animate-pulse rounded-full bg-gray-200 dark:bg-gray-700"></div>
       </div>
     </TheLink>
     <div class="flex items-end justify-start gap-2 px-4 md:px-8">
-      <div class="card-title h-5 w-16 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+      <div class="card-title h-5 w-16 animate-pulse rounded-full bg-gray-200 dark:bg-gray-700"></div>
     </div>
     <div class="flex w-full flex-wrap justify-between gap-2 px-4 pb-4 pt-0 md:px-8 md:pb-8">
       <QuantityBox disabled :value="0" class="grow" />

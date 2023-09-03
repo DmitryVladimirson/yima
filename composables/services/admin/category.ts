@@ -3,7 +3,6 @@ import type { AsyncDataOptions } from '#app'
 import type { YimaFetchOptions } from '~/plugins/http'
 
 declare global {
-
   interface Category {
     id: string
     name: string

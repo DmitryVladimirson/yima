@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between gap-4">
       <h1>{{ $t('orders') }}</h1>
       <div>
-        <div class="dropdown dropdown-end">
+        <div class="dropdown-end dropdown">
           <TheButton class="btn btn-primary relative" :loading="exportOrdersPending">
             <span class="indicator">
               <DownloadIcon class="text-lg" />

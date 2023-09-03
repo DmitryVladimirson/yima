@@ -28,9 +28,9 @@
               />
             </div>
             <div
-              class="absolute top-0 left-1/2 mt-14 hidden w-48 -translate-x-1/2 text-center text-sm sm:block lg:mt-16 lg:text-base"
+              class="absolute left-1/2 top-0 mt-14 hidden w-48 -translate-x-1/2 text-center text-sm sm:block lg:mt-16 lg:text-base"
               :class="{
-                'text-primary font-semibold': item.step === basketCurrentStep,
+                'font-semibold text-primary': item.step === basketCurrentStep,
                 'text-primary': item.step < basketCurrentStep,
               }"
             >
@@ -56,9 +56,9 @@
               />
             </span>
             <span
-              class="absolute top-0 left-1/2 mt-14 hidden w-48 -translate-x-1/2 text-center text-sm sm:block lg:mt-16 lg:text-base"
+              class="absolute left-1/2 top-0 mt-14 hidden w-48 -translate-x-1/2 text-center text-sm sm:block lg:mt-16 lg:text-base"
               :class="{
-                'text-primary font-semibold': item.step === basketCurrentStep,
+                'font-semibold text-primary': item.step === basketCurrentStep,
                 'text-primary': item.step < basketCurrentStep,
               }"
             >

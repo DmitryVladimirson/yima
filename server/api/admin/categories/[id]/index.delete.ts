@@ -1,7 +1,7 @@
 import { where, documentId } from 'firebase/firestore'
 import { del, queryByCollection } from '~/server/lib/firestore'
 import { createYimaError } from '~/composables/services/admin/utils'
-import {ClientCategoryCache} from "~/server/lib/clientCategoryCache";
+import { ClientCategoryCache } from '~/server/lib/clientCategoryCache'
 
 export default defineEventHandler(async (event) => {
   const categoryId = event.context.params.id
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
   }
 
   await del(categoryCollection, categoryId)
-  ClientCategoryCache.invalidateCustomerCategories();
+  ClientCategoryCache.invalidateCustomerCategories()
 
   return {}
 })

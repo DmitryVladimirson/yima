@@ -1,7 +1,7 @@
 <template>
   <div class="container flex flex-col items-center gap-6">
     <div v-if="orderState.products.length > 0" class="grid w-full max-w-4xl grid-flow-row gap-4">
-      <div class="hidden grid-flow-row grid-cols-1 gap-3 py-3 px-4 sm:grid sm:grid-cols-12 md:gap-4">
+      <div class="hidden grid-flow-row grid-cols-1 gap-3 px-4 py-3 sm:grid sm:grid-cols-12 md:gap-4">
         <div class="col-span-6 flex items-center gap-3 md:col-span-5" />
         <div class="col-span-3 flex items-center justify-center text-center md:col-span-2">
           {{ $t('count') }}
@@ -48,7 +48,7 @@
           </div>
           <div class="col-span-full flex items-center sm:col-span-1">
             <TheButton
-              class="hover:bg-primary absolute right-0 top-4 ml-auto flex h-6 w-6 items-center justify-center overflow-hidden rounded-full bg-gray-300 text-white disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-cyan-400 sm:static md:ml-4"
+              class="absolute right-0 top-4 ml-auto flex h-6 w-6 items-center justify-center overflow-hidden rounded-full bg-gray-300 text-white hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-cyan-400 sm:static md:ml-4"
               @click="removeProductFromOrder(item.id)"
             >
               <TrashIcon class="h-auto w-4" />

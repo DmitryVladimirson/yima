@@ -17,7 +17,7 @@
                 <th class="bg-neutral text-neutral-content">{{ $t('image') }}</th>
                 <th class="bg-neutral text-neutral-content">{{ $t('name') }}</th>
                 <th class="bg-neutral text-neutral-content">{{ $t('visibility') }}</th>
-                <th class="bg-neutral text-neutral-content text-center"></th>
+                <th class="bg-neutral text-center text-neutral-content"></th>
               </tr>
             </thead>
             <tbody>

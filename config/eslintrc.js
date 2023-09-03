@@ -54,6 +54,7 @@ const generalRules = {
    * Override some Unicorn rules
    */
   'unicorn/filename-case': 'off',
+  'unicorn/expiring-todo-comments': 'off',
 }
 
 const typeScriptRules = {

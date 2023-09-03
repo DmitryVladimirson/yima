@@ -2,7 +2,7 @@
   <TheBaseCard class="gap-4 p-0">
     <TheLink
       :to="`/${product.slug}`"
-      class="relative flex h-full w-full flex-col items-center gap-4 p-4 pt-6 pb-0 md:px-8 md:pt-8"
+      class="relative flex h-full w-full flex-col items-center gap-4 p-4 pb-0 pt-6 md:px-8 md:pt-8"
     >
       <div class="flex items-center justify-center">
         <img :src="product.imgUrl" width="128" height="128" class="h-32 w-32 object-contain" :alt="product.name" />
@@ -17,7 +17,7 @@
       <ThePrice class="text-lg font-bold" :class="{ 'old-price': product.oldPrice }" :value="product.price" />
       <ThePrice v-if="product.oldPrice" class="line-through" :value="product.oldPrice" />
     </div>
-    <div class="flex w-full flex-wrap justify-between gap-2 px-4 pt-0 pb-4 md:px-8 md:pb-8">
+    <div class="flex w-full flex-wrap justify-between gap-2 px-4 pb-4 pt-0 md:px-8 md:pb-8">
       <QuantityBox
         v-if="product.inStock"
         v-model="quantity"

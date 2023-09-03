@@ -3,7 +3,7 @@
     <TheH :level="1">{{ $t('settings') }}</TheH>
     <FormKit v-model="formData" :actions="false" type="form" form-class="flex flex-col gap-4" @submit="handleSubmit">
       <FormKit type="number" name="minPurchasePrice" :label="$t('minPurchasePrice')" />
-      <TheButton :loading="settingSavePending" type="submit" class="btn-primary btn relative mr-auto">
+      <TheButton :loading="settingSavePending" type="submit" class="btn btn-primary relative mr-auto">
         {{ $t('save') }}
       </TheButton>
     </FormKit>

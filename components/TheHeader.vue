@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar container min-h-min flex-col gap-4 px-4 sm:flex-row">
+  <div class="container navbar min-h-min flex-col gap-4 px-4 sm:flex-row">
     <TheLogo />
     <div class="flex flex-grow flex-wrap justify-end gap-2 sm:flex-nowrap">
       <div ref="searchFormReference" class="form-control w-full sm:w-auto">
@@ -22,13 +22,13 @@
               }"
               :input-class="{ 'rounded-b-none': showHits }"
             />
-            <TheBaseCard v-if="showHits" class="absolute top-full z-50 w-full rounded-tr-none rounded-tl-none p-0">
+            <TheBaseCard v-if="showHits" class="absolute top-full z-50 w-full rounded-tl-none rounded-tr-none p-0">
               <div v-if="searchHasHits" class="scroller max-h-[200px] w-full overflow-auto">
                 <TheLink
                   v-for="product in searchHits"
                   :key="product.id"
                   :to="`/${product.slug}`"
-                  class="hover:bg-base-200 flex items-center gap-2 p-3 sm:gap-4"
+                  class="flex items-center gap-2 p-3 hover:bg-base-200 sm:gap-4"
                   @click="closeHits"
                 >
                   <div class="flex h-10 w-10 min-w-fit items-center justify-center">
@@ -47,13 +47,13 @@
         </FormKit>
       </div>
       <TheDarkModeSwitcher />
-      <div class="dropdown dropdown-end dropdown-hover">
-        <TheLink to="/order" class="btn btn-ghost btn-circle">
+      <div class="dropdown-end dropdown-hover dropdown">
+        <TheLink to="/order" class="btn btn-circle btn-ghost">
           <span class="indicator">
             <CartIcon class="text-xl" />
             <span
               v-if="orderState.products.length > 0"
-              class="indicator-item bg-secondary dark:bg-info flex h-6 w-6 items-center justify-center rounded-full text-white"
+              class="indicator-item flex h-6 w-6 items-center justify-center rounded-full bg-secondary text-white dark:bg-info"
             >
               {{ orderState.products.length }}
             </span>
@@ -61,7 +61,7 @@
         </TheLink>
         <div
           tabindex="0"
-          class="card card-compact dropdown-content bg-base-100 shadow"
+          class="card dropdown-content card-compact bg-base-100 shadow"
           :class="[{ hidden: $route.path.startsWith('/order') }, orderState.products.length > 0 ? 'w-96' : 'w-52']"
         >
           <div class="card-body max-sm:hidden">
@@ -80,7 +80,7 @@
                     <span class="pl-1 text-xs">{{ product.quantity }}</span>
                   </span>
                   <TheButton
-                    class="hover:bg-primary relative m-0 flex h-4 w-4 items-center justify-center overflow-hidden rounded-full bg-gray-300 text-white disabled:cursor-not-allowed disabled:opacity-50 md:ml-4"
+                    class="relative m-0 flex h-4 w-4 items-center justify-center overflow-hidden rounded-full bg-gray-300 text-white hover:bg-primary disabled:cursor-not-allowed disabled:opacity-50 md:ml-4"
                     @click="removeProductFromOrder(product.id)"
                   >
                     <TrashIcon class="h-auto w-3" />

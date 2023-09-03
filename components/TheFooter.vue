@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer bg-neutral text-neutral-content mt-auto items-center py-4">
+  <footer class="footer mt-auto items-center bg-neutral py-4 text-neutral-content">
     <div class="container flex flex-col items-center justify-between gap-4 sm:flex-row sm:items-start">
       <div class="flex flex-col items-center gap-4 text-center sm:flex-row">
         <TheLogo />

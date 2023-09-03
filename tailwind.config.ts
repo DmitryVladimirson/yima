@@ -85,7 +85,7 @@ const config: Config = {
       },
     ],
   },
-  plugins: [forms,  typography, tailwindcss, daisyUI],
+  plugins: [forms, typography, tailwindcss, daisyUI],
 }
 
 export default config

@@ -22,7 +22,7 @@
         <div v-for="attribute in selectedAttributes" :key="attribute.id" class="flex flex-col">
           <div class="flex justify-between">
             <span class="text-sm">{{ attribute.name }}</span>
-            <TheButton class="text-error flex items-center gap-1" @click="handleDeleteAttribute(attribute.id)">
+            <TheButton class="flex items-center gap-1 text-error" @click="handleDeleteAttribute(attribute.id)">
               <CloseIcon /> {{ $t('delete') }}
             </TheButton>
           </div>
