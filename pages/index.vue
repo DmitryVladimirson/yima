@@ -14,8 +14,6 @@
         </div>
       </div>
     </section>
-    <HomepageChosenProducts :chosen-products="chosenProducts.member" />
-    <HomepageSaleProducts :sale-products="saleProducts.member" />
     <section>
       <div class="container flex flex-col gap-6">
         <div class="block md:hidden">
@@ -43,21 +41,30 @@
             </div>
           </div>
           <div class="flex flex-col gap-10 md:flex-row xl:gap-20">
-            <div
-              ref="productFiltersWrapper"
-              class="hidden w-full md:block md:w-1/3 lg:w-1/5 xl:w-1/6"
-              :class="{ '!block': showFilters }"
-            >
-              <ProductFilters :filters="filters" class="sticky top-4" @filters-changed="handleChangeFilters" />
+            <div class="hidden w-full md:block md:w-1/3 lg:w-1/5 xl:w-1/6" :class="{ '!block': showFilters }">
+              <ClientOnly>
+                <div ref="productFiltersWrapper" class="h-full w-full">
+                  <ProductFilters :filters="filters" class="sticky top-4" @filters-changed="handleChangeFilters" />
+                </div>
+
+                <template #fallback>
+                  <PlaceholderFilters class="hidden sm:block" />
+                </template>
+              </ClientOnly>
             </div>
             <div class="flex h-full flex-col items-center gap-4 md:w-4/5 md:items-end xl:w-5/6">
-              <ProductList :products="products.member" />
-              <ThePagination
-                v-model="currentPage"
-                :total-items="products.totalItems"
-                :items-per-page="itemsPerPage"
-                @pagination-change="updateProducts"
-              />
+              <ClientOnly>
+                <ProductList :products="products.member" />
+                <ThePagination
+                  v-model="currentPage"
+                  :total-items="products.totalItems"
+                  :items-per-page="itemsPerPage"
+                  @pagination-change="updateProducts"
+                />
+                <template #fallback>
+                  <PlaceholderProductList />
+                </template>
+              </ClientOnly>
             </div>
           </div>
         </template>
@@ -99,7 +106,7 @@ const currentPage = ref(Number(route.query.page) || 1)
 const itemsPerPage = ref(Number(route.query.itemsPerPage) || itemsPerPageOptionDefault)
 const filterString = ref(route.query.filter_by ?? '')
 
-const [{ data: products }, { data: filters }, { data: chosenProducts }, { data: saleProducts }] = await Promise.all([
+const [{ data: products }, { data: filters }] = await Promise.all([
   getProducts({
     params: {
       sort_by: currentSort.value || undefined,
@@ -108,16 +115,16 @@ const [{ data: products }, { data: filters }, { data: chosenProducts }, { data: 
     },
   }),
   getProductFilters(),
-  getProducts({
-    params: {
-      filter_by: 'categories:[chosen-products]',
-    },
-  }),
-  getProducts({
-    params: {
-      filter_by: 'categories:[sale]',
-    },
-  }),
+  // GetProducts({
+  //   params: {
+  //     filter_by: 'categories:[chosen-products]',
+  //   },
+  // }),
+  // getProducts({
+  //   params: {
+  //     filter_by: 'categories:[sale]',
+  //   },
+  // }),
 ])
 
 function handleChangeFilters(resultString: string) {
@@ -165,7 +172,11 @@ watch([currentSort], async () => {
   await updateProducts()
 })
 
-onMounted(() => {
+watch(productFiltersWrapper, () => {
+  if (!productFiltersWrapper?.value) {
+    return
+  }
+
   const productFilters = productFiltersWrapper.value.querySelector('div')
   const filtersHeight = productFilters.clientHeight
   const targetHeight = window.innerHeight - 25
