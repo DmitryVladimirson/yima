@@ -24,13 +24,15 @@
                     :section-name="filter.sectionName"
                     :form-data="formData"
                     :item="item"
-                    @checkbox-changed="handleChange"
                   />
                 </template>
               </li>
             </ul>
           </FormKit>
         </div>
+        <TheButton class="btn btn-primary w-full" @click="handleChange">
+          застосувати фільтри
+        </TheButton>
       </TheBaseCard>
       <TheButton v-if="showResetFiltersButton" class="btn btn-primary w-full" @click="handleResetFilters">
         {{ $t('resetFilters') }}
