@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-col gap-10 lg:gap-20">
+    <TheButton class="btn" @click="exportProducts">Export products</TheButton>
     <section>
       <div class="container">
         <div class="flex items-center justify-around rounded-xl bg-white p-8">
@@ -75,10 +76,11 @@
 </template>
 
 <script setup lang="ts">
-import { useYimaProduct, ref, useI18n, useRoute, navigateTo, watch, useThrottleFn, onMounted } from '#imports'
+import { useYimaProduct, ref, useI18n, useRoute, navigateTo, watch, useThrottleFn, useYimaAdminProduct } from '#imports'
 import DeliveryIcon from '~icons/mdi/truck-delivery-outline'
 import FilterIcon from '~icons/mdi/menu'
 
+const { exportProducts } = useYimaAdminProduct()
 const { getProducts, getProductFilters } = useYimaProduct()
 const { t } = useI18n()
 const route = useRoute()
