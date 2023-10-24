@@ -11,11 +11,7 @@
         <TheButton v-if="category.children?.length > 0" @click="toggleCollapse"><ChevronIcon /></TheButton>
         <TheButton
           v-if="categoryGroup.length > 1"
-          @click="
-            ;async () => {
-              await goToDragMenu(category.id)
-            }
-          "
+          @click="goToDragMenu(category.id)"
           >|||</TheButton
         >
       </div>
