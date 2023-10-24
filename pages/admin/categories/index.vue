@@ -5,14 +5,12 @@
 
       <TheLink to="/admin/categories/new" class="btn btn-primary">{{ $t('newCategory') }}</TheLink>
     </div>
-    <AdminCategoryList :categories="categories" />
+    <AdminCategoryList :categories="categories" :is-root="true" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useYimaAdminCategory } from '#imports'
+import { getCategories } from '~/server/lib/utils'
 
-const { getCategories } = useYimaAdminCategory()
-
-const { data: categories } = await getCategories()
+const categories = (await getCategories()) as AdminCategory[]
 </script>
