@@ -2,6 +2,7 @@ import { collection, documentId, getDocs, query, type QuerySnapshot, where } fro
 import { type H3Event, readBody } from 'h3'
 import { firestoreDatabase } from '~/server/lib/firebase'
 import { queryByCollection } from '~/server/lib/firestore'
+import { deepSortRelativesByPosition } from '~/server/lib/categoryArrangeService'
 
 export const getOrderProductsNames = async (orderProducts: Array<{ id: string; quantity?: number }>) => {
   const colReference = 'product'
@@ -78,16 +79,7 @@ export const getCategories = async (client?: boolean) => {
 
       createChildren(existingCategory)
 
-      category.childrenNew.push(
-        client
-          ? {
-              name: existingCategory.name,
-              id: existingCategory.id,
-              children: existingCategory.children,
-              parent: existingCategory.parent,
-            }
-          : existingCategory
-      )
+      category.childrenNew.push(client ? { ...existingCategory } : existingCategory)
     }
 
     category.children = category.childrenNew
@@ -104,13 +96,7 @@ export const getCategories = async (client?: boolean) => {
 
   categories = categories.filter((category) => !category.parent)
 
-  if (client) {
-    return categories.map((category) => {
-      return category as Category
-    })
-  }
-
-  return categories
+  return deepSortRelativesByPosition(categories)
 }
 
 export const yimaReadBody = async (event: H3Event) => {
