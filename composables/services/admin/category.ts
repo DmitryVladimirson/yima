@@ -6,6 +6,7 @@ declare global {
   interface Category {
     id: string
     name: string
+    position?: number
     children: Category[]
   }
 
