@@ -8,7 +8,7 @@
       form-class="flex flex-col gap-4"
       @submit="handleSubmit"
     >
-      <TheH :level="1">REPOSITION</TheH>
+      <TheH :level="1">{{ $t('adminCategoryArrangement') }}</TheH>
       <draggable
         v-model="positioned"
         :component-data="{
