@@ -42,10 +42,10 @@ import draggable from 'vuedraggable'
 import {
   fetchRelatives,
   storeRepositioned,
-  sortRelativesByPosition,
   fillPositionPropertyByOrder,
-} from '~/server/lib/categoryArrangeService'
+} from '~/composables/services/admin/category/categoryArrangeService'
 import { useYimaHttp } from '~/composables/core/http'
+import {sortRelativesByPosition} from "~/server/lib/categorySortUtil";
 
 const { getCategory } = useYimaAdminCategory()
 const { waitAnd } = useYimaHttp()
@@ -66,7 +66,8 @@ if (!categoryResponse.data) {
 const category = categoryResponse.data.value
 
 const sameParentCategories = await fetchRelatives(category)
-const positioned = fillPositionPropertyByOrder(sortRelativesByPosition(sameParentCategories))
+// eslint-disable-next-line prefer-const
+let positioned = fillPositionPropertyByOrder(sortRelativesByPosition(sameParentCategories))
 
 const formData = ref<Record<string, any>>()
 const dragging = ref(false)

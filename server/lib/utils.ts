@@ -2,7 +2,7 @@ import { collection, documentId, getDocs, query, type QuerySnapshot, where } fro
 import { type H3Event, readBody } from 'h3'
 import { firestoreDatabase } from '~/server/lib/firebase'
 import { queryByCollection } from '~/server/lib/firestore'
-import { deepSortRelativesByPosition } from '~/server/lib/categoryArrangeService'
+import { deepSortRelativesByPosition } from '~/server/lib/categorySortUtil'
 
 export const getOrderProductsNames = async (orderProducts: Array<{ id: string; quantity?: number }>) => {
   const colReference = 'product'
