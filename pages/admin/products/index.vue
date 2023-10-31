@@ -3,12 +3,37 @@
     <div class="flex flex-wrap items-center justify-between gap-4">
       <TheH :level="1">{{ $t('products') }}</TheH>
       <div class="flex flex-wrap items-center justify-between gap-4">
-        <div>{{ $t('totalItems') }}: {{ products.totalItems }}</div>
+        <div>{{ $t('totalItems') }}: {{ allItemsCount }}</div>
 
         <TheLink to="/admin/products/new" class="btn btn-primary">{{ $t('newProduct') }}</TheLink>
       </div>
     </div>
-    <template v-if="products.member?.length > 0">
+    <div class="flex justify-between">
+      <FormKit
+        v-model="formData"
+        type="form"
+        form-class="input-group sm:max-w-[200px] md:max-w-full"
+        :actions="false"
+        @submit="handleSearchByName"
+      >
+        <FormKit
+          type="text"
+          name="searchText"
+          :placeholder="$t('searchProducts')"
+          :classes="{
+            input:
+              'appearance-none border-none flex-shrink focus:ring-0 focus:outline-none rounded-br-none rounded-tr-none shadow',
+          }"
+        />
+        <TheButton type="submit" class="btn btn-primary relative text-white">
+          <SearchIcon class="text-xl"></SearchIcon>
+        </TheButton>
+      </FormKit>
+      <div v-if="foundCount > 0">
+        <div>{{ $t('foundItems') }}: {{ foundCount }}</div>
+      </div>
+    </div>
+    <template v-if="foundCount > 0">
       <div class="flex flex-col items-center gap-4">
         <div class="w-full overflow-x-auto">
           <table class="table w-full">
@@ -21,7 +46,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="product in products.member" :key="product.id" class="group relative">
+              <tr v-for="product in foundItems" :key="product.id" class="group relative">
                 <td class="group-hover:bg-base-200">
                   <TheLink class="absolute inset-0 z-10" :to="`/admin/products/${product.id}`" />
                   <div class="flex items-center space-x-3">
@@ -77,27 +102,45 @@
 </template>
 
 <script setup lang="ts">
-import { useYimaAdminProduct, useYimaHttp, useYimaToast, useI18n, ref } from '#imports'
+import { ref, useI18n, useYimaAdminProduct, useYimaHttp, useYimaToast } from '#imports'
 import DetailsIcon from '~icons/mdi/pencil'
 import DeleteIcon from '~icons/mdi/trash'
+import SearchIcon from '~icons/mdi/magnify'
+
+import { YimaFetchOptions } from '~/plugins/http'
 
 const { getProducts, deleteProduct } = useYimaAdminProduct()
 const { waitAnd } = useYimaHttp()
 const { toastSuccess } = useYimaToast()
 const { t } = useI18n()
 
+const ITEMS_PER_FETCH = 10
+
+const queriedName = ref('')
+const loadMoreClickCounter = ref<number>(0)
+
+watch(queriedName, (oldName, updatedName) => {
+  if (oldName.trim() === updatedName.trim()) {
+    return
+  }
+
+  loadMoreClickCounter.value = 0
+})
+
+const { data: products } = await getProducts(formFetchOptions())
+const allItemsCount = ref(products.value.totalItems)
+
+const foundCount = ref(products.value.totalItems)
+const foundItems = ref(products.value.member)
+
 const deleteProductModalOpen = ref(false)
 
-const { data: products } = await getProducts()
+const formData = ref<Record<string, any>>()
 
 const currentProductId = ref('')
 
 const loadMoreButtonEnabled = computed(() => {
-  if (!products.value?.member || !products.value?.totalItems) {
-    return false
-  }
-
-  return products.value.member.length < products.value.totalItems && products.value.totalItems > 10
+  return foundCount.value - ITEMS_PER_FETCH * (loadMoreClickCounter.value + 1) > 0
 })
 
 function handleDeleteButtonClick(id: string) {
@@ -114,26 +157,57 @@ const { execute: handleDeleteProduct, pending: productDeletePending } = waitAnd(
 
     toastSuccess(t('productDeleteSuccess'))
 
-    products.value?.member.splice(
-      products.value?.member.findIndex((product) => product.id === id),
+    products.value.member.splice(
+      products.value.member.findIndex((product) => product.id === id),
       1
     )
 
-    if (products.value?.totalItems) {
+    if (products.value.totalItems) {
       products.value.totalItems -= 1
     }
   }
 )
 
+function formFetchOptions(): YimaFetchOptions {
+  const parameters: Record<string, any> = {}
+
+  if (queriedName.value && queriedName.value.trim().length > 0) {
+    parameters.q = queriedName.value.trim()
+  }
+
+  parameters.page = loadMoreClickCounter.value + 1
+
+  return { params: parameters }
+}
+
+const { execute: handleSearchByName } = waitAnd(
+  (request: Record<string, any>) => {
+    queriedName.value = request.searchText
+    loadMoreClickCounter.value = 0
+
+    const fetchOptions = formFetchOptions()
+
+    return getProducts(fetchOptions)
+  },
+  (searchResponse) => {
+    if (!searchResponse || searchResponse.error.value || !searchResponse.data.value) {
+      return
+    }
+
+    foundCount.value = searchResponse.data.value.totalItems
+    foundItems.value = searchResponse.data.value.member
+  }
+)
+
 async function handleLoadMore() {
-  const { data } = await getProducts({
-    params: { anchorDocumentId: products.value?.member.at(-1)?.id },
-  })
+  loadMoreClickCounter.value += 1
+
+  const { data } = await getProducts(formFetchOptions())
+
   if (!data.value?.member) {
     return
   }
 
-  products.value?.member.push(...data.value.member)
+  foundItems.value.push(...data.value.member)
 }
 </script>
-`
