@@ -70,6 +70,7 @@ export default defineEventHandler(async (event): Promise<MemberResponse<Product>
       ...parameters,
       q: typeof parameters.q === 'string' ? parameters.q : '',
       query_by: typeof parameters.query_by === 'string' ? parameters.query_by : 'name',
+      filter_by: 'isVisible:true',
     }
 
     const searchResults = await client.collections('products').documents().search(search)
