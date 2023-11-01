@@ -1,7 +1,19 @@
 export function sortRelativesByPosition<C extends Category>(categories: C[]): C[] {
-  return categories[0]?.position === undefined
-    ? categories.sort((cat1, cat2) => cat1.name.localeCompare(cat2.name))
-    : categories.sort((cat1, cat2) => cat1.position! - cat2.position!)
+  return categories.sort((cat1, cat2) => {
+    if (cat1.position === undefined && cat2.position === undefined) {
+      return cat1.name.localeCompare(cat2.name)
+    }
+
+    if (cat1.position === undefined) {
+      return 1
+    }
+
+    if (cat2.position === undefined) {
+      return -1
+    }
+
+    return cat1.position - cat2.position
+  })
 }
 
 export function deepSortRelativesByPosition<C extends Category>(categories: C[]): C[] {
