@@ -2,37 +2,53 @@
   <div
     v-if="category"
     tabindex="0"
-    class="collapse rounded-box border border-base-300 bg-base-100 dark:bg-neutral dark:text-neutral-content"
+    class="collapse rounded-box border border-base-300 bg-base-100 pl-2 dark:bg-neutral dark:text-neutral-content"
     :class="[collapseOpen ? 'collapse-open' : 'collapse-close']"
   >
     <div class="collapse-title flex items-center justify-between text-xl font-medium">
-      <TheLink :to="`/admin/categories/${category.id}`">{{ category.name }}</TheLink>
-      <TheButton v-if="category.children?.length > 0" @click="toggleCollapse"><ChevronIcon /></TheButton>
-    </div>
-    <template v-if="category.children?.length > 0">
-      <div class="collapse-content flex flex-col gap-2">
-        <AdminCategoryRowItem v-for="child in category.children" :key="child.id" :category="child" />
+      <TheLink :to="`/admin/categories/${category.id}`" class="pl-1">{{ category.name }}</TheLink>
+      <div>
+        <TheButton v-if="category.children?.length > 0" @click="toggleCollapse"><ChevronIcon /></TheButton>
+        <TheButton
+          v-if="categoryGroup.length > 1"
+          @click="goToDragMenu(category.id)"
+          >|||</TheButton
+        >
       </div>
-    </template>
+    </div>
+    <AdminCategoryList
+      v-show="collapseOpen"
+      v-if="category.children?.length > 0"
+      :categories="category.children as AdminCategory[]"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from '#imports'
+import { navigateTo, ref, useLocalePath } from '#imports'
 import ChevronIcon from '~icons/mdi/chevron-down'
 import { withDefaults } from 'vue'
+
+const localPath = useLocalePath()
 
 const collapseOpen = ref(true)
 
 interface Properties {
   category: AdminCategory
+  categoryGroup: AdminCategory[]
+  childrenIgnored?: boolean
 }
 
 withDefaults(defineProps<Properties>(), {
   category: undefined,
+  categoryGroup: () => [],
 })
 
 function toggleCollapse() {
   collapseOpen.value = !collapseOpen.value
+}
+
+async function goToDragMenu(id: string) {
+  await navigateTo(localPath(`/admin/categories/${id}/reposition`))
 }
 </script>
