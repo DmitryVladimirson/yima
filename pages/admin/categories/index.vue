@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { getCategories } from '~/server/lib/utils'
+const { getCategories } = useYimaAdminCategory()
 
-const categories = (await getCategories()) as AdminCategory[]
+const { data: categories } = await getCategories()
 </script>
