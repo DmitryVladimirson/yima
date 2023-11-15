@@ -50,6 +50,7 @@
             v-model="flavour"
             :label="productClassification"
             type="select"
+            class="select-bordered"
             :options="product.flavours"
           />
 
