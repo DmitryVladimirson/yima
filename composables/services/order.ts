@@ -25,6 +25,7 @@ declare global {
   interface OrderState {
     products: OrderProduct[]
     shippingAddress?: ShippingAddress
+    paymentMethod: string
     total?: number
   }
 

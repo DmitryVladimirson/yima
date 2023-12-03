@@ -116,6 +116,8 @@
   "searchProducts": "Search products",
   "settings": "Settings",
   "settingsSaveSuccess": "Settings saved",
+  "paymentInfo": "Payment info",
+  "paymentMethod": "Payment method",
   "shippingMethod": "Shipping method",
   "buildingNum": "Building number",
   "street": "Street",
