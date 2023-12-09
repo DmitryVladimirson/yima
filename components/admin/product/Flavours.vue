@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div class="mb-1 block text-sm">
-      {{ $t('flavours') }}
-    </div>
-    <Vue3TagsInput :tags="flavours" :placeholder="$t('enterFlavours')" @on-tags-changed="handleChangeFlavours" />
+    <Vue3TagsInput :tags="flavours" :placeholder="$t('enterValues')" @on-tags-changed="handleChangeFlavours" class="text-black" />
   </div>
 </template>
 
@@ -27,7 +24,6 @@ const { modelValue } = toRefs(properties)
 const flavours = ref(modelValue.value)
 
 function handleChangeFlavours(flavoursNew: string[]) {
-  flavours.value = flavoursNew
   emits('update:modelValue', flavoursNew)
 }
 </script>
