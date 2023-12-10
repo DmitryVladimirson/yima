@@ -118,7 +118,6 @@ if (!product.value) {
 const quantity = ref(product.value?.minAmountToPurchase ?? 1)
 const flavour = ref(product.value?.flavours?.[0])
 const nonFood = ref(product.value.nonFood ?? false)
-console.log(nonFood.value)
 
 const productClassification = ref(t(nonFood.value ? 'types' : 'flavours'))
 
