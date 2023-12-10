@@ -1,8 +1,7 @@
-import { type SearchParams } from 'typesense/lib/Typesense/Documents'
 import { collection, query, where, getDocs, documentId } from 'firebase/firestore'
-import { client } from '~/server/lib/typesense'
 import { createYimaError } from '~/composables/services/admin/utils'
 import { firestoreDatabase } from '~/server/lib/firebase'
+import { queryByCollection } from '~/server/lib/firestore'
 
 const setAttributes = async (product: AdminProduct) => {
   if (product.attributes.length === 0) {
@@ -65,17 +64,11 @@ export default defineEventHandler(async (event): Promise<Product | undefined> =>
   try {
     const { slug } = event.context.params
 
-    const search: SearchParams = {
-      q: '*',
-      query_by: 'name',
-      filter_by: `slug:=${slug}`,
-    }
+    const products = await queryByCollection<AdminProduct>('product', { where: where(documentId(), '==', slug) })
 
-    const searchResults = await client.collections('products').documents().search(search)
+    const product = products.member[0]
 
-    const product = searchResults.hits?.[0]?.document as AdminProduct
-
-    if (!product) {
+    if (!product?.isVisible) {
       return
     }
 
