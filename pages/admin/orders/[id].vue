@@ -86,6 +86,12 @@
           @submit="handleSaveOrder"
         >
           <div class="flex grow flex-col gap-3">
+            <TheH :level="2"> {{ $t('paymentInfo' )}}</TheH>
+
+            <FormKit type="text" :label="$t('paymentMethod')" name="paymentMethod" />
+          </div>
+
+          <div class="flex grow flex-col gap-3">
             <TheH :level="2">{{ $t('shipping') }}</TheH>
 
             <FormKit type="text" :label="$t('shippingMethod')" name="shippingMethod" />

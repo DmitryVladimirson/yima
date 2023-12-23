@@ -35,6 +35,13 @@ const getOrderRows = (order: AdminOrder) => {
         s: { ...borderCellStyle, ...fontBoldStyle },
       },
     ],
+    [
+      '',
+      {
+        v: `Спосіб оплати: ${order.shippingAddress.paymentMethod ?? ''}`,
+        s: { ...borderCellStyle, ...fontBoldStyle },
+      },
+    ],
     ['', { v: `Доставка: ${order.shippingAddress.shippingMethod}`, s: { ...borderCellStyle, ...fontBoldStyle } }],
     [
       '',

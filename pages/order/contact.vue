@@ -15,6 +15,15 @@
         </div>
 
         <div class="flex flex-col gap-2">
+          <TheH :level="2">{{ $t('paymentInfo') }}</TheH>
+          <FormKit type="select" name="paymentMethod" validation="required" :label="$t('paymentMethod')">
+            <option v-for="(option, index) in paymentOptions" :key="option" :disabled="index === 0" :value="option">
+              {{ option }}
+            </option>
+          </FormKit>
+        </div>
+
+        <div class="flex flex-col gap-2">
           <TheH :level="2">{{ $t('contactInfo') }}</TheH>
           <TheBaseCard class="grid gap-4 p-4 sm:grid-cols-2">
             <FormKit type="text" name="firstName" validation="required" :label="$t('firstName')" />
@@ -44,7 +53,7 @@
           v-if="formData.shippingMethod !== shippingOptions[0].label"
           :key="currentShippingOption.label"
           v-model="selectedShippingAddress"
-          :shipping-option="currentShippingOption"
+          :shipping-option="currentShippingOption!"
         />
 
         <FormKit type="checkbox" name="commentEnabled" outer-class="w-fit" :label="$t('addComment')" />
@@ -72,6 +81,7 @@
               </div>
             </div>
           </TheBaseCard>
+
           <div class="mt-2 items-center text-right">
             <TheH class="inline" :level="4">{{ $t('totalPrice') }}: </TheH>
             <ThePrice class="ml-auto inline-block text-lg font-bold" :value="orderState.total" />
@@ -138,6 +148,13 @@ const shippingOptions: { label: string; department: boolean; service: string }[]
 
 const selectedShippingAddress = ref('')
 
+const paymentOptions = [
+  'Виберіть метод оплати',
+  'На карту',
+  'Розрахунковий рахунок',
+  'Накладений платіж (10% завдаток)',
+]
+
 if (orderState.value.shippingAddress) {
   formData.value = {
     email: orderState.value.shippingAddress.email,
@@ -145,6 +162,7 @@ if (orderState.value.shippingAddress) {
     lastName: orderState.value.shippingAddress.lastName,
     phoneNumber: orderState.value.shippingAddress.phoneNumber,
     shippingMethod: orderState.value.shippingAddress.shippingMethod,
+    paymentMethod: orderState.value.shippingAddress.paymentMethod,
   }
 }
 
@@ -169,6 +187,7 @@ const { execute: handleSubmit } = waitAnd(
       phoneNumber: data.phoneNumber,
       address: selectedShippingAddress.value,
       shippingMethod: data.shippingMethod,
+      paymentMethod: data.paymentMethod,
       ...(data.commentEnabled ? { comment: data.comment } : {}),
     }
 

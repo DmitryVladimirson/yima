@@ -117,6 +117,8 @@
   "searchProducts": "Шукати товар",
   "settings": "Налаштування",
   "settingsSaveSuccess": "Налаштування збережено",
+  "paymentInfo": "Інформація щодо оплати",
+  "paymentMethod": "Спосіб оплати",
   "shipping": "Доставка",
   "shippingMethod": "Спосіб доставки",
   "slug": "Slug",

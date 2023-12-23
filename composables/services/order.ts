@@ -19,6 +19,7 @@ declare global {
     phoneNumber?: string
     address?: string
     shippingMethod?: string
+    paymentMethod?: string
     comment?: string
   }
 
