@@ -19,13 +19,13 @@ declare global {
     phoneNumber?: string
     address?: string
     shippingMethod?: string
+    paymentMethod?: string
     comment?: string
   }
 
   interface OrderState {
     products: OrderProduct[]
     shippingAddress?: ShippingAddress
-    paymentMethod: string
     total?: number
   }
 
