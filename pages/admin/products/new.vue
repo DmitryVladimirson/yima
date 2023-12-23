@@ -23,11 +23,34 @@
       <FormKit v-model="id" type="text" validation="required" name="id" :label="$t('id')" />
       <AdminProductCategoryList :categories="allCategories" />
       <AdminProductAttributes :all-attributes="allAttributes.member" />
-      <AdminProductFlavours v-model="flavours" />
-      <FormKit type="textarea" name="description" :label="$t('description')" />
-      <FormKit type="number" validation="required" name="price" :min="1" :step="0.01" :label="$t('price')" />
-      <FormKit type="number" validation="required" name="oldPrice" :step="0.01" :label="$t('oldPrice')" />
-      <FormKit type="number" name="minAmountToPurchase" :step="1" :min="1" :label="$t('minAmountToPurchase')" />
+      <AdminProductTypeSwitcher v-model="nonFood" />
+      <AdminProductFlavours v-model="flavours"/>
+      <FormKit type="textarea" name="description" :label="$t('description')" class="text-black" />
+      <FormKit
+        type="number"
+        validation="required"
+        name="price"
+        :min="1"
+        :step="0.01"
+        :label="$t('price')"
+        class="text-black"
+      />
+      <FormKit
+        type="number"
+        validation="required"
+        name="oldPrice"
+        :step="0.01"
+        :label="$t('oldPrice')"
+        class="text-black"
+      />
+      <FormKit
+        type="number"
+        name="minAmountToPurchase"
+        :step="1"
+        :min="1"
+        :label="$t('minAmountToPurchase')"
+        class="text-black"
+      />
       <FormKit type="file" name="image" :label="$t('image')" />
       <FormKit type="checkbox" name="inStock" :label="$t('inStock')" />
       <FormKit type="checkbox" name="isVisible" :label="$t('visibility')" />
@@ -68,6 +91,7 @@ const productNewFormReference = ref()
 const slug = ref('')
 const id = ref('')
 const flavours = ref([])
+const nonFood = ref(false)
 
 const resolveSlug = computed(() => {
   const slug = formData.value.name
@@ -135,6 +159,7 @@ const { execute: handleSubmit, pending: submitPending } = waitAnd(
       oldPrice: Number(data.oldPrice),
       slug: data.slug,
       flavours: flavours.value,
+      nonFood: nonFood.value,
     }
 
     const addProductResponse = await addProduct(productData, { validationFormRef: 'productNewFormReference' })

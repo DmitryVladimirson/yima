@@ -48,7 +48,7 @@
           <FormKit
             v-if="product.flavours?.length > 0"
             v-model="flavour"
-            :label="$t('flavours')"
+            :label="productClassification"
             type="select"
             :options="product.flavours"
           />
@@ -99,6 +99,7 @@
 <script setup lang="ts">
 import { useYimaProduct, useRoute, createError, useYimaToast, useI18n, ref } from '#imports'
 import AddToCartIcon from '~icons/mdi/cart-plus'
+import {Ref} from "vue";
 
 const { getProductBySlug, addProductToOrder } = useYimaProduct()
 const { toastSuccess } = useYimaToast()
@@ -116,6 +117,9 @@ if (!product.value) {
 
 const quantity = ref(product.value?.minAmountToPurchase ?? 1)
 const flavour = ref(product.value?.flavours?.[0])
+const nonFood = ref(product.value.nonFood ?? false)
+
+const productClassification = ref(t(nonFood.value ? 'types' : 'flavours'))
 
 function handleAddToOrder() {
   addProductToOrder(product.value, quantity.value, flavour.value)

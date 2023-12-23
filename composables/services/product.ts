@@ -4,6 +4,7 @@ declare global {
   interface Product {
     attributes: Array<{ name: string; value: string | number; id: string }>
     categories: string[]
+    nonFood: boolean
     flavours: string[]
     createdAt: number
     description: string
