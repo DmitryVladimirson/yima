@@ -162,7 +162,7 @@ if (orderState.value.shippingAddress) {
     lastName: orderState.value.shippingAddress.lastName,
     phoneNumber: orderState.value.shippingAddress.phoneNumber,
     shippingMethod: orderState.value.shippingAddress.shippingMethod,
-    paymentMethod: orderState.value.paymentMethod,
+    paymentMethod: orderState.value.shippingAddress.paymentMethod,
   }
 }
 
