@@ -1,17 +1,20 @@
 <template>
+  <ProductPopup v-model="selectedProductId" />
   <ul
     v-if="products.length > 0"
     v-auto-animate
     class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
   >
     <li v-for="product in products" :key="product.id" class="">
-      <ProductCard :class="{ 'h-full': products.length > 1 }" :product="product" />
+      <ProductCard :class="{ 'h-full': products.length > 1 }" :product="product" @show-popup="handleShowPopup" />
     </li>
   </ul>
   <TheMessageBox v-else :message="$t('noProductsFound')"></TheMessageBox>
 </template>
 <script setup lang="ts">
 import { withDefaults } from 'vue'
+
+const selectedProductId = ref('')
 
 interface popperProperties {
   products: Product[]
@@ -20,4 +23,8 @@ interface popperProperties {
 withDefaults(defineProps<popperProperties>(), {
   products: () => [],
 })
+
+const handleShowPopup = (product: Product) => {
+  selectedProductId.value = product.toString()
+}
 </script>

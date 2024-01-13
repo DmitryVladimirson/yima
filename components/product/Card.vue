@@ -19,14 +19,24 @@
     </div>
     <div class="flex w-full flex-wrap justify-between gap-2 px-4 pb-4 pt-0 md:px-8 md:pb-8">
       <QuantityBox
-        v-if="product.inStock"
+        v-if="product.inStock && !(product.flavours?.length > 0)"
         v-model="quantity"
         class="grow"
         :disabled="!product.inStock"
         :min="product.minAmountToPurchase"
       />
-      <TheButton :disabled="!product.inStock" class="btn btn-primary relative grow" @click="handleAddToOrder">
-        {{ product.inStock ? $t('buy') : $t('notInStock') }}
+      <TheButton
+        v-if="product.inStock && product.flavours?.length > 0"
+        class="btn btn-primary relative grow"
+        @click="showPopup"
+      >
+        {{ $t('details') }}
+      </TheButton>
+      <TheButton v-else-if="product.inStock" class="btn btn-primary relative grow" @click="handleAddToOrder">
+        {{ $t('buy') }}
+      </TheButton>
+      <TheButton v-else :disabled="true" class="btn btn-primary relative grow">
+        {{ $t('notInStock') }}
       </TheButton>
     </div>
   </TheBaseCard>
@@ -50,6 +60,12 @@ const { t } = useI18n()
 const { product } = toRefs(properties)
 
 const quantity = ref(product.value.minAmountToPurchase ?? 1)
+
+const emits = defineEmits(['show-popup'])
+
+function showPopup() {
+  emits('show-popup', properties.product.id)
+}
 
 function handleAddToOrder() {
   addProductToOrder(product.value, quantity.value, product.value.flavours?.[0])
