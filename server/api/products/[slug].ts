@@ -64,7 +64,7 @@ export default defineEventHandler(async (event): Promise<Product | undefined> =>
   try {
     const { slug } = event.context.params
 
-    const products = await queryByCollection<AdminProduct>('product', { where: where(documentId(), '==', slug) })
+    const products = await queryByCollection<AdminProduct>('product', { where: where('slug', '==', slug) })
 
     const product = products.member[0]
 
