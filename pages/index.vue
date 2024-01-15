@@ -153,6 +153,7 @@ const updateProducts = useThrottleFn(async (resetPage?: boolean) => {
 
   products.value = productsResponse.value
 
+  await scrollToTop()
   await navigateTo({
     query: {
       ...route.query,
@@ -167,6 +168,13 @@ const updateProducts = useThrottleFn(async (resetPage?: boolean) => {
     },
   })
 }, 50)
+
+const scrollToTop = async () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  })
+}
 
 watch([currentSort], async () => {
   await updateProducts()
