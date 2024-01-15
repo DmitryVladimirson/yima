@@ -1,5 +1,5 @@
 <template>
-  <ProductPopup v-model="selectedProductId" />
+  <ProductPopup v-model="selectedProductSlug" />
   <ul
     v-if="products.length > 0"
     v-auto-animate
@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { withDefaults } from 'vue'
 
-const selectedProductId = ref('')
+const selectedProductSlug = ref('')
 
 interface popperProperties {
   products: Product[]
@@ -25,6 +25,6 @@ withDefaults(defineProps<popperProperties>(), {
 })
 
 const handleShowPopup = (product: Product) => {
-  selectedProductId.value = product.toString()
+  selectedProductSlug.value = product.toString()
 }
 </script>

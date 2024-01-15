@@ -64,7 +64,7 @@ const quantity = ref(product.value.minAmountToPurchase ?? 1)
 const emits = defineEmits(['show-popup'])
 
 function showPopup() {
-  emits('show-popup', properties.product.id)
+  emits('show-popup', properties.product.slug)
 }
 
 function handleAddToOrder() {
