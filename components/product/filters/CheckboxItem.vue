@@ -39,6 +39,7 @@ interface popperProperties {
   formData: Record<string, any>
   sectionName: string
   resetFilters: boolean
+  expanded?: boolean
 }
 
 const properties = withDefaults(defineProps<popperProperties>(), {
@@ -50,7 +51,7 @@ const properties = withDefaults(defineProps<popperProperties>(), {
 
 const data = ref(false)
 const setChildren = ref(true)
-const collapseOpen = ref(true)
+const collapseOpen = ref(properties.expanded)
 const { item, formData, sectionName, resetFilters } = toRefs(properties)
 
 function handleChange() {

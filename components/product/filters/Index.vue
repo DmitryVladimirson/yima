@@ -24,6 +24,7 @@
                     :section-name="filter.sectionName"
                     :form-data="formData"
                     :item="item"
+                    :expanded="true"
                   />
                 </template>
               </li>
