@@ -106,15 +106,16 @@ const currentPage = ref(Number(route.query.page) || 1)
 const itemsPerPage = ref(Number(route.query.itemsPerPage) || itemsPerPageOptionDefault)
 const filterString = ref(route.query.filter_by ?? '')
 
-const [{ data: products }, { data: filters }] = await Promise.all([
+const [{ data: filters }, { data: products }] = await Promise.all([
+  getProductFilters(),
   getProducts({
     params: {
       sort_by: currentSort.value || undefined,
       page: currentPage.value,
       per_page: itemsPerPage.value,
+      filter_by: filterString.value,
     },
   }),
-  getProductFilters(),
   // GetProducts({
   //   params: {
   //     filter_by: 'categories:[chosen-products]',
