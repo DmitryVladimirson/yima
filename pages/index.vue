@@ -14,6 +14,8 @@
         </div>
       </div>
     </section>
+    <HomepageChosenProducts :chosen-products="chosenProducts.member" />
+    <HomepageSaleProducts :sale-products="saleProducts.member" />
     <section>
       <div class="container flex flex-col gap-6">
         <div class="block md:hidden">
@@ -75,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { useYimaProduct, ref, useI18n, useRoute, navigateTo, watch, useThrottleFn, onMounted } from '#imports'
+import { useYimaProduct, ref, useI18n, useRoute, navigateTo, watch, useThrottleFn } from '#imports'
 import DeliveryIcon from '~icons/mdi/truck-delivery-outline'
 import FilterIcon from '~icons/mdi/menu'
 
@@ -106,7 +108,7 @@ const currentPage = ref(Number(route.query.page) || 1)
 const itemsPerPage = ref(Number(route.query.itemsPerPage) || itemsPerPageOptionDefault)
 const filterString = ref(route.query.filter_by ?? undefined)
 
-const [{ data: filters }, { data: products }] = await Promise.all([
+const [{ data: filters }, { data: products }, { data: chosenProducts }, { data: saleProducts }] = await Promise.all([
   getProductFilters(),
   getProducts({
     params: {
@@ -116,16 +118,16 @@ const [{ data: filters }, { data: products }] = await Promise.all([
       filter_by: filterString.value,
     },
   }),
-  // GetProducts({
-  //   params: {
-  //     filter_by: 'categories:[chosen-products]',
-  //   },
-  // }),
-  // getProducts({
-  //   params: {
-  //     filter_by: 'categories:[sale]',
-  //   },
-  // }),
+  getProducts({
+    params: {
+      filter_by: 'categories:[chosen-products]',
+    },
+  }),
+  getProducts({
+    params: {
+      filter_by: 'categories:[sale]',
+    },
+  }),
 ])
 
 function handleChangeFilters(resultString: string) {
