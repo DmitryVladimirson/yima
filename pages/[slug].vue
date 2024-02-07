@@ -1,6 +1,6 @@
 <template>
   <div v-if="product" class="container flex flex-col gap-10">
-    <TheLink to="/" class="btn btn-primary mt-2 flex w-fit items-center gap-2"> На головну </TheLink>
+    <TheButton class="btn btn-primary mt-2 flex w-fit items-center gap-2" type="button" @click="handleReturn"> На головну</TheButton>
     <div class="grid gap-10 md:grid-cols-2 md:gap-20">
       <div class="mx-auto flex w-1/2 items-center md:w-full">
         <TheBaseCard class="w-full">
@@ -100,7 +100,9 @@
 <script setup lang="ts">
 import { useYimaProduct, useRoute, createError, useYimaToast, useI18n, ref } from '#imports'
 import AddToCartIcon from '~icons/mdi/cart-plus'
-import {Ref} from "vue";
+import { Ref } from 'vue'
+import TheButton from '../components/TheButton.vue'
+import { navigateTo } from '#app/composables/router'
 
 const { getProductBySlug, addProductToOrder } = useYimaProduct()
 const { toastSuccess } = useYimaToast()
@@ -125,5 +127,13 @@ const productClassification = ref(t(nonFood.value ? 'types' : 'flavours'))
 function handleAddToOrder() {
   addProductToOrder(product.value, quantity.value, flavour.value)
   toastSuccess(t('addedToCart', { productName: product.value.name }))
+}
+
+async function handleReturn() {
+  if (window.history.length > 1) {
+    window.history.go(-1)
+  } else {
+    navigateTo('/')
+  }
 }
 </script>
