@@ -30,7 +30,7 @@
         class="btn btn-primary relative grow"
         @click="showPopup"
       >
-        {{ $t('details') }}
+        {{ $t('chooseType') }}
       </TheButton>
       <TheButton v-else-if="product.inStock" class="btn btn-primary relative grow" @click="handleAddToOrder">
         {{ $t('buy') }}
