@@ -1,5 +1,7 @@
 <template>
-  <TheSignIn />
+  <ClientOnly>
+    <TheSignIn />
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
