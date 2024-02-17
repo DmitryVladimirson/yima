@@ -25,7 +25,7 @@ export default defineNuxtConfig({
       meta: [
         { name: 'description', content: '' },
         { name: 'format-detection', content: 'telephone=no' },
-        { property: 'og:image', content: `/logo.png` },
+        { property: 'og:image', content: `/preview.jpg` },
       ],
     },
   },
