@@ -2,7 +2,7 @@
 
 import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
-import { FileSystemIconLoader } from 'unplugin-icons/loaders'
+import {FileSystemIconLoader} from 'unplugin-icons/loaders'
 import Components from 'unplugin-vue-components/vite'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from './tailwind.config'
@@ -23,9 +23,11 @@ export default defineNuxtConfig({
     head: {
       viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
       meta: [
-        { name: 'description', content: '' },
-        { name: 'format-detection', content: 'telephone=no' },
-        { property: 'og:image', content: `/preview.jpg` },
+        {name: 'description', content: ''},
+        {name: 'format-detection', content: 'telephone=no'},
+        {property: 'twitter:card', content: 'summary_large_image'},
+        {property: 'twitter:image', content: '/preview.jpg'},
+        {property: 'og:image', content: '/preview.jpg'},
       ],
     },
   },
@@ -65,7 +67,7 @@ export default defineNuxtConfig({
   },
   i18n: {
     locales: [
-      { code: 'uk', iso: 'uk-UA', file: 'uk-UA.json' },
+      {code: 'uk', iso: 'uk-UA', file: 'uk-UA.json'},
       // { code: 'en', iso: 'en-US', file: 'en-US.json' },
     ],
     defaultLocale: 'uk',
