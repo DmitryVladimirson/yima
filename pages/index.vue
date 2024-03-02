@@ -17,7 +17,7 @@
     <HomepageChosenProducts :chosen-products="chosenProducts.member" />
     <HomepageSaleProducts :sale-products="saleProducts.member" />
     <section>
-      <div class="container flex flex-col gap-6">
+      <div id="plp_container" ref="plpContainer" class="container flex flex-col gap-6">
         <div class="block md:hidden">
           <TheH>
             {{ $t('allProducts') }}
@@ -108,6 +108,15 @@ const currentPage = ref(Number(route.query.page) || 1)
 const itemsPerPage = ref(Number(route.query.itemsPerPage) || itemsPerPageOptionDefault)
 const filterString = ref(route.query.filter_by ?? undefined)
 
+const plpContainer = ref(null)
+const scrollToTop = async () => {
+  const position = plpContainer.value.offsetTop - 16
+  window.scrollTo({
+    top: position,
+    behavior: 'smooth',
+  })
+}
+
 const [{ data: filters }, { data: products }, { data: chosenProducts }, { data: saleProducts }] = await Promise.all([
   getProductFilters(),
   getProducts({
@@ -175,13 +184,6 @@ const updateProducts = useThrottleFn(async (resetPage?: boolean) => {
     },
   })
 }, 50)
-
-const scrollToTop = async () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  })
-}
 
 watch([currentSort], async () => {
   await updateProducts()
