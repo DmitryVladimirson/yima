@@ -28,6 +28,8 @@ export default defineNuxtConfig({
         {property: 'twitter:card', content: 'summary_large_image'},
         {property: 'twitter:image', content: '/preview.jpg'},
         {property: 'og:image', content: '/preview.jpg'},
+        {property: 'og:image:width', content: '990'},
+        {property: 'og:image:height', content: '653'},
       ],
     },
   },
