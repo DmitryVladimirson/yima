@@ -1,4 +1,5 @@
 <template>
+  <ProductPopup v-model="selectedProductSlug" />
   <TheSwiper
     navigation
     :autoplay="{ pauseOnMouseEnter: true, disableOnInteraction: false }"
@@ -15,7 +16,7 @@
     }"
   >
     <SwiperSlide v-for="product in products" :key="product.slug" class="!h-auto">
-      <ProductCard :product="product" />
+      <ProductCard :class="{ 'h-full': products.length > 1 }" :product="product" @show-popup="handleShowPopup" />
     </SwiperSlide>
   </TheSwiper>
 </template>
@@ -26,6 +27,8 @@ import { withDefaults } from 'vue'
 
 const { theme } = useAppConfig()
 
+const selectedProductSlug = ref('')
+
 interface Properties {
   products: Product[]
 }
@@ -33,4 +36,8 @@ interface Properties {
 withDefaults(defineProps<Properties>(), {
   products: () => [],
 })
+
+const handleShowPopup = (product: Product) => {
+  selectedProductSlug.value = product.toString()
+}
 </script>
