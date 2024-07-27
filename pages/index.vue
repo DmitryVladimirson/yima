@@ -2,21 +2,168 @@
   <div class="flex flex-col gap-10 lg:gap-20">
     <section>
       <div class="container">
-        <div class="flex items-center justify-around rounded-xl bg-white p-8">
-          <DeliveryIcon style="color: black" class="max-lg:hidden" width="100" height="100" />
-          <div class="m-0 flex w-fit flex-col">
-            <h2 class="mb-4 text-black">Запускаємо безкоштовну доставку по Ужгороду!</h2>
-            <p class="text-black">
-              Просто замовляй, а ми доставимо <span class="text-success">ШВИДКО</span> та
-              <span class="text-success">БЕЗКОШТОВНО</span>.
-            </p>
+        <!--        <div class="flex items-center justify-around rounded-xl bg-white p-8">-->
+        <!--          <DeliveryIcon style="color: black" class="max-lg:hidden" width="100" height="100" />-->
+        <!--          <div class="m-0 flex w-fit flex-col">-->
+        <!--            <h2 class="mb-4 text-black">Запускаємо безкоштовну доставку по Ужгороду!</h2>-->
+        <!--            <p class="text-black">-->
+        <!--              Просто замовляй, а ми доставимо <span class="text-success">ШВИДКО</span> та-->
+        <!--              <span class="text-success">БЕЗКОШТОВНО</span>.-->
+        <!--            </p>-->
+        <!--          </div>-->
+        <!--        </div>-->
+
+        <!-- Ваши существующие секции о продуктах и акциях -->
+
+        <!-- Табы с информацией -->
+
+        <div v-if="!currentTab" class="tabs">
+          <button class="tablink font-bold" @click="openTab('payment')">Способи оплати</button>
+          <button class="tablink font-bold" @click="openTab('delivery')">Способи доставки</button>
+          <button class="tablink font-bold" @click="openTab('return')">Заміна та повернення товару</button>
+          <button class="tablink font-bold" @click="openTab('about')">Про компанію</button>
+        </div>
+        <div id="payment" class="tabcontent" :class="{ 'active-tab': currentTab === 'payment' }">
+          <div class="flex flex-col items-center justify-center">
+            <h2 class="mb-8 text-center text-2xl md:text-4xl">СПОСОБИ ОПЛАТИ</h2>
+            <div class="flex flex-col justify-around lg:flex-row">
+              <div class="m-2 flex flex-col items-center rounded-2xl bg-white p-4 text-gray-800 shadow lg:w-1/3">
+                <CashIcon class="mb-8 text-8xl"></CashIcon>
+                <div class="mb-4 flex justify-center text-center text-lg font-bold md:text-2xl">
+                  ГОТІВКОВИЙ РОЗРАХУНОК
+                </div>
+                <div class="text-ml p-4 text-center md:text-lg">Оплата готівкою при отриманні товару у кур’єра.</div>
+              </div>
+              <div class="m-2 flex flex-col items-center rounded-2xl bg-white p-4 text-gray-800 shadow lg:w-1/3">
+                <CardIcon class="mb-8 text-8xl"></CardIcon>
+                <div class="mb-4 flex justify-center text-center text-lg font-bold md:text-2xl">
+                  БЕЗГОТІВКОВИЙ РОЗРАХУНОК
+                </div>
+                <div class="text-ml p-4 text-center md:text-lg">
+                  Оплата замовлення за допомогою банківських карт Visa й MasterCard. Оплата по безготівковому розрахунку
+                  в касі будь-якого банку або з розрахункового рахунку Вашої компанії.
+                </div>
+              </div>
+              <div class="m-2 flex flex-col items-center rounded-2xl bg-white p-4 text-gray-800 shadow lg:w-1/3">
+                <PayIcon class="mb-8 text-8xl"></PayIcon>
+                <div class="mb-4 flex justify-center text-center text-lg font-bold md:text-2xl">
+                  НАКЛАДЕНИМ ПЛАТЕЖЕМ
+                </div>
+                <div class="text-ml p-4 text-center md:text-lg">
+                  Оплата накладеним платежем (завдаток 10% від суми)у випадку доставлення кур’єрською службою Нова Пошта
+                  або Deliveri.
+                  <div class="mt-2">
+                    Розрахунок готівкою при отриманні товару на складі служби доставки. Оплата за послуги згідно з
+                    тарифом Нової пошти 20 грн. + 2% від суми замовлення.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <TheButton class="btn btn-primary mt-2 flex w-fit items-center gap-2" type="button" @click="handleReturn"
+              >Назад</TheButton
+            >
+          </div>
+        </div>
+
+        <div id="delivery" class="tabcontent" :class="{ 'active-tab': currentTab === 'delivery' }">
+          <div class="flex flex-col items-center justify-center">
+            <h2 class="mb-8 text-center text-2xl md:text-4xl">СПОСОБИ ДОСТАВКИ</h2>
+            <div class="flex flex-col justify-around lg:flex-row">
+              <div class="m-2 flex flex-col items-center rounded-2xl bg-white p-4 text-gray-800 shadow lg:w-1/3">
+                <CashIcon class="mb-8 text-8xl"></CashIcon>
+                <div class="mb-4 flex justify-center text-center text-lg font-bold md:text-2xl">
+                  ПО УЖГОРОДУ КУРЬЄРОМ
+                </div>
+                <div class="text-ml p-4 text-center md:text-lg">
+                  За наявності товару на складі, та при оформленні замовлення доставка здійснюється протягом 1-2 днів з
+                  дня замовлення. <br />
+                  <span class="font-medium text-green-600"
+                    >ДОСТАВКА ПО УЖГОРОДУ ТА В ПЕРЕДМІСТІ БЕЗКОШТОВНА ПРИ ЗАМОВЛЕННІ ВІД 5000 грн.</span
+                  >
+                </div>
+              </div>
+              <div class="m-2 flex flex-col items-center rounded-2xl bg-white p-4 text-gray-800 shadow lg:w-1/3">
+                <PayIcon class="mb-8 text-8xl"></PayIcon>
+                <div class="mb-4 flex justify-center text-center text-lg font-bold md:text-2xl">ПО УКРАЇНІ</div>
+                <div class="text-ml p-4 text-center md:text-lg">
+                  Нова пошта/ Diliveri <br />
+                  Доставка на відділення нової пошти, після затвердження замовлення, при умові наявності товару на
+                  складі.
+                  <div class="mt-2">
+                    Вартість доставки по Україні – за тарифами Нової пошти/Deliveri. Адресна доставка по Україні — за
+                    тарифами Нової Пошти/Deliveri.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <TheButton class="btn btn-primary mt-2 flex w-fit items-center gap-2" type="button" @click="handleReturn"
+              >Назад</TheButton
+            >
+          </div>
+        </div>
+
+        <div id="return" class="tabcontent" :class="{ 'active-tab': currentTab === 'return' }">
+          <div class="flex flex-col items-center justify-center text-center">
+            <div class="mb-4 text-xl font-bold lg:mb-8 lg:text-4xl">ЗАМІНА ТА ПОВЕРНЕННЯ ТОВАРУ</div>
+            <div class="text-md mb-4 lg:mb-8">
+              <p class="mb-4">
+                Повернення товару, придбаного в інтернет-магазині Euro Price, можна здійснити протягом 5 днів з моменту
+                придбання. <span class="font-bold">Обовʼязкові умови повернення товару:</span> <br />
+                товар не був в експлуатації, пакування товару не порушене та збережено товарний чек і гарантійний талон,
+                якщо він передбачений.
+              </p>
+              <p>Інтернет-магазин Euro Price завжди йде назустріч клієнтам.</p>
+              <p>
+                Якщо ви залишилися незадоволені якістю придбаного товару, ми готові в індивідуальному порядку розглянути
+                ваш випадок і вирішити його, навіть якщо пакування порушене.
+              </p>
+              <p>
+                Адреса повернення товарів: село Минай(Закарпаття) Нова Пошта №1<br />
+                Пошта для запитань та зауважень: <span class="font-bold">euprice.ua@gmail.com</span>
+              </p>
+            </div>
+            <TheButton class="btn btn-primary mt-2 flex w-fit items-center gap-2" type="button" @click="handleReturn"
+              >Назад</TheButton
+            >
+          </div>
+        </div>
+
+        <div id="about" class="tabcontent" :class="{ 'active-tab': currentTab === 'about' }">
+          <div class="flex flex-col items-center justify-center text-center">
+            <h2 class="mb-4 text-xl font-bold lg:mb-8 lg:text-4xl">ПРО КОМПАНІЮ</h2>
+            <div class="text-md mb-4 lg:mb-8">
+              <p>
+                Ласкаво просимо до нашої компанії, яка спеціалізується на постачанні продуктів харчування та побутової
+                хімії з Європи гуртом. Ми пропонуємо широкий асортимент якісних товарів за конкурентними цінами, при
+                цьому забезпечуючи високий рівень обслуговування та індивідуальний підхід до кожного клієнта.
+              </p>
+              <p>Чому обирають нас:</p>
+              <ol>
+                <li>
+                  Багаторічний досвід та надійність: Ми працюємо в галузі постачання з Європи вже протягом багатьох
+                  років. Наші клієнти довіряють нам завдяки стабільній якості та своєчасним поставкам. (При потребі
+                  складаємо договір про постачання товарів ФОП/ТОВ)
+                </li>
+                <li>
+                  Широкий асортимент продукції: Ви знайдете у нас все, що потрібно для побуту та бізнесу – від продуктів
+                  харчування до побутової та професійної хімії.
+                </li>
+                <li>
+                  Конкурентоспроможні ціни: Ми пропонуємо вигідні умови співпраці для оптових покупців та роздрібних
+                  магазинів, завжди готові обговорити індивідуальні умови оптових закупівель.
+                </li>
+              </ol>
+            </div>
+            <TheButton class="btn btn-primary mt-2 flex w-fit items-center gap-2" type="button" @click="handleReturn"
+              >Назад</TheButton
+            >
           </div>
         </div>
       </div>
     </section>
-    <HomepageChosenProducts :chosen-products="chosenProducts.member" />
-    <HomepageSaleProducts :sale-products="saleProducts.member" />
-    <section>
+    <HomepageChosenProducts v-if="!currentTab" :chosen-products="chosenProducts.member" />
+    <HomepageSaleProducts v-if="!currentTab" :sale-products="saleProducts.member" />
+    <section v-if="!currentTab">
       <div id="plp_container" ref="plpContainer" class="container flex flex-col gap-6">
         <div class="block md:hidden">
           <TheH>
@@ -79,7 +226,21 @@
 <script setup lang="ts">
 import { useYimaProduct, ref, useI18n, useRoute, navigateTo, watch, useThrottleFn } from '#imports'
 import DeliveryIcon from '~icons/mdi/truck-delivery-outline'
+import CashIcon from '~icons/mdi/account-cash-outline'
+import CardIcon from '~icons/mdi/account-credit-card-outline'
+import PayIcon from '~icons/mdi/truck-delivery-outline'
 import FilterIcon from '~icons/mdi/menu'
+import TheButton from '~/components/TheButton.vue'
+
+const currentTab = ref('')
+
+const openTab = (tabName: string) => {
+  currentTab.value = tabName
+}
+
+const handleReturn = () => {
+  currentTab.value = ''
+}
 
 const { getProducts, getProductFilters } = useYimaProduct()
 const { t } = useI18n()
@@ -209,4 +370,36 @@ watch(productFiltersWrapper, () => {
 })
 </script>
 
-<style lang=""></style>
+<style scoped>
+.tabs {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+.tablink {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+.tablink:hover {
+  background-color: #e8b508;
+  border-radius: 0.5rem;
+}
+
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border-top: none;
+}
+
+.tabcontent.active-tab {
+  display: block !important;
+}
+</style>
