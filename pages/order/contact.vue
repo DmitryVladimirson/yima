@@ -80,6 +80,13 @@
           </TheBaseCard>
         </div>
       </div>
+
+      <!-- Submit button inside FormKit actions -->
+      <div class="w-full mt-4">
+        <TheButton class="btn btn-primary" type="submit" :disabled="!isFormComplete">
+          {{ $t('submit') }}
+        </TheButton>
+      </div>
     </FormKit>
 
     <div class="hidden md:block md:w-1/3">
@@ -100,15 +107,6 @@
         <div class="mt-2 items-center text-right">
           <TheH class="inline" :level="4">{{ $t('totalPrice') }}:</TheH>
           <ThePrice class="ml-auto inline-block text-lg font-bold" :value="orderState.total" />
-        </div>
-        <div
-          class="ml-auto mt-4"
-          :class="{ 'tooltip tooltip-bottom': !isFormComplete }"
-          :data-tip="$t('provideData')"
-        >
-          <TheButton class="btn btn-primary" type="submit" :disabled="!isFormComplete">
-            {{ $t('submit') }}
-          </TheButton>
         </div>
       </div>
     </div>
@@ -175,14 +173,16 @@ const paymentOptions = [
   'Накладений платіж (10% завдаток)',
 ]
 
-if (orderState.value.shippingAddress) {
+const resetForm = () => {
   formData.value = {
-    firstName: orderState.value.shippingAddress.firstName,
-    lastName: orderState.value.shippingAddress.lastName,
-    phoneNumber: orderState.value.shippingAddress.phoneNumber,
-    shippingMethod: orderState.value.shippingAddress.shippingMethod,
-    shippingAddress: orderState.value.shippingAddress.address,
-    paymentMethod: orderState.value.shippingAddress.paymentMethod,
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    shippingMethod: '',
+    shippingAddress: '',
+    paymentMethod: '',
+    commentEnabled: false,
+    comment: '',
   }
 }
 
@@ -230,6 +230,9 @@ const { execute: handleSubmit } = waitAnd(
     if (response.error.value) {
       return
     }
+
+    // Reset form data and state
+    resetForm()
 
     await navigateTo(localePath('/order/complete'))
 
