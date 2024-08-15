@@ -39,7 +39,7 @@
         </TheButton>
       </div>
 
-      <div class="mt-0 flex-grow lg:ml-8 lg:w-[420px]">
+      <div class="mt-0 flex-grow flex flex-col justify-center items-center lg:block lg:ml-8 lg:w-[420px]">
         <!-- Product Title and Close Button -->
         <div class="mb-4 flex items-center justify-between">
           <TheH :level="2">{{ product.name }}</TheH>
@@ -56,7 +56,7 @@
           </TheButton>
         </div>
         <!-- Product Picture -->
-        <img :src="product.imgUrl" class="h-auto w-full object-contain" :alt="product?.name" />
+        <img :src="product.imgUrl" class=" w-[200px] h-[200px] lg:w-full lg:h-auto object-contain" :alt="product?.name" />
       </div>
     </div>
   </div>
