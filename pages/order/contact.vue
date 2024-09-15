@@ -44,9 +44,32 @@
         <div class="w-full mb-8">
           <TheH :level="2">{{ $t('contactInfo') }}</TheH>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <FormKit type="text" name="firstName" validation="required" v-model="formData.firstName" :label="$t('firstName')" />
-            <FormKit type="text" name="lastName" validation="required" v-model="formData.lastName" :label="$t('lastName')" />
-            <FormKit type="text" name="phoneNumber" validation="required" v-model="formData.phoneNumber" :label="$t('phoneNumber')" />
+            <FormKit
+              type="text"
+              name="firstName"
+              validation="required"
+              v-model="formData.firstName"
+              :label="$t('firstName')"
+              :validation-message="'Введіть ім\'я'"
+            />
+
+            <FormKit
+              type="text"
+              name="lastName"
+              validation="required"
+              v-model="formData.lastName"
+              :label="$t('lastName')"
+              :validation-message="'Введіть прізвище'"
+            />
+
+            <FormKit
+              type="text"
+              name="phoneNumber"
+              validation="required"
+              v-model="formData.phoneNumber"
+              :label="$t('phoneNumber')"
+              :validation-message="'Введіть номер телефона'"
+            />
           </div>
         </div>
 
