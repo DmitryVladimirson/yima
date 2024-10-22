@@ -16,7 +16,7 @@
         <!-- Ваши существующие секции о продуктах и акциях -->
 
         <!-- Табы с информацией -->
-        <div class="bg-white p-6 rounded-2xl shadow-md m-2 w-full">
+        <div class="bg-white p-6 rounded-2xl shadow-md m-2 mb-8 w-full">
           <div class="flex flex-col lg:flex-row items-center">
             <div class="flex flex-col items-center lg:items-start text-gray-800 w-full lg:w-1/2 p-4">
               <h2 class="mb-8 text-2xl md:text-4xl font-bold">
