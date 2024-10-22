@@ -16,6 +16,33 @@
         <!-- Ваши существующие секции о продуктах и акциях -->
 
         <!-- Табы с информацией -->
+        <div class="bg-white p-6 rounded-2xl shadow-md m-2 w-full">
+          <div class="flex flex-col lg:flex-row items-center">
+            <div class="flex flex-col items-center lg:items-start text-gray-800 w-full lg:w-1/2 p-4">
+              <h2 class="mb-8 text-2xl md:text-4xl font-bold">
+                ТОВАРИ З <span class="text-[#fbbf24]">ЄВРОПИ</span>
+              </h2>
+              <h2 class="mb-6 text-lg font-semibold">ГУРТОВЕ ПОСТАЧАННЯ ДЛЯ ВАШОГО БІЗНЕСУ</h2>
+
+              <div class="flex items-center mb-1">
+                <span class="mr-2 text-lg">🍏</span>
+                <h3 class="text-md">Продукти харчування</h3>
+              </div>
+              <div class="flex items-center mb-1">
+                <span class="mr-2 text-lg">🧴</span>
+                <h3 class="text-md">Побутова хімія</h3>
+              </div>
+
+              <div class="mt-4 flex items-center text-success">
+                <span class="mr-2">🚚</span>
+                <h4 class="text-lg font-semibold">БЕЗКОШТОВНА ДОСТАВКА УЖГОРОДОМ</h4>
+              </div>
+            </div>
+            <div class="w-full lg:w-1/2 flex justify-center mt-6 lg:mt-0">
+              <PayIcon class="text-9xl text-success lg:text-[300px]"></PayIcon>
+            </div>
+          </div>
+        </div>
 
         <div v-if="!currentTab" class="tabs">
           <button class="tablink font-bold" @click="openTab('payment')">Способи оплати</button>
@@ -172,7 +199,9 @@
           </div>
 
         </div>
+
       </div>
+
 
 
     </section>
@@ -384,6 +413,12 @@ watch(productFiltersWrapper, () => {
 </script>
 
 <style scoped>
+.banner {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
 .tabs {
   display: flex;
   justify-content: center;
