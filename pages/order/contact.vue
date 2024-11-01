@@ -44,64 +44,43 @@
         <div class="w-full mb-8">
           <TheH :level="2">{{ $t('contactInfo') }}</TheH>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <FormKit
-              type="text"
-              name="firstName"
-              validation="required"
-              v-model="formData.firstName"
-              :label="$t('firstName')"
-              :validation-message="'Введіть ім\'я'"
-            />
-
-            <FormKit
-              type="text"
-              name="lastName"
-              validation="required"
-              v-model="formData.lastName"
-              :label="$t('lastName')"
-              :validation-message="'Введіть прізвище'"
-            />
-
-            <FormKit
-              type="text"
-              name="phoneNumber"
-              validation="required"
-              v-model="formData.phoneNumber"
-              :label="$t('phoneNumber')"
-              :validation-message="'Введіть номер телефона'"
-            />
+            <FormKit type="text" name="firstName" validation="required" v-model="formData.firstName" :label="$t('firstName')" />
+            <FormKit type="text" name="lastName" validation="required" v-model="formData.lastName" :label="$t('lastName')" />
+            <FormKit type="text" name="phoneNumber" validation="required" v-model="formData.phoneNumber" :label="$t('phoneNumber')" />
           </div>
         </div>
 
         <!-- Payment method selection block -->
-        <div class="w-full mb-8">
-          <TheH :level="2">{{ $t('paymentInfo') }}</TheH>
-          <FormKit
-            type="select"
-            name="paymentMethod"
-            validation="required"
-            v-model="formData.paymentMethod"
-            :label="$t('paymentMethod')"
-          >
-            <option
-              v-for="(option, index) in paymentOptions"
-              :key="option"
-              :disabled="index === 0"
-              :value="option"
-            >
-              {{ option }}
-            </option>
-          </FormKit>
-        </div>
+<!--        <div class="w-full mb-8">-->
+<!--          <TheH :level="2">{{ $t('paymentInfo') }}</TheH>-->
+<!--          <FormKit-->
+<!--            type="select"-->
+<!--            name="paymentMethod"-->
+<!--            validation="required"-->
+<!--            v-model="formData.paymentMethod"-->
+<!--            :label="$t('paymentMethod')"-->
+<!--          >-->
+<!--            <option-->
+<!--              v-for="(option, index) in paymentOptions"-->
+<!--              :key="option"-->
+<!--              :disabled="index === 0"-->
+<!--              :value="option"-->
+<!--            >-->
+<!--              {{ option }}-->
+<!--            </option>-->
+<!--          </FormKit>-->
+<!--        </div>-->
 
         <!-- Placing comment on order block -->
+        <!-- Placing comment on order block -->
         <div class="w-full mb-8">
-          <TheH :level="2">{{ $t('addComment') }}</TheH>
-          <FormKit type="checkbox" name="commentEnabled" v-model="formData.commentEnabled" :label="$t('addComment')" />
+          <TheH :level="2">На карту, Розрахунковий рахунок або Накладений платіж (10% завдаток)</TheH>
+          <FormKit type="checkbox" name="commentEnabled" v-model="formData.commentEnabled" label="Вкажіть метод оплати в коментарі" />
           <TheBaseCard v-show="formData.commentEnabled" class="p-4">
-            <FormKit type="textarea" name="comment" v-model="formData.comment" :placeholder="$t('enterComment')" />
+            <FormKit type="textarea" name="comment" v-model="formData.comment" placeholder="Написати коментар" />
           </TheBaseCard>
         </div>
+
       </div>
 
       <!-- Submit button inside FormKit actions -->
@@ -227,8 +206,7 @@ const isFormComplete = computed(() => {
     formData.value.lastName &&
     formData.value.phoneNumber &&
     formData.value.shippingMethod &&
-    formData.value.shippingAddress &&
-    formData.value.paymentMethod
+    formData.value.shippingAddress
   )
 })
 
